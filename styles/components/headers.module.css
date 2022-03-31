@@ -1,0 +1,14 @@
+.Header {
+  height: 3.5rem;
+  width: 100%;
+  border-bottom: 1px solid var(--color-light-1);
+}
+
+.LogoContainer {
+  display: flex;
+  height: 100%;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 0.85rem 1rem;
+  color: var(--color-light-1);
+}
