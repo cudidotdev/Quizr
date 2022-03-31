@@ -18,9 +18,20 @@ a {
 }
 
 #body {
-  --color-dark-1: rgb(0, 8, 24);
-  --color-light-1: rgb(137, 175, 240);
+  --color-white-one: rgb(253, 253, 255);
+  --color-black-one: rgb(36, 36, 40);
+  --color-primary: rgb(81, 149, 251);
+
+  --shadow-bottom-one: 0 1px 2px rgba(36, 36, 36, 0.2);
+
+  --site-width: 1280px;
 
   min-height: 100vh;
-  background-color: var(--color-dark-1);
+  background-color: var(--color-white-one);
+}
+
+.site-width {
+  width: 100%;
+  max-width: var(--site-width);
+  margin: 0 auto;
 }
