@@ -1,19 +1,35 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { HelpIcon, Logo, PodiumIcon, UserIcon } from "components/icon";
 import styles from "styles/components/headers.module.css";
 import { Linkr } from "components/links";
+import { useRouter } from "next/router";
 
 const Header: React.FC = () => {
   const [width, setWidth] = useState<number>(0);
   const menuContainer = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   function updateWidth() {
     setWidth(window.innerWidth);
   }
 
+  function closeMenu() {
+    menuContainer.current?.classList.remove(styles.Active);
+    console.log("closed");
+  }
+
   useLayoutEffect(() => {
     updateWidth();
+  }, []);
+
+  useEffect(() => {
     window.addEventListener("resize", updateWidth);
+    router.events.on("routeChangeStart", closeMenu);
+
+    return () => {
+      window.removeEventListener("resize", updateWidth);
+      router.events.off("routeChangeStart", closeMenu);
+    };
   }, []);
 
   return (
@@ -30,15 +46,15 @@ const Header: React.FC = () => {
         </Linkr>
         {width > 600 ? (
           <div>
-            <Linkr _className={`${styles.IconTextContainer}`}>
+            <Linkr _className={`${styles.IconTextContainer}`} href="/board">
               <PodiumIcon />
               <div className={`${styles.IconText}`}>LeaderBoards</div>
             </Linkr>
-            <Linkr _className={`${styles.IconTextContainer}`}>
+            <Linkr _className={`${styles.IconTextContainer}`} href="/help">
               <HelpIcon />
               <div className={`${styles.IconText}`}>Help</div>
             </Linkr>
-            <Linkr _className={`${styles.IconTextContainer}`}>
+            <Linkr _className={`${styles.IconTextContainer}`} href="/in">
               <UserIcon />
               <div className={`${styles.IconText}`}>Login</div>
             </Linkr>
@@ -55,33 +71,15 @@ const Header: React.FC = () => {
               <span></span>
             </button>
             <div className={styles.Menu}>
-              <Linkr
-                _className={`${styles.IconTextContainer}`}
-                passProps={{
-                  onClick: () =>
-                    menuContainer.current?.classList.remove(styles.Active),
-                }}
-              >
+              <Linkr _className={`${styles.IconTextContainer}`} href="/board">
                 <PodiumIcon />
                 <div className={`${styles.IconText}`}>LeaderBoards</div>
               </Linkr>
-              <Linkr
-                _className={`${styles.IconTextContainer}`}
-                passProps={{
-                  onClick: () =>
-                    menuContainer.current?.classList.remove(styles.Active),
-                }}
-              >
+              <Linkr _className={`${styles.IconTextContainer}`} href="/help">
                 <HelpIcon />
                 <div className={`${styles.IconText}`}>Help</div>
               </Linkr>
-              <Linkr
-                _className={`${styles.IconTextContainer}`}
-                passProps={{
-                  onClick: () =>
-                    menuContainer.current?.classList.remove(styles.Active),
-                }}
-              >
+              <Linkr _className={`${styles.IconTextContainer}`} href="/in">
                 <UserIcon />
                 <div className={`${styles.IconText}`}>Login</div>
               </Linkr>
