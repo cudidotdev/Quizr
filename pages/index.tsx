@@ -6,13 +6,13 @@ const Home: NextPageWithLayout = () => {
   return (
     <main className="content-width pad-one">
       <div className={styles.Hero}>
-        <div className={`${styles.HeroText} t-light`}>
-          Hi, welcome to Quizr.
+        <div>
+          Hi, welcome to Quizr. Take a quiz and test your knowledge on some
+          mind-blowing facts.
         </div>
-        <div className={styles.HeroDesc}>
-          Take a quiz and test your knowledge on some mind-blowing facts. Choose
-          one of the quizes below. You can search for quizes and sort based on
-          category, difficulty or popularity.
+        <div>
+          Choose one of the quizes below. You can search for quizes and sort
+          based on category, difficulty or popularity.
         </div>
       </div>
     </main>
