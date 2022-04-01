@@ -52,3 +52,66 @@
 .LogoText::selection {
   background-color: transparent;
 }
+
+.MenuContainer {
+  padding: 0 1rem;
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.MenuBar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  background-color: transparent;
+  border: none;
+  border-radius: 0.25rem;
+  box-shadow: var(--shadow-two);
+  padding: 0.25rem;
+  position: relative;
+  transition: box-shadow 200ms linear;
+}
+
+.MenuBar span {
+  height: 2px;
+  width: 70%;
+  display: flex;
+  position: absolute;
+  background-color: var(--color-black-three);
+  transition: all 300ms linear;
+}
+
+.MenuBar span:first-child {
+  transform: translateY(-3px);
+}
+
+.MenuBar span:last-child {
+  transform: translateY(3px);
+}
+
+.MenuContainer.Active .MenuBar {
+  box-shadow: 0 0 3px var(--color-primary-one);
+}
+
+.MenuContainer.Active .MenuBar span {
+  background-color: var(--color-primary-one);
+}
+
+.MenuContainer.Active .MenuBar span:first-child {
+  transform: translateY(0) rotate(45deg);
+}
+
+.MenuContainer.Active .MenuBar span:last-child {
+  transform: translateY(0) rotate(315deg);
+}
+
+.Menu {
+  position: absolute;
+  right: 0;
+  visibility: hidden;
+}
