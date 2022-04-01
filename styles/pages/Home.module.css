@@ -1,0 +1,15 @@
+.Hero {
+  padding: 1rem;
+  border-radius: 0.25rem;
+  box-shadow: var(--shadow-three);
+}
+
+.HeroText {
+  font-size: 1.5rem;
+  color: var(--color-secondary-one);
+}
+
+.HeroDesc {
+  font-size: 0.95rem;
+  color: var(--color-black-two);
+}

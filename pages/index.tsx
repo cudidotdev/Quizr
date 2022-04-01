@@ -1,8 +1,22 @@
 import type { NextPageWithLayout } from "types/next";
 import Layout from "components/layouts";
+import styles from "styles/pages/Home.module.css";
 
 const Home: NextPageWithLayout = () => {
-  return <></>;
+  return (
+    <main className="content-width pad-one">
+      <div className={styles.Hero}>
+        <div className={`${styles.HeroText} t-light`}>
+          Hi, welcome to Quizr.
+        </div>
+        <div className={styles.HeroDesc}>
+          Take a quiz and test your knowledge on some mind-blowing facts. Choose
+          one of the quizes below. You can search for quizes and sort based on
+          category, difficulty or popularity.
+        </div>
+      </div>
+    </main>
+  );
 };
 
 Home.Layout = Layout;
