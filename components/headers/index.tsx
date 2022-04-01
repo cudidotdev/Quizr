@@ -6,7 +6,7 @@ import { Linkr } from "components/links";
 const Header: React.FC = () => {
   return (
     <header className={styles.Header}>
-      <div className={`site-width ${styles.Padder}`}>
+      <nav className={`site-width ${styles.Padder}`}>
         <Linkr
           _className={`${styles.IconTextContainer} ${styles.LogoContainer}`}
           href="/"
@@ -30,7 +30,7 @@ const Header: React.FC = () => {
             <div className={`${styles.IconText}`}>Login</div>
           </Linkr>
         </div>
-      </div>
+      </nav>
     </header>
   );
 };
