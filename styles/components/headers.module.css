@@ -71,7 +71,7 @@
   background-color: transparent;
   border: none;
   border-radius: 0.25rem;
-  box-shadow: var(--shadow-two);
+  box-shadow: var(--shadow-one);
   padding: 0.25rem;
   position: relative;
   transition: box-shadow 200ms linear;
@@ -95,23 +95,57 @@
 }
 
 .MenuContainer.Active .MenuBar {
-  box-shadow: 0 0 3px var(--color-primary-one);
+  box-shadow: var(--shadow-two);
 }
 
 .MenuContainer.Active .MenuBar span {
   background-color: var(--color-primary-one);
 }
 
-.MenuContainer.Active .MenuBar span:first-child {
+/* .MenuContainer.Active .MenuBar span:first-child {
   transform: translateY(0) rotate(45deg);
 }
 
 .MenuContainer.Active .MenuBar span:last-child {
   transform: translateY(0) rotate(315deg);
-}
+} */
 
 .Menu {
   position: absolute;
-  right: 0;
+  right: 1rem;
+  top: 3.5rem;
+  box-shadow: var(--shadow-one);
+  border-radius: 0.25rem;
+  max-width: 420px;
+  width: calc(100vw - 2rem);
   visibility: hidden;
+  opacity: 0;
+  z-index: 10;
+  background-color: var(--color-white-one);
+  transition: all 500ms linear;
+  padding: 1rem;
+}
+
+.Menu .IconTextContainer {
+  height: 3rem;
+  padding: 0.625rem;
+  box-shadow: var(--shadow-one);
+  border-radius: 0.25rem;
+}
+
+.Menu .IconTextContainer:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+.Menu .IconText {
+  margin-left: 1rem;
+}
+
+.MenuContainer.Active .Menu {
+  visibility: visible;
+  opacity: 1;
+}
+
+.Menu .IconTextContainer:hover {
+  box-shadow: var(--shadow-two);
 }

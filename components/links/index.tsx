@@ -7,10 +7,11 @@ export const Linkr: React.FC<linkr> = ({
   href = "#",
   _className = "",
   _style = {},
+  passProps,
 }) => {
   return (
     <Link href={href}>
-      <a className={`${_className}`} style={{ ..._style }}>
+      <a className={`${_className}`} style={{ ..._style }} {...passProps}>
         {children}
       </a>
     </Link>

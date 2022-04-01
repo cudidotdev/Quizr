@@ -55,15 +55,33 @@ const Header: React.FC = () => {
               <span></span>
             </button>
             <div className={styles.Menu}>
-              <Linkr _className={`${styles.IconTextContainer}`}>
+              <Linkr
+                _className={`${styles.IconTextContainer}`}
+                passProps={{
+                  onClick: () =>
+                    menuContainer.current?.classList.remove(styles.Active),
+                }}
+              >
                 <PodiumIcon />
                 <div className={`${styles.IconText}`}>LeaderBoards</div>
               </Linkr>
-              <Linkr _className={`${styles.IconTextContainer}`}>
+              <Linkr
+                _className={`${styles.IconTextContainer}`}
+                passProps={{
+                  onClick: () =>
+                    menuContainer.current?.classList.remove(styles.Active),
+                }}
+              >
                 <HelpIcon />
                 <div className={`${styles.IconText}`}>Help</div>
               </Linkr>
-              <Linkr _className={`${styles.IconTextContainer}`}>
+              <Linkr
+                _className={`${styles.IconTextContainer}`}
+                passProps={{
+                  onClick: () =>
+                    menuContainer.current?.classList.remove(styles.Active),
+                }}
+              >
                 <UserIcon />
                 <div className={`${styles.IconText}`}>Login</div>
               </Linkr>
