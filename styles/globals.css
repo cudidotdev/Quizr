@@ -96,11 +96,6 @@ a:focus:not(.disable-focus-color) {
   color: var(--color-primary-one);
 }
 
-a:focus:not(.disable-focus-outline),
-button:focus:not(.disable-focus-outline) {
-  outline: 2px solid var(--color-primary-one);
-}
-
 a.disable-focus-outline:focus,
 button.disable-focus-outline:focus {
   outline: none;
