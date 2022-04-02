@@ -1,5 +1,11 @@
 .Intro > div {
   padding-bottom: 0.5rem;
   color: var(--color-black-two);
-  font-size: 1rem;
+  font-size: 0.95rem;
+}
+
+@media screen and (min-width: 600px) {
+  .Intro > div {
+    font-size: 1rem;
+  }
 }
