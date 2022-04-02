@@ -5,7 +5,7 @@ import styles from "styles/pages/Home.module.css";
 const Home: NextPageWithLayout = () => {
   return (
     <main className="content-width pad-one">
-      <div className={styles.Hero}>
+      <div className={styles.Intro}>
         <div>
           Hi, welcome to Quizr. Take a quiz and test your knowledge on some
           mind-blowing facts.
