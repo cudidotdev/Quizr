@@ -111,7 +111,7 @@ button {
 }
 
 input {
-  font-size: 0.95rem;
+  font-size: inherit;
 }
 
 input,
@@ -152,6 +152,7 @@ button:hover {
   min-height: 100vh;
   background-color: var(--color-white-one);
   color: var(--color-black-one);
+  font-size: 0.95rem;
 }
 
 /*#region widths*/
