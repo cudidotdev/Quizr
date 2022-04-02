@@ -1,0 +1,41 @@
+.Cstm {
+  color: var(--color-grey-one);
+}
+
+.Cstm:hover,
+.Cstm:focus {
+  color: var(--color-primary-two);
+}
+
+.Cstm .InputBox {
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: 420px;
+  align-items: center;
+}
+
+.Cstm .InputBox input {
+  padding: 0.375rem 0.5rem;
+  border: 1px solid currentColor;
+  border-radius: 0.5rem;
+  width: 100%;
+  display: block;
+}
+
+.Cstm .InputBox .IconBox {
+  position: absolute;
+  display: flex;
+  height: 2rem;
+  width: 2rem;
+  padding: 0.25rem;
+  right: 0.25rem;
+  border-radius: 50%;
+  background-color: transparent;
+  border: none;
+}
+.Cstm .InputBox .IconBox:hover,
+.Cstm .InputBox .IconBox:focus {
+  color: var(--color-primary-two);
+  background-color: var(--color-primary-transparent);
+}

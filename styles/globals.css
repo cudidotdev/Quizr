@@ -92,8 +92,40 @@ a {
   cursor: pointer;
 }
 
+a:focus:not(.disable-focus-color) {
+  color: var(--color-primary-one);
+}
+
+a:focus:not(.disable-focus-outline),
+button:focus:not(.disable-focus-outline) {
+  outline: 2px solid var(--color-primary-one);
+}
+
+a.disable-focus-outline:focus,
+button.disable-focus-outline:focus {
+  outline: none;
+}
+
 button {
   cursor: pointer;
+}
+
+input {
+  font-size: 0.95rem;
+}
+
+input,
+button {
+  color: inherit;
+  font-family: inherit;
+}
+input:focus,
+input:active,
+input:hover,
+button:active,
+button:hover {
+  border: inherit;
+  outline: none;
 }
 
 #body {
@@ -101,8 +133,11 @@ button {
   --color-black-one: rgb(50, 50, 50);
   --color-black-two: rgb(75, 75, 75);
   --color-black-three: rgb(125, 125, 125);
+  --color-grey-one: rgb(150, 150, 150);
   --color-primary-one: rgb(81, 149, 251);
-  --color-primary-two: rgb(100, 163, 255);
+  --color-primary-two: rgb(113, 173, 255);
+  --color-primary-three: rgb(132, 186, 255);
+  --color-primary-transparent: rgb(81, 149, 251, 0.1);
   --color-secondary-one: rgb(130, 252, 150);
   --color-tertiary-one: rgb(255, 150, 50);
 
@@ -119,6 +154,8 @@ button {
   color: var(--color-black-one);
 }
 
+/*#region widths*/
+
 .site-width {
   width: 100%;
   max-width: var(--site-width);
@@ -131,9 +168,19 @@ button {
   margin: 0 auto;
 }
 
+/*#endregion */
+
+/*#region padding*/
+
 .pad-one {
   padding: 1rem;
 }
+
+.pad-bottom-one {
+  padding-bottom: 1rem;
+}
+
+/*#endregion padding*/
 
 /*#region t-font */
 
@@ -256,3 +303,15 @@ button {
 }
 
 /*#endregion */
+
+.card-one {
+  box-shadow: var(--shadow-one);
+}
+
+.card-two {
+  box-shadow: var(--shadow-two);
+}
+
+.rad-quart {
+  border-radius: 0.25rem;
+}
