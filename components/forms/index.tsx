@@ -118,7 +118,7 @@ export const MultipleSelectr: React.FC<selectr> = ({
   const [showOpts, setShowOpts] = useState<boolean>(false);
   return (
     <div className={`${styles.Cstm} ${styles.Selectr}`}>
-      <div>{label}:</div>
+      <label>{label}:</label>
       <div className={styles.SelectBox}>
         <div>
           <button
