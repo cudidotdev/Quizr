@@ -4,7 +4,6 @@ import { Option, Searchr, Selectr } from "components/forms";
 const QuizSortForm: React.FC = () => {
   return (
     <div className="card-one rad-quart pad-one">
-      <Searchr name="quizSearch" />
       <Selectr name="quizCategory" label="Categories" multiple>
         <Option>Movies</Option>
         <Option>Science</Option>
@@ -13,6 +12,7 @@ const QuizSortForm: React.FC = () => {
         <Option>Culture</Option>
         <Option>Music</Option>
       </Selectr>
+      <Searchr name="quizSearch" />
     </div>
   );
 };
