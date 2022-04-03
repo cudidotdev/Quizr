@@ -17,11 +17,6 @@
   transition: all 200ms linear;
 }
 
-.Cstm label {
-  width: 100%;
-  display: block;
-}
-
 .Cstm .InputBox {
   position: relative;
   display: flex;
