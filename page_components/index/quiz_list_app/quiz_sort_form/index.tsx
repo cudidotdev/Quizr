@@ -13,7 +13,6 @@ const QuizSortForm: React.FC = () => {
         <Option>Culture</Option>
         <Option>Music</Option>
       </Selectr>
-      <Searchr name="quizSearcher" />
     </div>
   );
 };

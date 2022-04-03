@@ -2,6 +2,8 @@
   color: var(--color-grey-one);
   width: 100%;
   max-width: 420px;
+  display: flex;
+  flex-direction: column;
 }
 .Cstm:not(:last-child) {
   padding-bottom: 0.5rem;
