@@ -314,3 +314,8 @@ button:hover {
 .rad-quart {
   border-radius: 0.25rem;
 }
+
+.f-column {
+  display: flex;
+  flex-direction: column;
+}
