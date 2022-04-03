@@ -118,8 +118,9 @@ export const MultipleSelectr: React.FC<selectr> = ({
   const [showOpts, setShowOpts] = useState<boolean>(false);
   return (
     <div className={`${styles.Cstm} ${styles.Selectr}`}>
-      <label>{label}:</label>
+      <label htmlFor={name}>{label}:</label>
       <div className={styles.SelectBox}>
+        <input type="hidden" name={name} id={name} />
         <div>
           <button
             className={`${styles.AddButton} disable-focus-outline`}
