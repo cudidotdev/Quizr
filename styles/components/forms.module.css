@@ -1,17 +1,26 @@
 .Cstm {
   color: var(--color-grey-one);
+  width: 100%;
+  max-width: 420px;
+}
+.Cstm:not(:last-child) {
+  padding-bottom: 0.5rem;
 }
 
 .Cstm:hover,
-.Cstm:focus {
+.Cstm:focus,
+.Cstm.Color {
   color: var(--color-primary-two);
+}
+
+.Cstm * {
+  transition: all 200ms linear;
 }
 
 .Cstm .InputBox {
   position: relative;
   display: flex;
   width: 100%;
-  max-width: 420px;
   align-items: center;
 }
 
@@ -21,6 +30,9 @@
   border-radius: 0.5rem;
   width: 100%;
   display: block;
+}
+.Cstm .InputBox input:focus {
+  box-shadow: var(--shadow-two-c);
 }
 
 .Cstm .InputBox .IconBox {
@@ -38,4 +50,53 @@
 .Cstm .InputBox .IconBox:focus {
   color: var(--color-primary-two);
   background-color: var(--color-primary-transparent);
+}
+
+.Selectr {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+}
+
+.Selectr .SelectBox {
+  padding: 0.25rem 0;
+  position: relative;
+}
+
+.SelectBox .Option {
+  height: 2rem;
+}
+
+.Selectr .SelectBox .AddButton {
+  display: flex;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: var(--color-primary-four);
+  color: var(--color-primary-two);
+  border: none;
+}
+
+.Selectr .SelectBox .AddButton:hover,
+.Selectr .SelectBox .AddButton:focus {
+  box-shadow: var(--shadow-two-b);
+}
+
+.Selectr .SelectBox .OptionBox {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  width: 100%;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  box-shadow: -2px 2px 3px var(--color-primary-transparent),
+    2px 2px 3px var(--color-primary-transparent);
+  background-color: var(--color-white-one);
+  transition: all 500ms linear;
+}
+
+.Selectr .SelectBox .OptionBox.Active {
+  visibility: visible;
+  opacity: 1;
 }

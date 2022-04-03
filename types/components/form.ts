@@ -11,7 +11,7 @@ export type inputr = defaultProps & {
   clickFn?: () => any;
 };
 
-export type searchr = {
+export type searchr = defaultProps & {
   label?: string;
   name: string;
   value?: string | number;
@@ -19,4 +19,13 @@ export type searchr = {
   type?: React.HTMLInputTypeAttribute;
   Icon?: React.FC;
   clickFn?: () => any;
+};
+
+export type selectr = {
+  label?: string;
+  name: string;
+  value?: string | number;
+  onChange?: (...arg: any) => any;
+  multiple?: boolean;
+  linear?: boolean;
 };
