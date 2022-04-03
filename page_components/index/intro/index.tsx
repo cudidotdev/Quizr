@@ -3,7 +3,7 @@ import { TextBlock } from "components/texts";
 
 const Intro: React.FC = () => {
   return (
-    <div className="pad-bottom-one f-column">
+    <div className="pad-bottom-one">
       <TextBlock>
         Hi, welcome to Quizr. Take a quiz and test your knowledge on some
         mind-blowing facts.
