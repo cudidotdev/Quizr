@@ -103,14 +103,6 @@
   background-color: var(--color-primary-one);
 }
 
-/* .MenuContainer.Active .MenuBar span:first-child {
-  transform: translateY(0) rotate(45deg);
-}
-
-.MenuContainer.Active .MenuBar span:last-child {
-  transform: translateY(0) rotate(315deg);
-} */
-
 .Menu {
   position: absolute;
   right: 1rem;
