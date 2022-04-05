@@ -1,12 +1,7 @@
-import {
-  EyeOpenIcon,
-  EyeClosedIcon,
-  SearchIcon,
-  AddIcon,
-} from "components/icons";
-import React, { useEffect, useRef, useState } from "react";
+import { EyeOpenIcon, EyeClosedIcon, SearchIcon } from "components/icons";
+import React, { useRef, useState } from "react";
 import styles from "styles/components/forms.module.css";
-import type { inputr, searchr, selectr } from "types/components/form";
+import type { inputr, searchr } from "types/components/form";
 
 export const Inputr: React.FC<inputr> = ({
   label,
@@ -98,42 +93,5 @@ export const Passwordr: React.FC<searchr> = ({
   );
 };
 
-export const Selectr: React.FC<selectr> = ({
-  label,
-  name,
-  multiple,
-  onChange = () => {},
-}) => {
-  if (multiple)
-    return <MultipleSelectr label={label} name={name} onChange={onChange} />;
-  return <></>;
-};
-
-export const MultipleSelectr: React.FC<selectr> = ({
-  label,
-  name,
-  onChange = () => {},
-  children,
-}) => {
-  const [showOpts, setShowOpts] = useState<boolean>(false);
-  return (
-    <div className={`${styles.Cstm} ${styles.Selectr}`}>
-      <div>{label}:</div>
-      <div className={styles.SelectBox}>
-        <div>
-          <button
-            className={`${styles.AddButton} disable-focus-outline`}
-            onClick={() => setShowOpts((prev) => !prev)}
-          >
-            <AddIcon />
-          </button>
-        </div>
-        <div className={`${styles.OptionBox} ${showOpts ? styles.Active : ""}`}>
-          {children}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export const Option: React.FC = () => <></>;
+export { default as Selectr } from "./selectr";
+export { Option } from "./selectr";

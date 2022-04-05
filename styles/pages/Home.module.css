@@ -1,0 +1,29 @@
+.SortForm {
+  padding: 1rem 0.5rem;
+  border-radius: 0.25rem;
+  box-shadow: var(--shadow-one);
+}
+
+.SearchAndCategoryBox {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+.SearchAndCategoryBox > div {
+  width: 100%;
+  padding: 0 0.5rem;
+}
+
+.SearchAndCategoryBox > div:not(:last-child) {
+  padding-bottom: 0.5rem;
+}
+
+.SortBox {
+  padding: 0 0.5rem;
+}
+
+@media screen and (min-width: 768px) {
+  .SearchAndCategoryBox {
+    flex-direction: row;
+  }
+}

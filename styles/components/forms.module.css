@@ -12,7 +12,7 @@
 .Cstm:hover,
 .Cstm:focus,
 .Cstm.Color {
-  color: var(--color-primary-two);
+  color: var(--color-primary-one);
 }
 
 .Cstm * {
@@ -50,50 +50,137 @@
 }
 .Cstm .InputBox .IconBox:hover,
 .Cstm .InputBox .IconBox:focus {
-  color: var(--color-primary-two);
+  color: var(--color-primary-one);
   background-color: var(--color-primary-transparent);
 }
 
-.Selectr {
+.MultipleSelectr {
   width: 100%;
   max-width: 420px;
   display: flex;
   flex-direction: column;
 }
 
-.Selectr .SelectBox {
-  padding: 0.25rem 0;
+.MultipleSelectr .SelectBox {
+  padding: 0.25rem 0 0;
   position: relative;
 }
 
-.SelectBox .Option {
-  height: 2rem;
+.MultipleSelectr .ChosenBox {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
-.Selectr .SelectBox .AddButton {
-  display: flex;
+.MultipleSelectr .Chosen {
+  display: inline-flex;
+  padding: 0.25rem 0.5rem;
+  background-color: var(--color-primary-transparent);
+  color: var(--color-primary-one);
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.95rem;
+}
+
+.MultipleSelectr .AddButton {
+  display: inline-flex;
+  flex-grow: 0;
+  flex-shrink: 0;
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
-  background-color: var(--color-primary-four);
-  color: var(--color-primary-two);
+  background-color: transparent;
+  color: var(--color-primary-one);
   border: none;
+  padding: 0.25rem;
 }
 
-.Selectr .SelectBox .OptionBox {
+.MultipleSelectr .AddButton:hover {
+  background-color: var(--color-primary-transparent);
+}
+
+.MultipleSelectr .RemoveButton {
+  display: flex;
+  height: 1.5rem;
+  width: 1.5rem;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+  background-color: transparent;
+  color: var(--color-primary-two);
+  border: none;
+  border-radius: 0.25rem;
+}
+
+.MultipleSelectr .RemoveButton:hover {
+  color: var(--color-primary-one);
+  background-color: var(--color-primary-transparent);
+}
+
+.MultipleSelectr .OptionBox {
   position: absolute;
   visibility: hidden;
   opacity: 0;
   width: 100%;
   padding: 1rem;
-  margin-top: 0.5rem;
   box-shadow: -2px 2px 3px var(--color-primary-transparent),
     2px 2px 3px var(--color-primary-transparent);
   background-color: var(--color-white-one);
   transition: all 300ms linear;
+  max-height: 200px;
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  z-index: 5;
+}
+.MultipleSelectr .OptionBox::-webkit-scrollbar {
+  display: none;
 }
 
-.Selectr .SelectBox .OptionBox.Active {
+.MultipleSelectr .OptionBox.Active {
   visibility: visible;
   opacity: 1;
+}
+
+.MultipleSelectr .MultipleOption {
+  display: inline-flex;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  border: none;
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
+  font-size: 0.95rem;
+  background-color: var(--color-grey-three);
+  color: var(--color-black-three);
+}
+
+.MultipleSelectr .MultipleOption:hover {
+  color: var(--color-primary-two);
+}
+
+.MultipleSelectr .MultipleOption.Selected {
+  color: var(--color-primary-one);
+  background-color: var(--color-primary-transparent);
+}
+
+.LinearSelectr .Option {
+  display: inline-flex;
+  padding: 0.25rem 0.5rem;
+  border: none;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: var(--color-grey-three);
+  color: var(--color-black-three);
+  font-size: 0.95rem;
+}
+
+.LinearSelectr .Option.Selected {
+  background-color: var(--color-primary-transparent);
+  color: var(--color-primary-one);
+}
+
+.LinearSelectr .Option:hover {
+  color: var(--color-primary-two);
 }

@@ -75,6 +75,7 @@
   -webkit-text-size-adjust: none;
   -ms-text-size-adjust: none;
   -webkit-tap-highlight-color: transparent;
+  line-height: 1.5rem;
 }
 
 html,
@@ -105,15 +106,15 @@ button.disable-focus-outline:focus {
 button {
   cursor: pointer;
 }
-
 input {
-  font-size: inherit;
+  line-height: 1.25rem;
 }
 
 input,
 button {
   color: inherit;
   font-family: inherit;
+  font-size: inherit;
 }
 input:focus,
 input:active,
@@ -130,6 +131,8 @@ button:hover {
   --color-black-two: rgb(75, 75, 75);
   --color-black-three: rgb(125, 125, 125);
   --color-grey-one: rgb(150, 150, 150);
+  --color-grey-two: rgb(200, 200, 200);
+  --color-grey-three: rgb(240, 240, 240);
   --color-primary-one: rgb(81, 149, 251);
   --color-primary-two: rgb(113, 173, 255);
   --color-primary-three: rgb(132, 186, 255);
@@ -178,6 +181,10 @@ button:hover {
 
 .pad-bottom-one {
   padding-bottom: 1rem;
+}
+
+.pad-half {
+  padding: 0.5rem;
 }
 
 /*#endregion padding*/

@@ -126,7 +126,12 @@ export const EyeClosedIcon: React.FC = () => (
 );
 
 export const AddIcon: React.FC = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="100%"
+    height="100%"
+    viewBox="0 0 512 512"
+  >
     <path
       fill="none"
       stroke="currentColor"
@@ -134,6 +139,19 @@ export const AddIcon: React.FC = () => (
       strokeLinejoin="round"
       strokeWidth="32"
       d="M256 112v288M400 256H112"
+    />
+  </svg>
+);
+
+export const CloseIcon: React.FC = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+    <path
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="32"
+      d="M368 368L144 144M368 144L144 368"
     />
   </svg>
 );
