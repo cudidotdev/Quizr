@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
-  username: String,
-  email: String,
+  username: { type: String, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
   profilePicture: String,
-  password: String,
-  createdAt: Date,
+  admin: Boolean,
+  createdAt: { type: Date, default: () => Date.now() },
 });
 
 export default mongoose.models.User ||

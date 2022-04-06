@@ -25,10 +25,22 @@ function validateUsername(username: string) {
 function validateEmail(email: string) {
   if (!email || !email.length)
     throw new ApiError("email", "Oops, an email is required");
-  if (email.length > 128)
+  if (email.length > 256)
     throw new ApiError(
       "email",
       "Opps an email cannot be more than 128 characters"
+    ); //e@
+  if (email.match(/@/g)?.length !== 1)
+    throw new ApiError("email", "An email should contain one @");
+  if (email.length < 3)
+    throw new ApiError(
+      "email",
+      "An email is supposed to have at least 3 characters"
+    );
+  if (!/[\w|\-|&|.|+|/|(|)|]+@[\w|\-|&|.|+|]+/.test(email))
+    throw new ApiError(
+      "email",
+      "Sorry, the email you provided either contains unaccepted characters or is in a wrong format"
     );
 }
 
@@ -45,6 +57,10 @@ function validatePassword(password: string, confirmPassword: string) {
       "password",
       "Your password should be less than 64 characters"
     );
+  if (!confirmPassword || !confirmPassword.length)
+    throw new ApiError("confirmPassword", "Please confirm your password");
+  if (confirmPassword !== password)
+    throw new ApiError("confirmPassword", "Passwords doesn't match");
 }
 
 export default validate;
