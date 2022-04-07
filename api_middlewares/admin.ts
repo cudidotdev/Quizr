@@ -6,8 +6,8 @@ export async function restrictToAdmins(req: NextApiRequestX) {
   await attachUser(req);
   if (!req.user?.isAdmin)
     throw new ApiError(
-      "user",
+      "forbidden",
       "This user cannot perform this kind of operations",
-      401
+      403
     );
 }

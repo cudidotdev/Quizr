@@ -34,5 +34,16 @@ export async function getAllQuizDrafts({
   return await QuizDraft.find({})
     .sort(sort)
     .limit(+limit)
-    .skip((page - 1) * limit);
+    .skip((page - 1) * limit)
+    .lean();
+}
+
+export async function modifyQuizDraft({ id, body }: { id: any; body: any }) {
+  return await QuizDraft.findByIdAndUpdate(
+    id,
+    { ...body, lastModified: Date.now() },
+    {
+      new: true,
+    }
+  ).lean();
 }

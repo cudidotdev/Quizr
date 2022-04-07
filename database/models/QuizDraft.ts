@@ -1,24 +1,19 @@
 import mongoose from "mongoose";
 
-const QuestionDraftSchema = new mongoose.Schema({
-  question: String,
-  index: Number,
-  options: [
-    {
-      option: String,
-      index: Number,
-      isCorrect: Boolean,
-    },
-  ],
-});
-
 const QuizDraftSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: String,
-  categories: String,
-  questions: [QuestionDraftSchema],
+  categories: [String],
+  questions: [
+    {
+      question: String,
+      index: Number,
+      options: { A: String, B: String, C: String, D: String },
+      answer: { type: String, enum: ["A", "B", "C", "D"] },
+    },
+  ],
   createdAt: { type: Date, default: () => Date.now() },
-  modifiedAt: Date,
+  lastModified: Date,
 });
 
 export default mongoose.models.QuizDraft ||
