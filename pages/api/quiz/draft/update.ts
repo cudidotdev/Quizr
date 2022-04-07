@@ -7,8 +7,8 @@ import { modifyError, modifyQuizDraft } from "api_utils";
 
 const handler: NextApiHandlerX = async (req, res) => {
   await connectDB();
-  try {
-    if (req.method === "PUT") {
+  if (req.method === "PUT") {
+    try {
       await restrictToAdmins(req);
 
       const { id } = req.query;
@@ -18,13 +18,13 @@ const handler: NextApiHandlerX = async (req, res) => {
       const data = await modifyQuizDraft({ id, body });
 
       return res.status(200).json({ success: true, data });
+    } catch (error: any) {
+      console.log(error);
+      const { name, message, status } = modifyError(error);
+      return res
+        .status(status)
+        .json({ success: false, error: { name, message } });
     }
-  } catch (error: any) {
-    console.log(error);
-    const { name, message, status } = modifyError(error);
-    return res
-      .status(status)
-      .json({ success: false, error: { name, message } });
   }
 
   return res.status(405).json({

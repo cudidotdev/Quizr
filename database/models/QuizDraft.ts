@@ -6,6 +6,7 @@ const QuizDraftSchema = new mongoose.Schema({
   categories: [String],
   questions: [
     {
+      _id: false,
       question: String,
       index: Number,
       options: { A: String, B: String, C: String, D: String },
