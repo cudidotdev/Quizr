@@ -1,16 +1,18 @@
-import { User } from "database/models";
-import type { NextApiHandler } from "next";
-import validateCredentials from "validators/user/create";
+import { NextApiHandlerX } from "types/next";
+import { restrictToAdmins } from "api_middlewares";
 import connectDB from "database/connect";
-import { modifyError } from "api_utils";
+import { QuizDraft } from "database/models";
+import { generateUniqueQuizTitle, modifyError } from "api_utils";
 
-const handler: NextApiHandler = async (req, res) => {
+const handler: NextApiHandlerX = async (req, res) => {
   await connectDB();
   if (req.method === "POST") {
     try {
-      const userCredentials = await validateCredentials(req.body);
-      await User.create(userCredentials);
-      return res.status(201).json({ success: true });
+      await restrictToAdmins(req);
+      const title = await generateUniqueQuizTitle();
+      const draft = await QuizDraft.create({ title });
+
+      return res.status(201).json({ success: true, data: draft });
     } catch (error: any) {
       console.log(error);
       const { name, message, status } = modifyError(error);

@@ -75,17 +75,8 @@ const MultipleSelectr: React.FC<multiSelectr> = ({
 
   function toggleSelection(value: string | number) {
     setSelected((prev) => {
-      //adds to selected
       if (!prev.includes(value)) return [...prev, value];
-      //removes from selected
-      else {
-        const prevCopy = prev.slice(); //shallow copy the previous state
-        prevCopy.splice(
-          prev.findIndex((val) => val === value),
-          1
-        );
-        return prevCopy;
-      }
+      return prev.filter((val) => val !== value);
     });
   }
 
@@ -244,17 +235,8 @@ const LinearMultipleSelectr: React.FC<multiSelectr> = ({
 
   function toggleSelection(value: string | number) {
     setSelected((prev) => {
-      //adds to selected
       if (!prev.includes(value)) return [...prev, value];
-      //removes from selected
-      else {
-        const prevCopy = prev.slice(); //shallow copy the previous state
-        prevCopy.splice(
-          prev.findIndex((val) => val === value),
-          1
-        );
-        return prevCopy;
-      }
+      return prev.filter((val) => val !== value);
     });
   }
 
