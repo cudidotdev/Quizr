@@ -21,7 +21,8 @@ const QuizSchema = new mongoose.Schema({
   },
   createdAt: { type: Date, default: () => Date.now() },
   lastModified: Date,
-  numberOfCompleted: Number,
+  currentlyOnEdit: Boolean,
+  editId: mongoose.Schema.Types.ObjectId,
 });
 
 export default mongoose.models.Quiz ||

@@ -74,7 +74,7 @@ function validateQuestions(questions: Array<any>, final: any) {
 
     if (question) {
       if (typeof question !== "string")
-        throw new ApiError("question", "The question should be a string");
+        throw new ApiError("questions", "The question should be a string");
 
       question = question.trim();
 
@@ -109,7 +109,7 @@ function validateQuestions(questions: Array<any>, final: any) {
       for (let option in options) {
         if (!validOptions.includes(option))
           throw new ApiError(
-            "question",
+            "questions",
             "The option object should have keys in form A, B, C and D",
             400
           );

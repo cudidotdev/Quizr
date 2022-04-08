@@ -15,6 +15,7 @@ const QuizDraftSchema = new mongoose.Schema({
   ],
   createdAt: { type: Date, default: () => Date.now() },
   lastModified: Date,
+  ogFile: mongoose.Schema.Types.ObjectId,
 });
 
 export default mongoose.models.QuizDraft ||

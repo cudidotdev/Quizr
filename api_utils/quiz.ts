@@ -1,4 +1,4 @@
-import { QuizDraft } from "database/models";
+import { QuizDraft, Quiz } from "database/models";
 
 export async function generateUniqueQuizTitle() {
   const Untitleds = await QuizDraft.find({
@@ -21,8 +21,21 @@ export async function generateUniqueQuizTitle() {
   return `Untitled_${+numOfLastUntitled + 1}`;
 }
 
+export async function getQuizById(id: any) {
+  return await Quiz.findById(id).lean();
+}
+
 export async function getQuizDraftById(id: any) {
   return await QuizDraft.findById(id).lean();
+}
+
+export async function getAllQuizes({ sort = "", limit = 0, page = 1 }: any) {
+  page = page > 1 ? Math.floor(page) : 1;
+  return await Quiz.find({})
+    .sort(sort)
+    .limit(+limit)
+    .skip((page - 1) * limit)
+    .lean();
 }
 
 export async function getAllQuizDrafts({

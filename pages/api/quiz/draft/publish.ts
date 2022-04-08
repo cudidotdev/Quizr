@@ -16,12 +16,19 @@ const handler: NextApiHandlerX = async (req, res) => {
       if (!id)
         throw new ApiError("id", "Please insert quiz id in the query", 400);
 
-      let quiz = await getQuizDraftById(id);
-      quiz = validateQuiz(quiz);
-      await Quiz.create(quiz);
-      await QuizDraft.findByIdAndDelete(id);
+      const _quiz = await getQuizDraftById(id);
+      let quiz = validateQuiz(_quiz);
 
-      return res.status(200).json({ success: true });
+      /* the ogfile prop signifies that is was from an already published quiz */
+      if (_quiz.ogFile)
+        quiz = await Quiz.findByIdAndUpdate(_quiz.ogFile, {
+          ...quiz,
+          $unset: { currentlyOnEdit: "", editId: "" },
+        });
+      else quiz = await Quiz.create(quiz);
+
+      await QuizDraft.findByIdAndDelete(id);
+      return res.status(201).json({ success: true, data: { id: quiz._id } });
     } catch (error: any) {
       console.log(error);
       const { name, message, status } = modifyError(error);
