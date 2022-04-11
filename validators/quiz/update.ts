@@ -2,12 +2,12 @@ import ApiError from "errors/api";
 
 export async function validateBody(body: any) {
   const final: any = {};
-  const { title, categories, questions, description } = body;
+  const { title, categories, questions, introText } = body;
 
   if (title) validateTitle(title, final);
   if (categories) validateCategories(categories, final);
   if (questions) validateQuestions(questions, final);
-  if (description) validateDescription(description, final);
+  if (introText) validateIntroText(introText, final);
 
   return final;
 }
@@ -156,20 +156,20 @@ function validateQuestions(questions: Array<any>, final: any) {
   final.questions = questions;
 }
 
-function validateDescription(description: string, final: any) {
-  if (typeof description !== "string")
+function validateIntroText(introText: string, final: any) {
+  if (typeof introText !== "string")
     throw new ApiError(
       "description",
       "The description should be a string",
       400
     );
 
-  if (description.length > 1024)
+  if (introText.length > 1024)
     throw new ApiError(
       "description",
       "The description should not exceed 1024 characters",
       400
     );
 
-  final.description = description;
+  final.introText = introText;
 }

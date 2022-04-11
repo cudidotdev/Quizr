@@ -2,10 +2,10 @@ import ApiError from "errors/api";
 
 export function validateQuiz(quiz: any) {
   const final: any = {};
-  const { title, description, categories, questions } = quiz;
+  const { title, introText, categories, questions } = quiz;
 
   validateTitle(title, final);
-  validateDescription(description, final);
+  validateIntroText(introText, final);
   validateCategories(categories, final);
   validateQuestions(questions, final);
 
@@ -19,15 +19,15 @@ function validateTitle(title: string, final: any) {
   final.title = title;
 }
 
-function validateDescription(description: string, final: any) {
-  if (!description)
+function validateIntroText(introText: string, final: any) {
+  if (!introText)
     throw new ApiError(
       "description",
       "A description for the quiz is required",
       400
     );
 
-  final.description = description;
+  final.introText = introText;
 }
 
 function validateCategories(categories: string[], final: any) {

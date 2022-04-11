@@ -23,6 +23,7 @@ const handler: NextApiHandlerX = async (req, res) => {
       if (_quiz.ogFile)
         quiz = await Quiz.findByIdAndUpdate(_quiz.ogFile, {
           ...quiz,
+          lastModified: Date.now(),
           $unset: { currentlyOnEdit: "", editId: "" },
         });
       else quiz = await Quiz.create(quiz);

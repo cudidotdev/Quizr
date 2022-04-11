@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const QuizDraftSchema = new mongoose.Schema({
   title: { type: String, required: true },
-  description: String,
+  introText: String,
   categories: [String],
   questions: [
     {
