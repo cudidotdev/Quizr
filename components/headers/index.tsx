@@ -37,7 +37,7 @@ const Header: React.FC = () => {
     <header className={styles.Header}>
       <nav className={`site-width ${styles.Padder}`}>
         <Linkr
-          _className={`${styles.IconTextContainer} ${styles.LogoContainer}`}
+          className={`${styles.IconTextContainer} ${styles.LogoContainer}`}
           href="/"
         >
           <Logo />
@@ -47,15 +47,15 @@ const Header: React.FC = () => {
         </Linkr>
         {width > 600 ? (
           <div>
-            <Linkr _className={`${styles.IconTextContainer}`} href="/board">
+            <Linkr className={`${styles.IconTextContainer}`} href="/board">
               <PodiumIcon />
               <div className={`${styles.IconText}`}>LeaderBoards</div>
             </Linkr>
-            <Linkr _className={`${styles.IconTextContainer}`} href="/help">
+            <Linkr className={`${styles.IconTextContainer}`} href="/help">
               <HelpIcon />
               <div className={`${styles.IconText}`}>Help</div>
             </Linkr>
-            <Linkr _className={`${styles.IconTextContainer}`} href="/in">
+            <Linkr className={`${styles.IconTextContainer}`} href="/in">
               <UserIcon />
               <div className={`${styles.IconText}`}>Login</div>
             </Linkr>
@@ -72,15 +72,15 @@ const Header: React.FC = () => {
               <span></span>
             </button>
             <div className={styles.Menu}>
-              <Linkr _className={`${styles.IconTextContainer}`} href="/board">
+              <Linkr className={`${styles.IconTextContainer}`} href="/board">
                 <PodiumIcon />
                 <div className={`${styles.IconText}`}>LeaderBoards</div>
               </Linkr>
-              <Linkr _className={`${styles.IconTextContainer}`} href="/help">
+              <Linkr className={`${styles.IconTextContainer}`} href="/help">
                 <HelpIcon />
                 <div className={`${styles.IconText}`}>Help</div>
               </Linkr>
-              <Linkr _className={`${styles.IconTextContainer}`} href="/in">
+              <Linkr className={`${styles.IconTextContainer}`} href="/in">
                 <UserIcon />
                 <div className={`${styles.IconText}`}>Login</div>
               </Linkr>

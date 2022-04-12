@@ -1,19 +1,10 @@
 import { EyeOpenIcon, EyeClosedIcon, SearchIcon } from "components/icons";
 import React, { useRef, useState } from "react";
 import styles from "styles/components/forms.module.css";
-import type { inputr, searchr } from "types/components/form";
+import type { inputr, submitr } from "types/components/form";
 
-export const Inputr: React.FC<inputr> = ({
-  label,
-  name,
-  value,
-  onChange,
-  type = "text",
-  Icon,
-  clickFn,
-  passProps = {},
-  required,
-}) => {
+export const Inputr: React.FC<inputr> = (props) => {
+  const { label = "", name, onChange, type = "text", Icon, clickFn } = props;
   const cstm = useRef<HTMLDivElement>(null);
 
   return (
@@ -21,21 +12,19 @@ export const Inputr: React.FC<inputr> = ({
       <label htmlFor={name}>{label}</label>
       <div className={`${styles.InputBox}`}>
         <input
-          autoComplete="off"
+          {...props}
+          autoComplete={props.autoComplete || "off"}
           type={type}
           id={name}
           name={name}
-          value={value}
           onChange={(ev: any) => onChange && onChange(ev.target.value)}
           onFocus={() => cstm.current?.classList.add(styles.Color)}
           onBlur={() => cstm.current?.classList.remove(styles.Color)}
-          {...passProps}
-          required={required}
         />
         {!!Icon && (
           <button
             type="button"
-            className={`${styles.IconBox} disable-focus-outline`}
+            className={`${styles.IconBox}  disable-focus-outline `}
             onClick={() => clickFn && clickFn()}
           >
             <Icon />
@@ -46,72 +35,46 @@ export const Inputr: React.FC<inputr> = ({
   );
 };
 
-export const Searchr: React.FC<searchr> = ({
-  label = "Search",
-  name,
-  value,
-  onChange,
-  clickFn,
-  passProps = {},
-  required,
-}) => (
-  <Inputr
-    label={label}
-    name={name}
-    value={value}
-    onChange={onChange}
-    Icon={SearchIcon}
-    clickFn={clickFn}
-    passProps={{
-      ...passProps,
-      onKeyDown: (ev: any) => ev.key === "Enter" && clickFn && clickFn(),
-    }}
-    required
-  />
-);
+export const Searchr: React.FC<inputr> = (props) => {
+  const { label = "Search", clickFn } = props;
+  return (
+    <Inputr
+      {...props}
+      label={label}
+      Icon={SearchIcon}
+      clickFn={clickFn}
+      onKeyDown={(ev: any) => ev.key === "Enter" && clickFn && clickFn()}
+    />
+  );
+};
 
-export const Passwordr: React.FC<searchr> = ({
-  label = "Password",
-  name,
-  value,
-  onChange,
-  passProps = {},
-  clickFn = () => {},
-  required,
-}) => {
+export const Passwordr: React.FC<inputr> = (props) => {
+  const { label = "Password" } = props;
   const [visible, setVisible] = useState<boolean>(false);
 
-  function _clickFn() {
-    clickFn();
+  function clickFn() {
     setVisible((visibility) => !visibility);
   }
 
   return (
     <Inputr
+      {...props}
       label={label}
       type={visible ? "text" : "password"}
-      name={name}
-      value={value}
-      onChange={onChange}
       Icon={visible ? EyeClosedIcon : EyeOpenIcon}
-      clickFn={_clickFn}
-      passProps={passProps}
-      required
+      clickFn={clickFn}
     />
   );
 };
 
-export const Sumbitr: React.FC<
-  React.ButtonHTMLAttributes<HTMLButtonElement>
-> = ({ children, form = "", disabled }) => {
+export const Submitr: React.FC<submitr> = (props) => {
   return (
     <button
+      {...props}
       type="submit"
-      form={form}
-      className={`${styles.Cstm} ${styles.Submit}`}
-      disabled={disabled}
+      className={`${styles.Cstm} ${styles.Submit} ${props.className}`}
     >
-      {children}
+      {props.children}
     </button>
   );
 };

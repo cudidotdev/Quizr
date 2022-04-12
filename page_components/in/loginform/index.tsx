@@ -1,4 +1,4 @@
-import { Inputr, Passwordr, Sumbitr } from "components/forms";
+import { Inputr, Passwordr, Submitr } from "components/forms";
 import { Linkr } from "components/links";
 import { TripleSquareLoader } from "components/loaders";
 import React, { useRef, useEffect, useState } from "react";
@@ -79,17 +79,17 @@ const LoginForm: React.FC = () => {
         </div>
         <div className={styles.InputBox}>
           {!loading ? (
-            <Sumbitr form="loginForm">Log in</Sumbitr>
+            <Submitr form="loginForm">Log in</Submitr>
           ) : (
-            <Sumbitr disabled>
+            <Submitr disabled>
               Logging in <TripleSquareLoader />
-            </Sumbitr>
+            </Submitr>
           )}
         </div>
       </form>
       <div className={styles.footer}>
         <p>Don&apos;t have an account?</p>
-        <Linkr _className={styles.link}>Create account</Linkr>
+        <Linkr className={styles.link}>Create account</Linkr>
       </div>
     </div>
   );

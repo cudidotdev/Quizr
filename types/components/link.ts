@@ -1,5 +1,7 @@
-import type { defaultProps } from "types/app";
+import React from "react";
 
-export type linkr = defaultProps & {
-  href?: string;
-};
+export interface linkr
+  extends React.DetailedHTMLProps<
+    React.AnchorHTMLAttributes<HTMLAnchorElement>,
+    HTMLAnchorElement
+  > {}
