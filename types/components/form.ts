@@ -9,6 +9,7 @@ export type inputr = defaultProps & {
   type?: React.HTMLInputTypeAttribute;
   Icon?: React.FC;
   clickFn?: () => any;
+  required?: boolean;
 };
 
 export type searchr = defaultProps & {
@@ -19,6 +20,7 @@ export type searchr = defaultProps & {
   type?: React.HTMLInputTypeAttribute;
   Icon?: React.FC;
   clickFn?: () => any;
+  required?: boolean;
 };
 
 export type selectValue = string | number | Array<string | number>;

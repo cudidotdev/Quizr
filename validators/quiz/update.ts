@@ -87,7 +87,7 @@ function validateQuestions(questions: Array<any>, final: any) {
     }
 
     if (index) {
-      if (!(index > 0) || !(index < 11) || !Number.isInteger(index))
+      if (index < 1 || index > 10 || !Number.isInteger(index))
         throw new ApiError(
           "questions",
           "The question index should be integers from 1 to 10"

@@ -12,12 +12,13 @@ export const Inputr: React.FC<inputr> = ({
   Icon,
   clickFn,
   passProps = {},
+  required,
 }) => {
   const cstm = useRef<HTMLDivElement>(null);
 
   return (
     <div className={`${styles.Cstm}`} ref={cstm}>
-      <label htmlFor={name}>{label}:</label>
+      <label htmlFor={name}>{label}</label>
       <div className={`${styles.InputBox}`}>
         <input
           autoComplete="off"
@@ -29,9 +30,11 @@ export const Inputr: React.FC<inputr> = ({
           onFocus={() => cstm.current?.classList.add(styles.Color)}
           onBlur={() => cstm.current?.classList.remove(styles.Color)}
           {...passProps}
+          required={required}
         />
         {!!Icon && (
           <button
+            type="button"
             className={`${styles.IconBox} disable-focus-outline`}
             onClick={() => clickFn && clickFn()}
           >
@@ -50,6 +53,7 @@ export const Searchr: React.FC<searchr> = ({
   setValue,
   clickFn,
   passProps = {},
+  required,
 }) => (
   <Inputr
     label={label}
@@ -62,6 +66,7 @@ export const Searchr: React.FC<searchr> = ({
       ...passProps,
       onKeyDown: (ev: any) => ev.key === "Enter" && clickFn && clickFn(),
     }}
+    required
   />
 );
 
@@ -72,6 +77,7 @@ export const Passwordr: React.FC<searchr> = ({
   setValue,
   passProps = {},
   clickFn = () => {},
+  required,
 }) => {
   const [visible, setVisible] = useState<boolean>(false);
 
@@ -83,13 +89,29 @@ export const Passwordr: React.FC<searchr> = ({
   return (
     <Inputr
       label={label}
+      type={visible ? "text" : "password"}
       name={name}
       value={value}
       setValue={setValue}
       Icon={visible ? EyeClosedIcon : EyeOpenIcon}
       clickFn={_clickFn}
       passProps={passProps}
+      required
     />
+  );
+};
+
+export const Sumbitr: React.FC<
+  React.ButtonHTMLAttributes<HTMLButtonElement>
+> = ({ children, form = "" }) => {
+  return (
+    <button
+      type="submit"
+      form={form}
+      className={`${styles.Cstm} ${styles.Submit}`}
+    >
+      {children}
+    </button>
   );
 };
 

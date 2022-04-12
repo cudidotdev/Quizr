@@ -104,13 +104,13 @@ const MultipleSelectr: React.FC<multiSelectr> = ({
       tabIndex={-1}
       ref={selectr}
     >
-      <div>{label}:</div>
+      <div>{label}</div>
       <div className={styles.SelectBox} tabIndex={-1}>
         <div className={styles.ChosenBox} tabIndex={-1}>
           {/* --the code below renders elements to the chosenbox based on the num of selected options*/}
           {selected.length === 0 ? (
             <span className={styles.Chosen} style={{ cursor: "pointer" }}>
-              None
+              Unspecified
             </span>
           ) : selected.length === numOfOptions ? (
             <span className={styles.Chosen}>All</span>
@@ -194,7 +194,7 @@ const LinearSelectr: React.FC<selectr> = ({
 
   return (
     <div className={`${styles.Cstm} ${styles.LinearSelectr}`}>
-      <div>{label}:</div>
+      <div>{label}</div>
       <div className={styles.SelectBox}>
         {React.Children.map(children, (child) => (
           <LinearOption
@@ -246,7 +246,7 @@ const LinearMultipleSelectr: React.FC<multiSelectr> = ({
 
   return (
     <div className={`${styles.Cstm} ${styles.LinearSelectr}`}>
-      <div>{label}:</div>
+      <div>{label}</div>
       <div className={styles.SelectBox}>
         {React.Children.map(children, (child) => (
           <LinearOption
@@ -299,7 +299,7 @@ const DefaultSelectr: React.FC<selectr> = ({
       tabIndex={-1}
       ref={selectr}
     >
-      <div>{label}:</div>
+      <div>{label}</div>
       <div className={styles.SelectBox} tabIndex={-1}>
         <div className={styles.ChosenBox} tabIndex={-1}>
           {!!selected ? (

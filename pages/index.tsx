@@ -4,7 +4,7 @@ import { Intro, QuizListApp } from "page_components/index";
 
 const Home: NextPageWithLayout = () => {
   return (
-    <main className="content-width pad-one">
+    <main className="site-width pad-one">
       <Intro />
       <QuizListApp />
     </main>

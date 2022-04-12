@@ -107,7 +107,7 @@ button {
   cursor: pointer;
 }
 input {
-  line-height: 1.25rem;
+  line-height: 1.375rem;
 }
 
 input,
@@ -129,7 +129,7 @@ button:hover {
   --color-white-one: rgb(253, 253, 255);
   --color-black-one: rgb(50, 50, 50);
   --color-black-two: rgb(75, 75, 75);
-  --color-black-three: rgb(125, 125, 125);
+  --color-black-three: rgb(100, 100, 100);
   --color-grey-one: rgb(150, 150, 150);
   --color-grey-two: rgb(200, 200, 200);
   --color-grey-three: rgb(240, 240, 240);
@@ -144,16 +144,17 @@ button:hover {
   --shadow-one: 0 0px 3px rgba(50, 50, 50, 0.2);
   --shadow-two: 0 0px 3px rgba(81, 149, 251, 0.5);
   --shadow-two-b: 0 0px 2px rgba(81, 149, 251, 0.5);
-  --shadow-two-c: 0 0px 3px rgba(81, 149, 251, 0.3);
+  --shadow-two-c: 0 0px 3px rgba(81, 149, 251, 0.5);
   --shadow-three: 0 0px 3px rgba(130, 252, 150, 0.5);
   --shadow-bottom-one: 0 1px 2px rgba(50, 50, 50, 0.2);
 
   --site-width: 1280px;
   --content-width: 900px;
+  --box-width: 420px;
 
   min-height: 100vh;
   background-color: var(--color-white-one);
-  color: var(--color-black-one);
+  color: var(--color-black-two);
   font-size: 0.95rem;
 }
 
@@ -168,6 +169,12 @@ button:hover {
 .content-width {
   width: 100%;
   max-width: var(--content-width);
+  margin: 0 auto;
+}
+
+.box-width {
+  width: 100%;
+  max-width: var(--box-width);
   margin: 0 auto;
 }
 

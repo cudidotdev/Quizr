@@ -1,5 +1,5 @@
 .Cstm {
-  color: var(--color-grey-one);
+  color: var(--color-black-three);
   width: 100%;
   max-width: 420px;
   display: flex;
@@ -11,10 +11,21 @@
 
 .Cstm:hover,
 .Cstm:focus,
-.Cstm.Color {
+.Cstm.Color,
+.Cstm:hover label,
+.Cstm:focus label,
+.Cstm.Color label {
   color: var(--color-primary-one);
 }
 
+.Cstm:hover .InputBox input,
+.Cstm:focus .InputBox input,
+.Cstm.Color .InputBox input {
+  color: var(--color-primary-one);
+  border: 1px solid var(--color-primary-one);
+}
+
+.Cstm,
 .Cstm * {
   transition: all 200ms linear;
 }
@@ -28,7 +39,8 @@
 
 .Cstm .InputBox input {
   padding: 0.375rem 0.5rem;
-  border: 1px solid currentColor;
+  color: var(--color-black-three);
+  border: 1px solid var(--color-grey-two);
   border-radius: 0.5rem;
   width: 100%;
   display: block;
@@ -48,11 +60,32 @@
   border-radius: 50%;
   background-color: transparent;
   border: none;
+  color: var(--color-grey-one);
 }
 .Cstm .InputBox .IconBox:hover,
 .Cstm .InputBox .IconBox:focus {
   color: var(--color-primary-one);
   background-color: var(--color-primary-transparent);
+}
+
+.Cstm.Submit {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 0.375rem 1rem;
+  line-height: 1.5rem;
+  background-color: var(--color-primary-one);
+  border: none;
+  color: var(--color-white-one);
+  justify-content: center;
+  text-align: center;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+.Cstm.Submit:hover {
+  background-color: var(--color-primary-two);
+  box-shadow: 0 2px 5px var(--color-primary-transparent);
 }
 
 .MultipleSelectr {

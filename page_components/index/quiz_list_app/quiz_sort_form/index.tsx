@@ -4,7 +4,7 @@ import styles from "styles/pages/Home.module.css";
 
 const QuizSortForm: React.FC = () => {
   return (
-    <div className={styles.SortForm}>
+    <div className={`${styles.SortForm} content-width`}>
       <div className={styles.SearchAndCategoryBox}>
         <div>
           <Searchr

@@ -7,6 +7,10 @@ const UserSchema = new mongoose.Schema({
   profilePicture: String,
   isAdmin: Boolean,
   createdAt: { type: Date, default: () => Date.now() },
+  quizStarted: [],
+  quizTaking: [
+    { _id: false, quizId: mongoose.Schema.Types.ObjectId, timeStarted: Date },
+  ],
 });
 
 export default mongoose.models.User ||

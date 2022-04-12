@@ -60,3 +60,18 @@ export async function modifyQuizDraft({ id, body }: { id: any; body: any }) {
     }
   ).lean();
 }
+
+export async function gradeQuiz(answerSheet: any[], id: any) {
+  const quiz: any[] = (await Quiz.findById(id).select("questions -_id").lean())
+    .questions;
+  let score: number = 0;
+
+  answerSheet.forEach((answerObj) => {
+    const { index, answer } = answerObj;
+
+    if (quiz.find((question) => question.index === index)?.answer === answer)
+      score++;
+  });
+
+  return score;
+}
