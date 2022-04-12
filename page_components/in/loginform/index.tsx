@@ -39,7 +39,7 @@ const LoginForm: React.FC = () => {
 
   return (
     <div className={`box-width ${styles.LoginForm}`}>
-      <h1 className={`${styles.Heading} t-regular`}>Log in</h1>
+      <h1 className={`${styles.Heading} t-regular`}>LOGIN</h1>
       <form name="loginForm" id="loginForm" onSubmit={submitHandler}>
         <div className={styles.InputBox}>
           <Inputr
