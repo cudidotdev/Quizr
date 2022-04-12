@@ -5,7 +5,7 @@ export type inputr = defaultProps & {
   label: string;
   name: string;
   value?: string | number;
-  setValue?: (value: string | number) => any;
+  onChange?: (value: any) => any;
   type?: React.HTMLInputTypeAttribute;
   Icon?: React.FC;
   clickFn?: () => any;
@@ -16,7 +16,7 @@ export type searchr = defaultProps & {
   label?: string;
   name: string;
   value?: string | number;
-  setValue?: (value: string | number) => any;
+  onChange?: (value: any) => any;
   type?: React.HTMLInputTypeAttribute;
   Icon?: React.FC;
   clickFn?: () => any;

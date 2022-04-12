@@ -20,7 +20,7 @@ const handler: NextApiHandlerX = async (req, res) => {
         $push: { quizTaking: { quizId: id, timeStarted: Date.now() } },
       });
 
-      return res.status(200).json({ success: true, id });
+      return res.status(200).json({ success: true, data: { id } });
     } catch (error: any) {
       console.log(error);
       const { name, message, status } = modifyError(error);

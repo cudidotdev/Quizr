@@ -7,7 +7,7 @@ export const Inputr: React.FC<inputr> = ({
   label,
   name,
   value,
-  setValue,
+  onChange,
   type = "text",
   Icon,
   clickFn,
@@ -26,7 +26,7 @@ export const Inputr: React.FC<inputr> = ({
           id={name}
           name={name}
           value={value}
-          onChange={(ev: any) => setValue && setValue(ev.target.value)}
+          onChange={(ev: any) => onChange && onChange(ev.target.value)}
           onFocus={() => cstm.current?.classList.add(styles.Color)}
           onBlur={() => cstm.current?.classList.remove(styles.Color)}
           {...passProps}
@@ -50,7 +50,7 @@ export const Searchr: React.FC<searchr> = ({
   label = "Search",
   name,
   value,
-  setValue,
+  onChange,
   clickFn,
   passProps = {},
   required,
@@ -59,7 +59,7 @@ export const Searchr: React.FC<searchr> = ({
     label={label}
     name={name}
     value={value}
-    setValue={setValue}
+    onChange={onChange}
     Icon={SearchIcon}
     clickFn={clickFn}
     passProps={{
@@ -74,7 +74,7 @@ export const Passwordr: React.FC<searchr> = ({
   label = "Password",
   name,
   value,
-  setValue,
+  onChange,
   passProps = {},
   clickFn = () => {},
   required,
@@ -92,7 +92,7 @@ export const Passwordr: React.FC<searchr> = ({
       type={visible ? "text" : "password"}
       name={name}
       value={value}
-      setValue={setValue}
+      onChange={onChange}
       Icon={visible ? EyeClosedIcon : EyeOpenIcon}
       clickFn={_clickFn}
       passProps={passProps}

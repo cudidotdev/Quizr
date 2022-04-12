@@ -15,13 +15,13 @@ const Header: React.FC = () => {
 
   function closeMenu() {
     menuContainer.current?.classList.remove(styles.Active);
-    console.log("closed");
   }
 
   useLayoutEffect(() => {
     updateWidth();
   }, []);
 
+  /* eslint-disable */
   useEffect(() => {
     window.addEventListener("resize", updateWidth);
     router.events.on("routeChangeStart", closeMenu);
@@ -31,6 +31,7 @@ const Header: React.FC = () => {
       router.events.off("routeChangeStart", closeMenu);
     };
   }, []);
+  /* eslint-enable */
 
   return (
     <header className={styles.Header}>

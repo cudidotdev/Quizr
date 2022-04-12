@@ -7,13 +7,7 @@ const QuizSortForm: React.FC = () => {
     <div className={`${styles.SortForm} content-width`}>
       <div className={styles.SearchAndCategoryBox}>
         <div>
-          <Searchr
-            name="quizSearch"
-            passProps={{
-              onKeyPress: (ev: any) =>
-                ev.key === "Enter" && console.log("click"),
-            }}
-          />
+          <Searchr name="quizSearch" />
         </div>
         <div>
           <Selectr

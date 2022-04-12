@@ -43,7 +43,7 @@ const handler: NextApiHandlerX = async (req, res) => {
 
       return res.status(200).json({
         success: true,
-        result: { score, timeTaken, exp },
+        data: { score, timeTaken, exp },
       });
     } catch (error: any) {
       console.log(error);
