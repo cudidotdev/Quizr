@@ -1,6 +1,7 @@
 import { Inputr, Passwordr, Sumbitr } from "components/forms";
 import { Linkr } from "components/links";
-import React, { useState } from "react";
+import { TripleSquareLoader } from "components/loaders";
+import React, { useRef, useEffect, useState } from "react";
 import styles from "styles/pages/In.module.css";
 import { postFetcher } from "utils/fetchers";
 
@@ -14,6 +15,8 @@ const LoginForm: React.FC = () => {
     user: "",
     password: "",
   });
+  const [loading, setLoading] = useState<boolean>(false);
+  const loginForm = useRef<HTMLFormElement>(null);
 
   function setUser(user: string) {
     setLoginDetails((prev) => {
@@ -27,20 +30,36 @@ const LoginForm: React.FC = () => {
     });
   }
 
+  function processError(error: any) {}
+
   async function submitHandler(ev: any) {
     ev.preventDefault();
-    const { success, data, error } = await postFetcher(
-      "/api/user/login",
-      loginDetails
-    );
-    if (!success) return console.log(error);
+
+    setLoading(true);
+    const res = await postFetcher("/api/user/login", loginDetails);
+    setLoading(false);
+
+    if (!res) return;
+    const { success, data, error } = res;
+    if (!success) processError(error);
     return console.log(data);
   }
+
+  useEffect(() => {
+    loading
+      ? loginForm.current?.classList.add(styles.OnProgress)
+      : loginForm.current?.classList.remove(styles.OnProgress);
+  }, [loading]);
 
   return (
     <div className={`box-width ${styles.LoginForm}`}>
       <h1 className={`${styles.Heading} t-regular`}>LOGIN</h1>
-      <form name="loginForm" id="loginForm" onSubmit={submitHandler}>
+      <form
+        name="loginForm"
+        id="loginForm"
+        onSubmit={submitHandler}
+        ref={loginForm}
+      >
         <div className={styles.InputBox}>
           <Inputr
             label="Username or Email"
@@ -59,7 +78,13 @@ const LoginForm: React.FC = () => {
           />
         </div>
         <div className={styles.InputBox}>
-          <Sumbitr form="loginForm">Log in</Sumbitr>
+          {!loading ? (
+            <Sumbitr form="loginForm">Log in</Sumbitr>
+          ) : (
+            <Sumbitr disabled>
+              Logging in <TripleSquareLoader />
+            </Sumbitr>
+          )}
         </div>
       </form>
       <div className={styles.footer}>

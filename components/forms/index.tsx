@@ -103,12 +103,13 @@ export const Passwordr: React.FC<searchr> = ({
 
 export const Sumbitr: React.FC<
   React.ButtonHTMLAttributes<HTMLButtonElement>
-> = ({ children, form = "" }) => {
+> = ({ children, form = "", disabled }) => {
   return (
     <button
       type="submit"
       form={form}
       className={`${styles.Cstm} ${styles.Submit}`}
+      disabled={disabled}
     >
       {children}
     </button>

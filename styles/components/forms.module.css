@@ -78,6 +78,7 @@
   border: none;
   color: var(--color-white-one);
   justify-content: center;
+  align-items: center;
   text-align: center;
   border-radius: 0.5rem;
   font-size: 1rem;
@@ -88,6 +89,10 @@
   outline: none;
   background-color: var(--color-primary-two);
   box-shadow: var(--shadow-two);
+}
+
+.Cstm.Submit:disabled {
+  background-color: var(--color-primary-two);
 }
 
 .MultipleSelectr {

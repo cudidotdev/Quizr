@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import type { AppPropsWithLayout } from "types/next";
 import React from "react";
 import Head from "next/head";
+import App from "components/app";
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const CLayout = Component.Layout;
@@ -13,9 +14,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <title>Quizr: A quiz portfoilo project by CudiLala</title>
         <link rel="icon" href="/logo.png" />
       </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <App>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </App>
     </>
   );
 }

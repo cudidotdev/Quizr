@@ -25,7 +25,7 @@ const QuizSortForm: React.FC = () => {
         </div>
       </div>
       <div className={styles.SortBox}>
-        <Selectr name="quizSort" label="Sort By">
+        <Selectr name="quizSort" label="Sort by">
           <Option value="Popularity" />
           <Option value="Difficulty" />
           <Option value="A-Z" />
