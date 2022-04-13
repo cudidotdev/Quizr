@@ -139,7 +139,8 @@ button:hover {
   --color-primary-four: rgb(241, 247, 255);
   --color-primary-transparent: rgb(132, 186, 255, 0.1);
   --color-secondary-one: rgb(130, 252, 150);
-  --color-tertiary-one: rgb(255, 150, 50);
+  --color-tertiary-one: rgb(255, 120, 0);
+  --color-tertiary-two: rgb(255, 150, 50);
 
   --shadow-one: 0 0px 3px rgba(50, 50, 50, 0.2);
   --shadow-two: 0 0px 3px rgba(81, 149, 251, 0.5);

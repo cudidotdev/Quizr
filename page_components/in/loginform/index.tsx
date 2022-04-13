@@ -1,6 +1,7 @@
 import { Inputr, Passwordr, Submitr } from "components/forms";
 import { Linkr } from "components/links";
 import { TripleSquareLoader } from "components/loaders";
+import { useRouter } from "next/router";
 import React, { useRef, useEffect, useState } from "react";
 import styles from "styles/pages/In.module.css";
 import { postFetcher } from "utils/fetchers";
@@ -16,7 +17,9 @@ const LoginForm: React.FC = () => {
     password: "",
   });
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const loginForm = useRef<HTMLFormElement>(null);
+  const router = useRouter();
 
   function setUser(user: string) {
     setLoginDetails((prev) => {
@@ -30,7 +33,18 @@ const LoginForm: React.FC = () => {
     });
   }
 
-  function processError(error: any) {}
+  function processError(error: any) {
+    const { name, message } = error;
+
+    if (name === "not resolved")
+      return setError("It seems there is a connection error");
+    if (name === "user" || name === "password") {
+      //@ts-ignore
+      document.loginForm[name].focus();
+      return setError(message);
+    }
+    return setError("Unkwown server error, please try again");
+  }
 
   async function submitHandler(ev: any) {
     ev.preventDefault();
@@ -39,10 +53,11 @@ const LoginForm: React.FC = () => {
     const res = await postFetcher("/api/user/login", loginDetails);
     setLoading(false);
 
-    if (!res) return;
+    if (!res) return processError({ name: "not resolved" });
     const { success, data, error } = res;
-    if (!success) processError(error);
-    return console.log(data);
+    if (!success) return processError(error);
+
+    router.push("/");
   }
 
   useEffect(() => {
@@ -77,6 +92,21 @@ const LoginForm: React.FC = () => {
             onChange={setPassword}
           />
         </div>
+        {!!error && (
+          <div className={`${styles.InputBox} ${styles.ErrorMsg}`}>
+            <span className={`${styles.Icon} t-medium`}>!</span>
+            <p className={styles.Msg}>
+              {error}.
+              {error === "Oops, username or email doesn't exists" && (
+                <>
+                  {" "}
+                  Do you want to{" "}
+                  <Linkr className={styles.Link}>create an account ?</Linkr>
+                </>
+              )}
+            </p>
+          </div>
+        )}
         <div className={styles.InputBox}>
           {!loading ? (
             <Submitr form="loginForm">Log in</Submitr>
