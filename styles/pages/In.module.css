@@ -7,8 +7,8 @@
   text-align: center;
 }
 
-.LoginForm form.OnProgress,
-.LoginForm form.OnProgress * {
+.LoginForm.OnProgress form,
+.LoginForm.LoginForm.OnProgress form * {
   cursor: progress;
 }
 

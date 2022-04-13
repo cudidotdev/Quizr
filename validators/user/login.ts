@@ -3,13 +3,14 @@ import ApiError from "errors/api";
 import bcrypt from "bcrypt";
 
 async function validateCredentials(body: any) {
-  const { user, password } = body;
+  let { user, password } = body;
+  user = user.trim();
 
   if (!user) throw new ApiError("user", "Please insert username or email", 400);
   if (!password) throw new ApiError("password", "Please insert password", 400);
 
   const _user = await User.findOne({
-    $or: [{ username: user.trim() }, { email: user.trim() }],
+    $or: [{ username: user }, { email: user }],
   })
     .collation({ locale: "en", strength: 2 })
     .lean();

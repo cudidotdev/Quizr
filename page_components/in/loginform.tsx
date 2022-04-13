@@ -16,20 +16,14 @@ const LoginForm: React.FC = () => {
     user: "",
     password: "",
   });
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState({ value: false, msg: "" });
   const [error, setError] = useState<string | null>(null);
-  const loginForm = useRef<HTMLFormElement>(null);
+  const loginForm = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
-  function setUser(user: string) {
+  function changeLoginDetails(key: string, value: string) {
     setLoginDetails((prev) => {
-      return { ...prev, user };
-    });
-  }
-
-  function setPassword(password: string) {
-    setLoginDetails((prev) => {
-      return { ...prev, password };
+      return { ...prev, [key]: value };
     });
   }
 
@@ -49,9 +43,9 @@ const LoginForm: React.FC = () => {
   async function submitHandler(ev: any) {
     ev.preventDefault();
 
-    setLoading(true);
+    setLoading({ value: true, msg: "Logging in" });
     const res = await postFetcher("/api/user/login", loginDetails);
-    setLoading(false);
+    setLoading({ value: false, msg: "" });
 
     if (!res) return processError({ name: "not resolved" });
     const { success, data, error } = res;
@@ -61,27 +55,23 @@ const LoginForm: React.FC = () => {
   }
 
   useEffect(() => {
-    loading
+    loading.value
       ? loginForm.current?.classList.add(styles.OnProgress)
       : loginForm.current?.classList.remove(styles.OnProgress);
   }, [loading]);
 
   return (
-    <div className={`box-width ${styles.LoginForm}`}>
+    <div className={`box-width ${styles.LoginForm}`} ref={loginForm}>
       <h1 className={`${styles.Heading} t-regular`}>LOGIN</h1>
-      <form
-        name="loginForm"
-        id="loginForm"
-        onSubmit={submitHandler}
-        ref={loginForm}
-      >
+      <form name="loginForm" id="loginForm" onSubmit={submitHandler}>
         <div className={styles.InputBox}>
           <Inputr
             label="Username or Email"
             name="user"
             value={loginDetails.user}
-            onChange={setUser}
+            onChange={(val: string) => changeLoginDetails("user", val)}
             required
+            placeholder="Enter username or email"
           />
         </div>
         <div className={styles.InputBox}>
@@ -89,7 +79,8 @@ const LoginForm: React.FC = () => {
             name="password"
             required
             value={loginDetails.password}
-            onChange={setPassword}
+            onChange={(val: string) => changeLoginDetails("password", val)}
+            placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
           />
         </div>
         {!!error && (
@@ -101,25 +92,29 @@ const LoginForm: React.FC = () => {
                 <>
                   {" "}
                   Do you want to{" "}
-                  <Linkr className={styles.Link}>create an account ?</Linkr>
+                  <Linkr className={styles.Link} href="/join">
+                    create an account ?
+                  </Linkr>
                 </>
               )}
             </p>
           </div>
         )}
         <div className={styles.InputBox}>
-          {!loading ? (
+          {!loading.value ? (
             <Submitr form="loginForm">Log in</Submitr>
           ) : (
             <Submitr disabled>
-              Logging in <TripleSquareLoader />
+              {loading.msg} <TripleSquareLoader />
             </Submitr>
           )}
         </div>
       </form>
       <div className={styles.footer}>
         <p>Don&apos;t have an account?</p>
-        <Linkr className={styles.link}>Create account</Linkr>
+        <Linkr className={styles.link} href="/join">
+          Create account
+        </Linkr>
       </div>
     </div>
   );

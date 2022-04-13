@@ -2,17 +2,19 @@ import bcrypt from "bcrypt";
 import ApiError from "errors/api";
 
 async function validate(body: any) {
+  const final: any = {};
   let { username, email, password, confirmPassword } = body;
-  validateUsername(username);
-  validateEmail(email);
-  validatePassword(password, confirmPassword);
 
-  password = await bcrypt.hash(password, 10);
+  validateUsername(username, final);
+  validateEmail(email, final);
+  await validatePassword(password, confirmPassword, final);
 
-  return { username, email, password };
+  return final;
 }
 
-function validateUsername(username: string) {
+function validateUsername(username: string, final: any) {
+  username = username.trim();
+
   if (!username || !username.length)
     throw new ApiError("username", "Oops, a username is required", 400);
   if (username.length > 64)
@@ -21,9 +23,13 @@ function validateUsername(username: string) {
       "Opps a username cannot be more than 64 characters",
       400
     );
+
+  final.username = username;
 }
 
-function validateEmail(email: string) {
+function validateEmail(email: string, final: any) {
+  email = email.trim();
+
   if (!email || !email.length)
     throw new ApiError("email", "Oops, an email is required", 400);
   if (email.length > 256)
@@ -46,9 +52,15 @@ function validateEmail(email: string) {
       "Sorry, the email you provided either contains unaccepted characters or is in a wrong format",
       400
     );
+
+  final.email = email;
 }
 
-function validatePassword(password: string, confirmPassword: string) {
+async function validatePassword(
+  password: string,
+  confirmPassword: string,
+  final: any
+) {
   if (!password || !password.length)
     throw new ApiError("password", "Oops, please choose a password", 400);
   if (password.length < 4)
@@ -67,6 +79,8 @@ function validatePassword(password: string, confirmPassword: string) {
     throw new ApiError("confirmPassword", "Please confirm your password", 400);
   if (confirmPassword !== password)
     throw new ApiError("confirmPassword", "Passwords doesn't match", 400);
+
+  final.password = await bcrypt.hash(password, 10);
 }
 
 export default validate;

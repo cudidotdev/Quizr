@@ -49,6 +49,13 @@
 .Cstm .InputBox input:focus {
   box-shadow: var(--shadow-two);
 }
+.Cstm .InputBox input::placeholder {
+  color: var(--color-grey-one);
+  transition: all 200ms linear;
+}
+.Cstm .InputBox input:focus::placeholder {
+  color: var(--color-primary-two);
+}
 
 .Cstm .InputBox .IconBox {
   position: absolute;
