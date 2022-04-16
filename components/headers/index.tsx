@@ -7,9 +7,11 @@ import React, {
 } from "react";
 import {
   HelpIcon,
+  LoginIcon,
   Logo,
   LogoutIcon,
   PodiumIcon,
+  ProfileIcon,
   UserIcon,
 } from "components/icons";
 import styles from "styles/components/headers.module.css";
@@ -74,13 +76,9 @@ const Header: React.FC = () => {
                   />
                 </div>
                 <div className={styles.Menu}>
-                  <Linkr className={`${styles.IconTextContainer}`} href="/in">
-                    <UserIcon />
+                  <Linkr className={`${styles.IconTextContainer}`} href="/u/01">
+                    <ProfileIcon />
                     <div className={`${styles.IconText}`}>Profile</div>
-                  </Linkr>
-                  <Linkr className={`${styles.IconTextContainer}`} href="/in">
-                    <UserIcon />
-                    <div className={`${styles.IconText}`}>Login</div>
                   </Linkr>
                   <Linkr className={`${styles.IconTextContainer}`} href="/out">
                     <LogoutIcon />
@@ -91,26 +89,49 @@ const Header: React.FC = () => {
             )}
           </div>
         ) : (
-          <div className={styles.MenuContainer}>
-            <button className={styles.MenuBar}>
-              <span></span>
-              <span></span>
-            </button>
-            <div className={styles.Menu}>
-              <Linkr className={`${styles.IconTextContainer}`} href="/board">
-                <PodiumIcon />
-                <div className={`${styles.IconText}`}>LeaderBoards</div>
+          <div>
+            {!!user && (
+              <Linkr href="/u/01" className={`${styles.ProfilePictureBox}`}>
+                <Image
+                  src={user.profilePicture}
+                  alt="profile picture"
+                  width={"100%"}
+                  height={"100%"}
+                />
               </Linkr>
-              <Linkr className={`${styles.IconTextContainer}`} href="/help">
-                <HelpIcon />
-                <div className={`${styles.IconText}`}>Help</div>
-              </Linkr>
-              {!user && (
-                <Linkr className={`${styles.IconTextContainer}`} href="/in">
-                  <UserIcon />
-                  <div className={`${styles.IconText}`}>Login</div>
+            )}
+            <div className={styles.MenuContainer}>
+              <button className={styles.MenuBar}>
+                <span></span>
+                <span></span>
+              </button>
+              <div className={styles.Menu}>
+                {!!user && (
+                  <Linkr className={`${styles.IconTextContainer}`} href="/u/01">
+                    <ProfileIcon />
+                    <div className={`${styles.IconText}`}>Profile</div>
+                  </Linkr>
+                )}
+                <Linkr className={`${styles.IconTextContainer}`} href="/board">
+                  <PodiumIcon />
+                  <div className={`${styles.IconText}`}>LeaderBoards</div>
                 </Linkr>
-              )}
+                <Linkr className={`${styles.IconTextContainer}`} href="/help">
+                  <HelpIcon />
+                  <div className={`${styles.IconText}`}>Help</div>
+                </Linkr>
+                {!user ? (
+                  <Linkr className={`${styles.IconTextContainer}`} href="/in">
+                    <UserIcon />
+                    <div className={`${styles.IconText}`}>Login</div>
+                  </Linkr>
+                ) : (
+                  <Linkr className={`${styles.IconTextContainer}`} href="/out">
+                    <LogoutIcon />
+                    <div className={`${styles.IconText}`}>Logout</div>
+                  </Linkr>
+                )}
+              </div>
             </div>
           </div>
         )}
