@@ -29,7 +29,8 @@ export default function useUser(): [any, React.Dispatch<any>] {
 
   /* eslint-disable */
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("user") || ""));
+    //@ts-ignore
+    setUser(JSON.parse(localStorage.getItem("user")));
     fetchUser();
   }, []);
 
