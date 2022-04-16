@@ -109,7 +109,7 @@
   top: 3.5rem;
   box-shadow: var(--shadow-one);
   border-radius: 0.25rem;
-  max-width: 420px;
+  max-width: 360px;
   width: calc(100vw - 2rem);
   visibility: hidden;
   opacity: 0;

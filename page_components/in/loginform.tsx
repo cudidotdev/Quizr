@@ -2,9 +2,10 @@ import { Inputr, Passwordr, Submitr } from "components/forms";
 import { Linkr } from "components/links";
 import { TripleSquareLoader } from "components/loaders";
 import { useRouter } from "next/router";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
 import styles from "styles/pages/In.module.css";
 import { postFetcher } from "utils/fetchers";
+import { UserContext } from "components/app";
 
 type loginDetails = {
   user: string;
@@ -20,6 +21,7 @@ const LoginForm: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const loginForm = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const [, setUser] = useContext(UserContext);
 
   function changeLoginDetails(key: string, value: string) {
     setLoginDetails((prev) => {
@@ -51,6 +53,8 @@ const LoginForm: React.FC = () => {
     const { success, data, error } = res;
     if (!success) return processError(error);
 
+    console.log(data);
+    setUser(data);
     router.push("/");
   }
 
@@ -62,7 +66,7 @@ const LoginForm: React.FC = () => {
 
   return (
     <div className={`box-width ${styles.LoginForm}`} ref={loginForm}>
-      <h1 className={`${styles.Heading} t-regular`}>LOGIN</h1>
+      <h1 className={`${styles.Heading} t-medium`}>LOGIN</h1>
       <form name="loginForm" id="loginForm" onSubmit={submitHandler}>
         <div className={styles.InputBox}>
           <Inputr

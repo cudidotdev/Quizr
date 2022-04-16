@@ -4,7 +4,11 @@ const UserSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  profilePicture: String,
+  profilePicture: {
+    type: String,
+    default: () =>
+      `https://avatars.dicebear.com/api/bottts/${Math.random()}.svg`,
+  },
   isAdmin: Boolean,
   createdAt: { type: Date, default: () => Date.now() },
   quizStarted: [],

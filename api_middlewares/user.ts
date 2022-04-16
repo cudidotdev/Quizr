@@ -11,10 +11,10 @@ export async function attachUser(req: NextApiRequestX) {
     .populate("uId")
     .select("uId -_id")
     .lean();
-  if (!_user) return (req.user = null);
+  if (!_user || !_user.uId) return (req.user = null);
 
-  const { username, _id, email } = _user.uId;
-  const user: any = { username, _id, email };
+  const { username, _id, email, profilePicture } = _user.uId;
+  const user: any = { username, _id, email, profilePicture };
   if (_user.uId.isAdmin) user.isAdmin = true;
   req.user = user;
 }

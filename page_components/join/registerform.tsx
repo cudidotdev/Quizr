@@ -2,9 +2,10 @@ import { Inputr, Passwordr, Submitr } from "components/forms";
 import { Linkr } from "components/links";
 import { TripleSquareLoader } from "components/loaders";
 import { useRouter } from "next/router";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
 import styles from "styles/pages/In.module.css";
 import { postFetcher } from "utils/fetchers";
+import { UserContext } from "components/app";
 
 type registerDetails = {
   username: string;
@@ -24,6 +25,7 @@ const RegisterForm: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const registerForm = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const [, setUser] = useContext(UserContext);
 
   function changeRegDetails(key: string, value: string) {
     setRegDetails((prev) => {
@@ -64,9 +66,14 @@ const RegisterForm: React.FC = () => {
     setLoading({ value: false, msg: "" });
 
     if (!loginRes) return processError({ name: "not resolved" });
-    const { success: loginSuccess, data: loginData, error: loginError } = res;
+    const {
+      success: loginSuccess,
+      data: loginData,
+      error: loginError,
+    } = loginRes;
     if (!loginSuccess) return processError(loginError);
 
+    setUser(loginData);
     router.push("/");
   }
 
@@ -78,7 +85,7 @@ const RegisterForm: React.FC = () => {
 
   return (
     <div className={`box-width ${styles.LoginForm}`} ref={registerForm}>
-      <h1 className={`${styles.Heading} t-regular`}>REGISTER</h1>
+      <h1 className={`${styles.Heading} t-medium`}>REGISTER</h1>
       <form name="registerForm" id="registerForm" onSubmit={submitHandler}>
         <div className={styles.InputBox}>
           <Inputr

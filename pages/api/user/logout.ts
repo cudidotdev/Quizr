@@ -8,7 +8,7 @@ import { modifyError } from "api_utils";
 
 const handler: NextApiHandler = async (req, res) => {
   await connectDB();
-  if (req.method === "DELETE") {
+  if (req.method === "DELETE" || req.method === "GET") {
     try {
       const { ssId } = req.cookies;
       if (!ssId) throw new ApiError("login", "You are not logged in yet.", 401);

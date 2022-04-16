@@ -9,7 +9,8 @@ const handler: NextApiHandler = async (req, res) => {
   await connectDB();
   if (req.method === "POST") {
     try {
-      const { username, _id } = await validateCredentials(req.body);
+      const { username, _id, profilePicture, email, isAdmin } =
+        await validateCredentials(req.body);
       const { ssId: prevSsId } = req.cookies;
       const ssId = await Session.create({ uId: _id });
 
@@ -24,7 +25,16 @@ const handler: NextApiHandler = async (req, res) => {
       );
       prevSsId && (await Session.findByIdAndDelete(prevSsId));
 
-      return res.status(200).json({ success: true, data: { _id, username } });
+      return res.status(200).json({
+        success: true,
+        data: {
+          _id,
+          username,
+          profilePicture,
+          email,
+          [`${isAdmin === true ? "isAdmin" : "user"}`]: true,
+        },
+      });
     } catch (error: any) {
       console.log(error);
       const { name, message, status } = modifyError(error);

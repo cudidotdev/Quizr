@@ -1,13 +1,21 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { HelpIcon, Logo, PodiumIcon, UserIcon } from "components/icons";
 import styles from "styles/components/headers.module.css";
 import { Linkr } from "components/links";
 import { useRouter } from "next/router";
+import { UserContext } from "components/app";
 
 const Header: React.FC = () => {
   const [width, setWidth] = useState<number>(0);
   const menuContainer = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const [user] = useContext(UserContext);
 
   function updateWidth() {
     setWidth(window.innerWidth);
@@ -55,10 +63,12 @@ const Header: React.FC = () => {
               <HelpIcon />
               <div className={`${styles.IconText}`}>Help</div>
             </Linkr>
-            <Linkr className={`${styles.IconTextContainer}`} href="/in">
-              <UserIcon />
-              <div className={`${styles.IconText}`}>Login</div>
-            </Linkr>
+            {!user && (
+              <Linkr className={`${styles.IconTextContainer}`} href="/in">
+                <UserIcon />
+                <div className={`${styles.IconText}`}>Login</div>
+              </Linkr>
+            )}
           </div>
         ) : (
           <div className={styles.MenuContainer} ref={menuContainer}>
@@ -80,10 +90,12 @@ const Header: React.FC = () => {
                 <HelpIcon />
                 <div className={`${styles.IconText}`}>Help</div>
               </Linkr>
-              <Linkr className={`${styles.IconTextContainer}`} href="/in">
-                <UserIcon />
-                <div className={`${styles.IconText}`}>Login</div>
-              </Linkr>
+              {!user && (
+                <Linkr className={`${styles.IconTextContainer}`} href="/in">
+                  <UserIcon />
+                  <div className={`${styles.IconText}`}>Login</div>
+                </Linkr>
+              )}
             </div>
           </div>
         )}
