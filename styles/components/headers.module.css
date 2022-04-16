@@ -10,18 +10,17 @@
 
 .Padder {
   height: 100%;
-  padding: 0.75rem 0;
+  padding: 0.5rem 0;
   display: flex;
   justify-content: space-between;
 }
 
 .Padder > * {
-  padding: 0 1rem;
   display: flex;
 }
 
 .IconTextContainer {
-  padding: 0.25rem 1rem;
+  padding: 0.5rem 1rem;
   display: flex;
   height: 100%;
   color: var(--color-black-two);
@@ -40,7 +39,7 @@
 }
 
 .LogoContainer {
-  padding: 0 1rem;
+  padding: 0.25rem 1rem;
   color: var(--color-primary-one);
 }
 .LogoContainer:hover {
@@ -95,11 +94,16 @@
   transform: translateY(3px);
 }
 
-.MenuContainer.Active .MenuBar {
+.MenuContainer:hover .ProfilePictureBox {
+  box-shadow: 0 0 3px rgba(81, 149, 251, 0.5);
+  background-color: var(--color-primary-transparent);
+}
+
+.MenuContainer:hover .MenuBar {
   box-shadow: var(--shadow-two);
 }
 
-.MenuContainer.Active .MenuBar span {
+.MenuContainer:hover .MenuBar span {
   background-color: var(--color-primary-one);
 }
 
@@ -134,11 +138,21 @@
   margin-left: 1rem;
 }
 
-.MenuContainer.Active .Menu {
+.MenuContainer:hover .Menu {
   visibility: visible;
   opacity: 1;
 }
 
 .Menu .IconTextContainer:hover {
   box-shadow: var(--shadow-two);
+}
+
+.ProfilePictureBox {
+  cursor: pointer;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.125rem;
+  border-radius: 50%;
+  box-shadow: 0 0 3px rgba(255, 255, 255, 0);
+  transition: all 300ms linear;
 }

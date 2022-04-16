@@ -27,6 +27,7 @@ export default function useUser(): [any, React.Dispatch<any>] {
     setReload(false);
   }
 
+  /* eslint-disable */
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("user") || ""));
     fetchUser();
@@ -45,6 +46,7 @@ export default function useUser(): [any, React.Dispatch<any>] {
       x = setTimeout(fetchUser, 10000);
     }
   }, [reload]);
+  /* eslint-enable */
 
   return [user, setUser];
 }

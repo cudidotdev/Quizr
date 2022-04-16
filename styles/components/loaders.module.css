@@ -33,7 +33,7 @@
   }
 
   20%,
-  60% {
+  50% {
     background-color: rgba(253, 253, 255, 0.9);
   }
 
@@ -50,7 +50,7 @@
   }
 
   30%,
-  70% {
+  60% {
     background-color: rgba(253, 253, 255, 0.9);
   }
 
@@ -67,12 +67,82 @@
   }
 
   40%,
-  80% {
+  70% {
     background-color: rgba(253, 253, 255, 0.9);
   }
 
   90%,
   100% {
     background-color: rgba(253, 253, 255, 0);
+  }
+}
+
+.TripleSquareLoader.Colored span {
+  background-color: var(--color-primary-three);
+}
+
+.TripleSquareLoader.Colored span:first-child {
+  animation-name: colored-triplesquare-square-one;
+  animation-duration: 2.5s;
+  animation-iteration-count: infinite;
+}
+.TripleSquareLoader.Colored span:nth-child(2) {
+  animation-name: colored-triplesquare-square-two;
+  animation-duration: 2.5s;
+  animation-iteration-count: infinite;
+}
+.TripleSquareLoader.Colored span:last-child {
+  animation-name: colored-triplesquare-square-three;
+  animation-duration: 2.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes colored-triplesquare-square-one {
+  0% {
+    background-color: rgba(132, 186, 255, 0);
+  }
+
+  20%,
+  50% {
+    background-color: rgba(132, 186, 255, 0.9);
+  }
+
+  80%,
+  100% {
+    background-color: rgba(132, 186, 255, 0);
+  }
+}
+
+@keyframes colored-triplesquare-square-two {
+  0%,
+  10% {
+    background-color: rgba(132, 186, 255, 0);
+  }
+
+  30%,
+  60% {
+    background-color: rgba(132, 186, 255, 0.9);
+  }
+
+  85%,
+  100% {
+    background-color: rgba(132, 186, 255, 0);
+  }
+}
+
+@keyframes colored-triplesquare-square-three {
+  0%,
+  20% {
+    background-color: rgba(132, 186, 255, 0);
+  }
+
+  40%,
+  70% {
+    background-color: rgba(132, 186, 255, 0.9);
+  }
+
+  90%,
+  100% {
+    background-color: rgba(132, 186, 255, 0);
   }
 }

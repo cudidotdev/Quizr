@@ -12,7 +12,7 @@ export default function modifyError(error: any) {
     message = `${error.value} is a wrong type/format of ${error.path}`;
   }
 
-  if (error.name === "MongooseError")
+  if (error.name.startsWith("Mongo"))
     message = `Server error, Please try again`;
 
   const acceptableStatus = [
