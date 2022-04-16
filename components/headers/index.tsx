@@ -7,11 +7,13 @@ import React, {
 } from "react";
 import {
   HelpIcon,
+  KeyIcon,
   LoginIcon,
   Logo,
   LogoutIcon,
   PodiumIcon,
   ProfileIcon,
+  SheildIcon,
   UserIcon,
 } from "components/icons";
 import styles from "styles/components/headers.module.css";
@@ -52,6 +54,12 @@ const Header: React.FC = () => {
         </Linkr>
         {width > 600 ? (
           <div>
+            {user?.isAdmin === true && (
+              <Linkr className={`${styles.IconTextContainer}`} href={`/admin`}>
+                <KeyIcon />
+                <div className={`${styles.IconText}`}>Admin</div>
+              </Linkr>
+            )}
             <Linkr className={`${styles.IconTextContainer}`} href="/board">
               <PodiumIcon />
               <div className={`${styles.IconText}`}>LeaderBoards</div>
@@ -76,7 +84,10 @@ const Header: React.FC = () => {
                   />
                 </div>
                 <div className={styles.Menu}>
-                  <Linkr className={`${styles.IconTextContainer}`} href="/u/01">
+                  <Linkr
+                    className={`${styles.IconTextContainer}`}
+                    href={`/u/${user.username}`}
+                  >
                     <ProfileIcon />
                     <div className={`${styles.IconText}`}>Profile</div>
                   </Linkr>
@@ -91,7 +102,10 @@ const Header: React.FC = () => {
         ) : (
           <div>
             {!!user && (
-              <Linkr href="/u/01" className={`${styles.ProfilePictureBox}`}>
+              <Linkr
+                href={`/u/${user.username}`}
+                className={`${styles.ProfilePictureBox}`}
+              >
                 <Image
                   src={user.profilePicture}
                   alt="profile picture"
@@ -107,9 +121,21 @@ const Header: React.FC = () => {
               </button>
               <div className={styles.Menu}>
                 {!!user && (
-                  <Linkr className={`${styles.IconTextContainer}`} href="/u/01">
+                  <Linkr
+                    className={`${styles.IconTextContainer}`}
+                    href={`/u/${user.username}`}
+                  >
                     <ProfileIcon />
                     <div className={`${styles.IconText}`}>Profile</div>
+                  </Linkr>
+                )}
+                {user?.isAdmin === true && (
+                  <Linkr
+                    className={`${styles.IconTextContainer}`}
+                    href={`/admin`}
+                  >
+                    <KeyIcon />
+                    <div className={`${styles.IconText}`}>Admin</div>
                   </Linkr>
                 )}
                 <Linkr className={`${styles.IconTextContainer}`} href="/board">

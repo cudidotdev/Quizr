@@ -13,7 +13,10 @@ const LogoutPage: NextPageWithLayout = () => {
   const router = useRouter();
 
   async function logout() {
+    document.body.style.cursor = "progress";
     const data = await deleteFetcher("/api/user/logout");
+    document.body.style.cursor = "default";
+
     if (!data)
       return setMsg({
         name: "error",

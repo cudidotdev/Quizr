@@ -121,6 +121,14 @@
   background-color: var(--color-white-one);
   transition: all 500ms linear;
   padding: 1rem;
+  overflow: auto;
+  max-height: calc(100vh - 5rem);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.Menu::-webkit-scrollbar {
+  display: none;
 }
 
 .Menu .IconTextContainer {

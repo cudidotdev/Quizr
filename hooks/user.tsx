@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { getFetcher } from "utils/fetchers";
 
+const prev = { val: 0 };
+
 export default function useUser(): [any, React.Dispatch<any>] {
   const [user, setUser] = useState<any>(null);
   const [reload, setReload] = useState<any>();
-  const rCol: number[] = [];
 
   function r(): number {
     const a = Math.random();
-    if (rCol.includes(a)) return r();
+    if (a === prev.val) return r();
 
-    rCol.pop();
-    rCol.push(a);
-    console.log(rCol);
+    prev.val = a;
     return a;
   }
 
@@ -35,17 +34,11 @@ export default function useUser(): [any, React.Dispatch<any>] {
   }, []);
 
   useEffect(() => {
-    console.log(user);
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
 
   useEffect(() => {
-    let x: any;
-    console.log("run");
-
-    if (reload) {
-      x = setTimeout(fetchUser, 10000);
-    }
+    reload && setTimeout(fetchUser, 10000);
   }, [reload]);
   /* eslint-enable */
 
