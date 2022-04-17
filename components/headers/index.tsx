@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   HelpIcon,
   KeyIcon,
@@ -12,13 +18,21 @@ import styles from "styles/components/headers.module.css";
 import { Linkr } from "components/links";
 import { UserContext } from "components/app";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 const Header: React.FC = () => {
   const [width, setWidth] = useState<number>(0);
   const [user] = useContext(UserContext);
+  const menuContainer1 = useRef<HTMLDivElement>(null);
+  const menuContainer2 = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   function updateWidth() {
     setWidth(window.innerWidth);
+  }
+
+  function removeActive(refObj: React.RefObject<HTMLElement>) {
+    refObj.current?.classList.remove(styles.Active);
   }
 
   useLayoutEffect(() => {
@@ -27,9 +41,19 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     window.addEventListener("resize", updateWidth);
+    router.events.on("routeChangeStart", () => {
+      removeActive(menuContainer1);
+      removeActive(menuContainer2);
+    });
 
-    return () => window.removeEventListener("resize", updateWidth);
-  }, []);
+    return () => {
+      window.removeEventListener("resize", updateWidth);
+      router.events.off("routeChangeStart", () => {
+        removeActive(menuContainer1);
+        removeActive(menuContainer2);
+      });
+    };
+  }, [router]);
 
   return (
     <header className={styles.Header}>
@@ -67,7 +91,16 @@ const Header: React.FC = () => {
                 <div className={`${styles.IconText}`}>Login</div>
               </Linkr>
             ) : (
-              <div className={`${styles.MenuContainer}`}>
+              <div
+                className={`${styles.MenuContainer}`}
+                ref={menuContainer1}
+                onMouseOver={(ev) =>
+                  ev.currentTarget.classList.add(styles.Active)
+                }
+                onMouseOut={(ev) =>
+                  ev.currentTarget.classList.remove(styles.Active)
+                }
+              >
                 <div className={`${styles.ProfilePictureBox}`}>
                   <Image
                     src={user.profilePicture}
@@ -116,7 +149,16 @@ const Header: React.FC = () => {
                 />
               </Linkr>
             )}
-            <div className={styles.MenuContainer}>
+            <div
+              className={styles.MenuContainer}
+              ref={menuContainer2}
+              onMouseOver={(ev) =>
+                ev.currentTarget.classList.add(styles.Active)
+              }
+              onMouseOut={(ev) =>
+                ev.currentTarget.classList.remove(styles.Active)
+              }
+            >
               <button className={styles.MenuBar}>
                 <span></span>
                 <span></span>

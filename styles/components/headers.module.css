@@ -94,17 +94,22 @@
   transform: translateY(3px);
 }
 
-.MenuContainer:hover .ProfilePictureBox {
+.MenuContainer.Active .ProfilePictureBox {
   box-shadow: 0 0 3px rgba(81, 149, 251, 0.5);
   background-color: var(--color-primary-transparent);
 }
 
-.MenuContainer:hover .MenuBar {
+.MenuContainer.Active .MenuBar {
   box-shadow: var(--shadow-two);
 }
 
-.MenuContainer:hover .MenuBar span {
+.MenuContainer.Active .MenuBar span {
   background-color: var(--color-primary-one);
+}
+
+.MenuContainer.Active .Menu {
+  visibility: visible;
+  opacity: 1;
 }
 
 .Menu {
@@ -144,11 +149,6 @@
 
 .Menu .IconText {
   margin-left: 1rem;
-}
-
-.MenuContainer:hover .Menu {
-  visibility: visible;
-  opacity: 1;
 }
 
 .Menu .IconTextContainer:hover {
