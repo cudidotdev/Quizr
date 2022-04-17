@@ -1,0 +1,45 @@
+.NavPadder {
+  padding-bottom: 1rem;
+}
+
+.AdminNav {
+  box-shadow: var(--shadow-one);
+  border-radius: 0.25rem;
+  padding: 0.5rem 0;
+  display: flex;
+  justify-content: space-evenly;
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.AdminNav::-webkit-scrollbar {
+  display: none;
+}
+
+.AdminNav .IconTextBox {
+  display: flex;
+  height: 100%;
+  padding: 0 1rem;
+  align-items: center;
+}
+
+.AdminNav .IconBox {
+  display: flex;
+  height: 1.5rem;
+  width: 1.5rem;
+  margin-right: 0.25rem;
+}
+
+.AdminNav a {
+  transition: all 200ms linear;
+}
+.AdminNav a:hover {
+  color: var(--color-primary-two);
+}
+
+@media screen and (max-width: 600px) {
+  .AdminNav {
+    justify-content: space-between;
+  }
+}
