@@ -1,24 +1,15 @@
-import React, {
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import {
   HelpIcon,
   KeyIcon,
-  LoginIcon,
   Logo,
   LogoutIcon,
   PodiumIcon,
   ProfileIcon,
-  SheildIcon,
   UserIcon,
 } from "components/icons";
 import styles from "styles/components/headers.module.css";
 import { Linkr } from "components/links";
-import { useRouter } from "next/router";
 import { UserContext } from "components/app";
 import Image from "next/image";
 

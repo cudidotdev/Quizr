@@ -5,12 +5,18 @@ import {
   QuizIcon,
 } from "components/icons";
 import { Linkr } from "components/links";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "styles/pages/Admin.module.css";
 
 const Nav: React.FC = () => {
+  const adminNav = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    adminNav.current?.scrollTo({ left: 98, behavior: "smooth" });
+  });
+
   return (
-    <nav className={styles.AdminNav}>
+    <nav className={styles.AdminNav} ref={adminNav}>
       <Linkr className={styles.IconTextBox}>
         <div className={styles.IconBox}>
           <QuizIcon />
