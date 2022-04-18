@@ -104,6 +104,7 @@ const Header: React.FC = () => {
                 <div className={`${styles.ProfilePictureBox}`}>
                   <Image
                     src={user.profilePicture}
+                    className={styles.ProfilePicture}
                     alt="profile picture"
                     width={"100%"}
                     height={"100%"}
@@ -143,6 +144,7 @@ const Header: React.FC = () => {
               >
                 <Image
                   src={user.profilePicture}
+                  className={styles.ProfilePicture}
                   alt="profile picture"
                   width={"100%"}
                   height={"100%"}

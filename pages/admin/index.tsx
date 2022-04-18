@@ -1,8 +1,15 @@
-import AdminPage from "page_components/admin";
-import styles from "styles/pages/Admin.module.css";
+import { AdminLayout } from "components/layouts";
+import { NextPageWithLayout } from "types/next";
 
-const AdminIndex: React.FC = () => (
-  <main className="site-width pad-one">Hello</main>
-);
+const AdminIndexPage: NextPageWithLayout = () => {
+  return (
+    <main className="site-width pad-one">
+      <p>Overview</p>
+    </main>
+  );
+};
 
-export default AdminPage(AdminIndex);
+AdminIndexPage.Layout = AdminLayout;
+AdminIndexPage.LayoutProps = { page: "overview" };
+
+export default AdminIndexPage;

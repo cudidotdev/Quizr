@@ -8,14 +8,14 @@
   background-color: rgba(255, 255, 255, 0.95);
 }
 
-.Padder {
+.Header .Padder {
   height: 100%;
   padding: 0.5rem 0;
   display: flex;
   justify-content: space-between;
 }
 
-.Padder > * {
+.Header .Padder > * {
   display: flex;
 }
 
@@ -168,4 +168,26 @@
 .ProfilePictureBox:hover {
   box-shadow: 0 0 3px rgba(81, 149, 251, 0.5);
   background-color: var(--color-primary-transparent);
+}
+
+.ProfilePicture {
+  background-color: var(--color-primary-transparent);
+  border-radius: 50%;
+}
+
+.AdminHeader .LogoContainer {
+  display: flex;
+  padding: 0.5rem 1rem 0;
+  align-items: center;
+  width: fit-content;
+  transition: all 200ms linear;
+}
+.AdminHeader .LogoContainer .LogoIconBox {
+  display: flex;
+  height: 1.75rem;
+  width: 1.75rem;
+  margin-right: 0.25rem;
+}
+.AdminHeader .LogoContainer .LogoText {
+  font-size: 1.1rem;
 }

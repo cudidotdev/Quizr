@@ -15,8 +15,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <link rel="icon" href="/logo.png" />
       </Head>
       <App>
-        <Layout>
-          <Component {...pageProps} name="page" />
+        <Layout {...Component.LayoutProps}>
+          <Component {...pageProps} />
         </Layout>
       </App>
     </>

@@ -1,27 +1,38 @@
-.NavPadder {
-  padding-bottom: 1rem;
-}
-
 .AdminNav {
-  box-shadow: var(--shadow-one);
-  border-radius: 0.25rem;
   padding: 0.5rem 0;
-  display: flex;
-  justify-content: space-between;
+  box-shadow: var(--shadow-bottom-one);
+  /* position: sticky;
+  top: 0;
+  z-index: 8; */
+  width: 100%;
   overflow: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  background-color: rgba(255, 255, 255, 0.95);
 }
 
 .AdminNav::-webkit-scrollbar {
   display: none;
 }
 
+.AdminNav .Padder {
+  display: flex;
+}
+
 .AdminNav .IconTextBox {
   display: flex;
-  height: 100%;
-  padding: 0 1rem;
   align-items: center;
+  padding: 0 1rem;
+  font-size: 0.9rem;
+  transition: all 200ms linear;
+}
+
+.AdminNav .IconTextBox:hover {
+  color: var(--color-primary-two);
+}
+
+.AdminNav .IconTextBox.Active {
+  color: var(--color-primary-one);
 }
 
 .AdminNav .IconBox {
@@ -29,17 +40,4 @@
   height: 1.5rem;
   width: 1.5rem;
   margin-right: 0.25rem;
-}
-
-.AdminNav a {
-  transition: all 200ms linear;
-}
-.AdminNav a:hover {
-  color: var(--color-primary-two);
-}
-
-@media screen and (max-width: 600px) {
-  .AdminNav {
-    justify-content: space-between;
-  }
 }

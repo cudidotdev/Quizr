@@ -3,7 +3,8 @@ import { AppProps } from "next/dist/shared/lib/router/router";
 import React from "react";
 
 export type NextPageWithLayout = NextPage & {
-  Layout?: React.FC;
+  Layout?: React.FC<{ [key: string]: any }>;
+  LayoutProps?: { [key: string]: any };
 };
 
 export type AppPropsWithLayout = AppProps & {

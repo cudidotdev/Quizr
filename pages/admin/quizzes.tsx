@@ -1,8 +1,15 @@
-import AdminPage from "page_components/admin";
-import styles from "styles/pages/Admin.module.css";
+import { AdminLayout } from "components/layouts";
+import { NextPageWithLayout } from "types/next";
 
-const AdminQuizzesPage: React.FC = () => (
-  <main className="site-width pad-one">quizzes</main>
-);
+const AdminQuizzesPage: NextPageWithLayout = () => {
+  return (
+    <main className="site-width pad-one">
+      <p>Quizzes</p>
+    </main>
+  );
+};
 
-export default AdminPage(<AdminQuizzesPage />);
+AdminQuizzesPage.Layout = AdminLayout;
+AdminQuizzesPage.LayoutProps = { page: "quizzes" };
+
+export default AdminQuizzesPage;

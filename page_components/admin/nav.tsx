@@ -1,51 +1,72 @@
+import React, { useEffect } from "react";
+import { Linkr } from "components/links";
+import styles from "styles/pages/Admin.module.css";
+import type { page } from "types/pages/admin";
 import {
   DraftIcon,
+  MenuIcon,
   PeopleIcon,
   PieChartIcon,
   QuizIcon,
 } from "components/icons";
-import { Linkr } from "components/links";
-import React, { useEffect, useRef } from "react";
-import styles from "styles/pages/Admin.module.css";
 
-type pagetype = { page?: "quizzes" | "drafts" | "users" | "stats" };
+const AdminNav: React.FC<{ page?: page }> = ({ page = "overview" }) => {
+  function colorActive(page: page) {
+    document
+      .querySelectorAll("#overview, #quizzes, #drafts, #users, #stats")
+      .forEach((elem) => elem.classList.remove(styles.Active));
+    document.getElementById(page)?.classList.add(styles.Active);
+  }
 
-const Nav: React.FC<pagetype> = ({ page }) => {
   useEffect(() => {
-    if (page)
-      document
-        .getElementById(page)
-        ?.scrollIntoView({ inline: "center", behavior: "smooth" });
+    document.getElementById(page)?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center",
+    });
+    colorActive(page);
   }, [page]);
 
   return (
-    <nav className={styles.AdminNav}>
-      <Linkr className={styles.IconTextBox} href="/admin/quizzes" id="quizzes">
-        <div className={styles.IconBox}>
-          <QuizIcon />
-        </div>
-        Quizzes
-      </Linkr>
-      <Linkr className={styles.IconTextBox} href="/admin/drafts" id="drafts">
-        <div className={styles.IconBox}>
-          <DraftIcon />
-        </div>
-        Drafts
-      </Linkr>
-      <Linkr className={styles.IconTextBox} href="/admin/users" id="users">
-        <div className={styles.IconBox}>
-          <PeopleIcon />
-        </div>
-        Users
-      </Linkr>
-      <Linkr className={styles.IconTextBox} href="/admin/stats" id="stats">
-        <div className={styles.IconBox}>
-          <PieChartIcon />
-        </div>
-        Stats
-      </Linkr>
+    <nav className={`${styles.AdminNav}`}>
+      <div className={`${styles.Padder} site-width`}>
+        <Linkr className={styles.IconTextBox} href="/admin" id="overview">
+          <span className={styles.IconBox}>
+            <MenuIcon />
+          </span>
+          Overview
+        </Linkr>
+        <Linkr
+          className={styles.IconTextBox}
+          href="/admin/quizzes"
+          id="quizzes"
+        >
+          <span className={styles.IconBox}>
+            <QuizIcon />
+          </span>
+          Quizzes
+        </Linkr>
+        <Linkr className={styles.IconTextBox} href="/admin/drafts" id="drafts">
+          <span className={styles.IconBox}>
+            <DraftIcon />
+          </span>
+          Drafts
+        </Linkr>
+        <Linkr className={styles.IconTextBox} href="/admin/users" id="users">
+          <span className={styles.IconBox}>
+            <PeopleIcon />
+          </span>
+          Users
+        </Linkr>
+        <Linkr className={styles.IconTextBox} href="/admin/stats" id="stats">
+          <span className={styles.IconBox}>
+            <PieChartIcon />
+          </span>
+          Stats
+        </Linkr>
+      </div>
     </nav>
   );
 };
 
-export default Nav;
+export default AdminNav;

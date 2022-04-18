@@ -1,8 +1,15 @@
-import AdminPage from "page_components/admin";
-import styles from "styles/pages/Admin.module.css";
+import { AdminLayout } from "components/layouts";
+import { NextPageWithLayout } from "types/next";
 
-const AdminUsersPage: React.FC = () => (
-  <main className="site-width pad-one">Users</main>
-);
+const AdminUsersPage: NextPageWithLayout = () => {
+  return (
+    <main className="site-width pad-one">
+      <p>Users</p>
+    </main>
+  );
+};
 
-export default AdminPage(<AdminUsersPage />);
+AdminUsersPage.Layout = AdminLayout;
+AdminUsersPage.LayoutProps = { page: "users" };
+
+export default AdminUsersPage;
