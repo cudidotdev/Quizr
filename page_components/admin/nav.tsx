@@ -15,7 +15,7 @@ const Nav: React.FC<pagetype> = ({ page }) => {
     if (page)
       document
         .getElementById(page)
-        ?.scrollIntoView({ inline: "center", behavior: "smooth", block:"nearest" });
+        ?.scrollIntoView({ inline: "center", behavior: "smooth" });
   }, [page]);
 
   return (
