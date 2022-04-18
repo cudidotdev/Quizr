@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import React, { useRef, useEffect, useState, useContext } from "react";
 import styles from "styles/pages/In.module.css";
 import { postFetcher } from "utils/fetchers";
-import { UserContext } from "components/app";
+import { NotePadContext, UserContext } from "components/app";
 
 type loginDetails = {
   user: string;
@@ -22,6 +22,7 @@ const LoginForm: React.FC = () => {
   const loginForm = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [, setUser] = useContext(UserContext);
+  const addNote = useContext(NotePadContext);
 
   function changeLoginDetails(key: string, value: string) {
     setLoginDetails((prev) => {
@@ -54,6 +55,11 @@ const LoginForm: React.FC = () => {
     if (!success) return processError(error);
 
     setUser(data);
+    addNote({
+      type: "info",
+      id: "loginsuccess",
+      msg: "Logged in successfully",
+    });
     router.push("/");
   }
 

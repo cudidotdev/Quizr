@@ -21,15 +21,15 @@ const App: React.FC = ({ children }) => {
 
   return (
     <div id="body">
-      <UserContext.Provider value={[user, setUser]}>
-        <ModalContext.Provider value={[runModal, removeModal]}>
-          <NotePadContext.Provider value={addNote}>
+      <ModalContext.Provider value={[runModal, removeModal]}>
+        <NotePadContext.Provider value={addNote}>
+          <UserContext.Provider value={[user, setUser]}>
             <Modal />
             <NotePad />
             {children}
-          </NotePadContext.Provider>
-        </ModalContext.Provider>
-      </UserContext.Provider>
+          </UserContext.Provider>
+        </NotePadContext.Provider>
+      </ModalContext.Provider>
     </div>
   );
 };

@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import React, { useRef, useEffect, useState, useContext } from "react";
 import styles from "styles/pages/In.module.css";
 import { postFetcher } from "utils/fetchers";
-import { UserContext } from "components/app";
+import { NotePadContext, UserContext } from "components/app";
 
 type registerDetails = {
   username: string;
@@ -26,6 +26,7 @@ const RegisterForm: React.FC = () => {
   const registerForm = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [, setUser] = useContext(UserContext);
+  const addNote = useContext(NotePadContext);
 
   function changeRegDetails(key: string, value: string) {
     setRegDetails((prev) => {
@@ -57,6 +58,8 @@ const RegisterForm: React.FC = () => {
     const { success, data, error } = res;
     if (!success) return processError(error);
 
+    addNote({ msg: "Registration successful", id: "regsuccess", type: "info" });
+
     setLoading({ value: true, msg: "Logging in" });
     const { username, password } = regDetails;
     const loginRes = await postFetcher("/api/user/login", {
@@ -74,6 +77,11 @@ const RegisterForm: React.FC = () => {
     if (!loginSuccess) return processError(loginError);
 
     setUser(loginData);
+    addNote({
+      msg: "Logged in successfully",
+      id: "loginsuccess",
+      type: "info",
+    });
     router.push("/");
   }
 

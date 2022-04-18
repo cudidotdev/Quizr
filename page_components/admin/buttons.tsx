@@ -34,6 +34,11 @@ export const CreateQuizButton: React.FC = () => {
         id: "button_5424",
       });
 
+    addNote({
+      type: "info",
+      msg: "Quiz Created",
+      id: "quizcreated324",
+    });
     return router.push(`/admin/drafts/editor?id=${data._id}`);
   }
 

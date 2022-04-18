@@ -2,7 +2,7 @@ import type { NextPageWithLayout } from "types/next";
 import Layout from "components/layouts";
 import { useContext, useEffect, useState } from "react";
 import { deleteFetcher } from "utils/fetchers";
-import { UserContext } from "components/app";
+import { NotePadContext, UserContext } from "components/app";
 import { useRouter } from "next/router";
 import styles from "styles/pages/Out.module.css";
 import { TripleSquareLoader } from "components/loaders";
@@ -10,6 +10,7 @@ import { TripleSquareLoader } from "components/loaders";
 const LogoutPage: NextPageWithLayout = () => {
   const [msg, setMsg] = useState({ name: "running", value: "Good Bye" });
   const [, setUser] = useContext(UserContext);
+  const addNote = useContext(NotePadContext);
   const router = useRouter();
 
   async function logout() {
@@ -25,6 +26,8 @@ const LogoutPage: NextPageWithLayout = () => {
 
     const { success, error } = data;
     if (!success) return setMsg({ name: "error", value: error.message });
+
+    addNote({ type: "info", id: "logoutmsg", msg: "Logged out successfully" });
 
     setUser(null);
     router.push("/");
