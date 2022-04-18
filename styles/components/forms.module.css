@@ -156,7 +156,7 @@
   flex-shrink: 0;
   margin-left: 0.5rem;
   background-color: transparent;
-  color: var(--color-primary-two);
+  color: var(--color-primary-three);
   border: none;
   border-radius: 0.25rem;
 }
@@ -203,8 +203,9 @@
   color: var(--color-black-three);
 }
 
-.MultipleSelectr .MultipleOption:hover {
-  color: var(--color-primary-two);
+.MultipleSelectr .MultipleOption:hover,
+.MultipleSelectr .MultipleOption.Selected:hover {
+  color: var(--color-primary-three);
 }
 
 .MultipleSelectr .MultipleOption.Selected {
@@ -229,6 +230,7 @@
   color: var(--color-primary-one);
 }
 
-.LinearSelectr .Option:hover {
-  color: var(--color-primary-two);
+.LinearSelectr .Option:hover,
+.LinearSelectr .Option.Selected:hover {
+  color: var(--color-primary-three);
 }

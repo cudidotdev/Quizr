@@ -1,52 +1,14 @@
 import { AdminLayout } from "components/layouts";
 import { NextPageWithLayout } from "types/next";
+import styles from "styles/pages/Admin.module.css";
+import { CreateQuizButton } from "page_components/admin";
 
 const AdminIndexPage: NextPageWithLayout = () => {
   return (
     <main className="site-width pad-one">
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
-      <p>Overview</p>
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <CreateQuizButton />
+      </div>
     </main>
   );
 };

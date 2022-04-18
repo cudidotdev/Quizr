@@ -30,40 +30,46 @@ const AdminNav: React.FC<{ page?: page }> = ({ page = "overview" }) => {
   return (
     <nav className={`${styles.AdminNav}`}>
       <div className={`${styles.Padder} site-width`}>
-        <Linkr className={styles.IconTextBox} href="/admin" id="overview">
-          <span className={styles.IconBox}>
-            <MenuIcon />
-          </span>
-          Overview
-        </Linkr>
-        <Linkr
-          className={styles.IconTextBox}
-          href="/admin/quizzes"
-          id="quizzes"
-        >
-          <span className={styles.IconBox}>
-            <QuizIcon />
-          </span>
-          Quizzes
-        </Linkr>
-        <Linkr className={styles.IconTextBox} href="/admin/drafts" id="drafts">
-          <span className={styles.IconBox}>
-            <DraftIcon />
-          </span>
-          Drafts
-        </Linkr>
-        <Linkr className={styles.IconTextBox} href="/admin/users" id="users">
-          <span className={styles.IconBox}>
-            <PeopleIcon />
-          </span>
-          Users
-        </Linkr>
-        <Linkr className={styles.IconTextBox} href="/admin/stats" id="stats">
-          <span className={styles.IconBox}>
-            <PieChartIcon />
-          </span>
-          Stats
-        </Linkr>
+        <div className={styles.ScrollBox}>
+          <Linkr className={styles.IconTextBox} href="/admin" id="overview">
+            <span className={styles.IconBox}>
+              <MenuIcon />
+            </span>
+            Overview
+          </Linkr>
+          <Linkr
+            className={styles.IconTextBox}
+            href="/admin/quizzes"
+            id="quizzes"
+          >
+            <span className={styles.IconBox}>
+              <QuizIcon />
+            </span>
+            Quizzes
+          </Linkr>
+          <Linkr
+            className={styles.IconTextBox}
+            href="/admin/drafts"
+            id="drafts"
+          >
+            <span className={styles.IconBox}>
+              <DraftIcon />
+            </span>
+            Drafts
+          </Linkr>
+          <Linkr className={styles.IconTextBox} href="/admin/users" id="users">
+            <span className={styles.IconBox}>
+              <PeopleIcon />
+            </span>
+            Users
+          </Linkr>
+          <Linkr className={styles.IconTextBox} href="/admin/stats" id="stats">
+            <span className={styles.IconBox}>
+              <PieChartIcon />
+            </span>
+            Stats
+          </Linkr>
+        </div>
       </div>
     </nav>
   );

@@ -126,12 +126,7 @@ export const EyeClosedIcon: React.FC = () => (
 );
 
 export const AddIcon: React.FC = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="100%"
-    height="100%"
-    viewBox="0 0 512 512"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
     <path
       fill="none"
       stroke="currentColor"
