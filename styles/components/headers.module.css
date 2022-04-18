@@ -177,7 +177,7 @@
 
 .AdminHeader .LogoContainer {
   display: flex;
-  padding: 0.5rem 1rem 0;
+  padding: 0.5rem 1rem;
   align-items: center;
   width: fit-content;
   transition: all 200ms linear;
