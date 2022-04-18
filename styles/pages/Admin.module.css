@@ -1,9 +1,9 @@
 .AdminNav {
   padding: 0.5rem 0;
-  box-shadow: var(--shadow-bottom-one);
-  /* position: sticky;
+  box-shadow: 0 0 2px rgba(50, 50, 50, 0.3);
+  position: sticky;
   top: 0;
-  z-index: 8; */
+  z-index: 8;
   width: 100%;
   overflow: auto;
   -ms-overflow-style: none;
