@@ -152,6 +152,7 @@ button:hover {
   --content-width: 900px;
   --box-width: 420px;
 
+  width: 100%;
   min-height: 100vh;
   background-color: var(--color-white-one);
   color: var(--color-black-two);

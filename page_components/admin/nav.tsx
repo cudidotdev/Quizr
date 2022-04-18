@@ -15,7 +15,8 @@ const AdminNav: React.FC<{ page?: page }> = ({ page = "overview" }) => {
     document
       .querySelectorAll("#overview, #quizzes, #drafts, #users, #stats")
       .forEach((elem) => elem.classList.remove(styles.Active));
-    document.getElementById(page)?.classList.add(styles.Active);
+    if (["overview, quizzes, d"])
+      document.getElementById(page)?.classList.add(styles.Active);
   }
 
   useEffect(() => {

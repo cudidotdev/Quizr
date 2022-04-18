@@ -50,3 +50,7 @@
   width: 1.5rem;
   margin-right: 0.25rem;
 }
+
+.AdminNav a:focus {
+  color: var(--color-primary-three);
+}

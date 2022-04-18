@@ -1,0 +1,57 @@
+.NotePad {
+  position: absolute;
+  width: 100%;
+  max-width: 420px;
+  top: 0;
+  left: calc(50% - 210px);
+  z-index: 10;
+}
+
+.Note {
+  display: flex;
+  width: 100%;
+  box-shadow: var(--shadow-one);
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  margin-top: 1rem;
+  align-items: center;
+  color: var(--color-primary-one);
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+.Note.Error {
+  color: var(--color-tertiary-one);
+}
+
+.Note.New {
+  animation-name: fade-in;
+  animation-duration: 500ms;
+}
+
+.Icon {
+  display: flex;
+  width: 1.75rem;
+  height: 1.75rem;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-right: 0.5rem;
+}
+
+.Text {
+  width: 100%;
+  border-radius: 0.25rem;
+  color: currentColor;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

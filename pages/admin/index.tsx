@@ -5,7 +5,7 @@ import { CreateQuizButton } from "page_components/admin";
 
 const AdminIndexPage: NextPageWithLayout = () => {
   return (
-    <main className="site-width pad-one">
+    <main className="site-width" style={{ padding: "0.5rem 1rem" }}>
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <CreateQuizButton />
       </div>

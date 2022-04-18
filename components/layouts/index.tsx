@@ -9,11 +9,11 @@ import { AdminNav } from "page_components/admin";
 
 const Layout: React.FC = ({ children }) => {
   return (
-    <div id="body">
+    <>
       <Header />
       {children}
       <Footer />
-    </div>
+    </>
   );
 };
 
@@ -26,12 +26,12 @@ export const AdminLayout: React.FC<{ page?: page }> = ({ children, page }) => {
       </Layout>
     );
   return (
-    <div id="body">
+    <>
       <AdminHeader />
-      <AdminNav page={page || "overview"} />
+      <AdminNav page={page} />
       {children}
       <Footer />
-    </div>
+    </>
   );
 };
 

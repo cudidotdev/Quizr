@@ -20,6 +20,8 @@
   border-radius: 0.25rem;
   padding: 0.375rem 1rem;
   transition: all 200ms linear;
+  display: inline-flex;
+  align-items: center;
 }
 .BtnPrimary:hover {
   background-color: var(--color-primary-two);
@@ -37,4 +39,9 @@
 
 .BtnPrimary.BtnIcon {
   padding-left: 0.625rem;
+}
+
+.BtnPrimary.BtnLoading {
+  background-color: var(--color-primary-two);
+  cursor: progress;
 }
