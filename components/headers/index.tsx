@@ -211,3 +211,4 @@ const Header: React.FC = () => {
 };
 
 export default Header;
+export { default as AdminHeader } from "./admin";

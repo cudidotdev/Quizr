@@ -53,7 +53,6 @@ const LoginForm: React.FC = () => {
     const { success, data, error } = res;
     if (!success) return processError(error);
 
-    console.log(data);
     setUser(data);
     router.push("/");
   }
