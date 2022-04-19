@@ -1,7 +1,7 @@
 export default function modifyError(error: any) {
   let { name, message, status = 500 } = error;
 
-  if (error.code === 11000) {
+  if (error.code == 11000) {
     [name] = Object.keys(error.keyPattern);
     message = `Oops, the ${name} is already taken`;
     status = 400;
@@ -12,7 +12,7 @@ export default function modifyError(error: any) {
     message = `${error.value} is a wrong type/format of ${error.path}`;
   }
 
-  if (error.name.startsWith("Mongo"))
+  if (error.name.startsWith("Mongo") && error.code != 11000)
     message = `Server error, Please try again`;
 
   const acceptableStatus = [

@@ -77,11 +77,6 @@ const RegisterForm: React.FC = () => {
     if (!loginSuccess) return processError(loginError);
 
     setUser(loginData);
-    addNote({
-      msg: "Logged in successfully",
-      id: "loginsuccess",
-      type: "info",
-    });
     router.push("/");
   }
 

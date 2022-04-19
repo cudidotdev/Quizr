@@ -54,12 +54,13 @@ const LoginForm: React.FC = () => {
     const { success, data, error } = res;
     if (!success) return processError(error);
 
-    setUser(data);
     addNote({
       type: "info",
       id: "loginsuccess",
       msg: "Logged in successfully",
     });
+
+    setUser(data);
     router.push("/");
   }
 
