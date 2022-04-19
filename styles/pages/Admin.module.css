@@ -54,3 +54,70 @@
 .AdminNav a:focus {
   color: var(--color-primary-three);
 }
+
+.MsgContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem 0;
+}
+
+.LoaderBox,
+.MsgBox,
+.ErrorBox {
+  color: var(--color-primary-one);
+  display: flex;
+  align-items: center;
+}
+
+.ErrorBox {
+  color: var(--color-tertiary-one);
+}
+
+.ReloadButton {
+  background-color: transparent;
+  color: var(--color-secondary-one);
+  border: none;
+  display: flex;
+  align-items: center;
+  transition: all 200ms linear;
+  padding: 0 0.5rem;
+}
+.ReloadButton .Icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-left: 0.5rem;
+}
+.ReloadButton:hover {
+  color: var(--color-secondary-two);
+}
+
+.EditorMenu {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.EditorMenu .Padder {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
+.EditorMenu .Padder button:not(:last-child) {
+  margin-right: 0.75rem;
+}
+
+@media screen and (min-width: 480px) {
+  .EditorMenu .Padder {
+    width: fit-content;
+    justify-content: flex-start;
+  }
+  .EditorMenu .Padder:not(:last-child) {
+    margin-right: 0.75rem;
+  }
+}

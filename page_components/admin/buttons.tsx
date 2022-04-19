@@ -1,5 +1,11 @@
 import { NotePadContext } from "components/app";
-import { AddIcon } from "components/icons";
+import {
+  AddIcon,
+  DeleteIcon,
+  ExitIcon,
+  PublishIcon,
+  SaveIcon,
+} from "components/icons";
 import { TripleSquareLoader } from "components/loaders";
 import { useRouter } from "next/router";
 import React, { useContext, useState } from "react";
@@ -62,6 +68,50 @@ export const CreateQuizButton: React.FC = () => {
         <AddIcon />
       </span>
       Create quiz
+    </button>
+  );
+};
+
+export const ExitButton: React.FC = () => {
+  return (
+    <button className={`${btnStyles.BtnIcon} ${btnStyles.BtnTertiaryX}`}>
+      <span className={btnStyles.Icon}>
+        <ExitIcon />
+      </span>
+      Exit
+    </button>
+  );
+};
+
+export const SaveButton: React.FC = () => {
+  return (
+    <button className={`${btnStyles.BtnIcon} ${btnStyles.BtnSecondaryX}`}>
+      <span className={btnStyles.Icon}>
+        <SaveIcon />
+      </span>
+      Save
+    </button>
+  );
+};
+
+export const DeleteButton: React.FC = () => {
+  return (
+    <button className={`${btnStyles.BtnIcon} ${btnStyles.BtnTertiaryX}`}>
+      <span className={btnStyles.Icon}>
+        <DeleteIcon />
+      </span>
+      Delete
+    </button>
+  );
+};
+
+export const PublishButton: React.FC = () => {
+  return (
+    <button className={`${btnStyles.BtnIcon} ${btnStyles.BtnSecondaryX}`}>
+      <span className={btnStyles.Icon}>
+        <PublishIcon />
+      </span>
+      Publish
     </button>
   );
 };

@@ -13,18 +13,41 @@
   cursor: not-allowed;
 }
 
-.BtnPrimary {
-  background-color: var(--color-primary-one);
-  color: var(--color-white-one);
+.BtnPrimary,
+.BtnTertiaryX,
+.BtnSecondaryX {
   border: none;
   border-radius: 0.25rem;
-  padding: 0.375rem 1rem;
+  padding: 0.375rem 0.75rem;
   transition: all 200ms linear;
   display: inline-flex;
   align-items: center;
 }
+
+.BtnPrimary {
+  background-color: var(--color-primary-one);
+  color: var(--color-white-one);
+}
 .BtnPrimary:hover {
   background-color: var(--color-primary-two);
+}
+
+.BtnSecondaryX {
+  background-color: transparent;
+  color: var(--color-secondary-one);
+  box-shadow: 0 0 3px rgba(50, 50, 50, 0.2);
+}
+.BtnSecondaryX:hover {
+  box-shadow: 0 0 3px rgba(0, 194, 97, 0.5);
+}
+
+.BtnTertiaryX {
+  background-color: transparent;
+  color: var(--color-tertiary-one);
+  box-shadow: 0 0 3px rgba(50, 50, 50, 0.2);
+}
+.BtnTertiaryX:hover {
+  box-shadow: 0 0 3px rgba(255, 120, 0, 0.5);
 }
 
 .BtnIcon {
@@ -34,7 +57,7 @@
   display: flex;
   height: 1.5rem;
   width: 1.5rem;
-  margin-right: 0.375rem;
+  margin-right: 0.5rem;
 }
 
 .BtnPrimary.BtnIcon {
