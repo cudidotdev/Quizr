@@ -120,7 +120,9 @@ input:focus,
 input:active,
 input:hover,
 button:active,
-button:hover {
+button:hover,
+textarea:focus,
+textarea:hover {
   border: inherit;
   outline: none;
 }

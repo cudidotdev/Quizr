@@ -28,7 +28,7 @@ export const LinkList: React.FC<
         <Linkr
           className={`${styles.List} disable-focus-color`}
           key={index}
-          href={`${child.props.id}`}
+          href={`${child.props.itemProp}`}
         >
           <div className={styles.Index}>{index + 1}</div>
           <div className={styles.Child}>{child}</div>

@@ -10,7 +10,7 @@ import { TripleSquareLoader } from "components/loaders";
 import { useRouter } from "next/router";
 import React, { useContext, useState } from "react";
 import btnStyles from "styles/components/buttons.module.css";
-import { postFetcher } from "utils/fetchers";
+import { deleteFetcher, postFetcher } from "utils/fetchers";
 
 export const CreateQuizButton: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -41,7 +41,7 @@ export const CreateQuizButton: React.FC = () => {
       });
 
     addNote({
-      type: "info",
+      type: "success",
       msg: "Quiz Created",
       id: "quizcreated324",
     });
@@ -72,9 +72,13 @@ export const CreateQuizButton: React.FC = () => {
   );
 };
 
-export const ExitButton: React.FC = () => {
+export const DraftExitButton: React.FC = () => {
+  const router = useRouter();
   return (
-    <button className={`${btnStyles.BtnIcon} ${btnStyles.BtnTertiaryX}`}>
+    <button
+      className={`${btnStyles.BtnIcon} ${btnStyles.BtnTertiaryX}`}
+      onClick={() => router.push("/admin/drafts")}
+    >
       <span className={btnStyles.Icon}>
         <ExitIcon />
       </span>
@@ -83,7 +87,7 @@ export const ExitButton: React.FC = () => {
   );
 };
 
-export const SaveButton: React.FC = () => {
+export const DraftSaveButton: React.FC<{ id: any }> = ({ id }) => {
   return (
     <button className={`${btnStyles.BtnIcon} ${btnStyles.BtnSecondaryX}`}>
       <span className={btnStyles.Icon}>
@@ -94,9 +98,58 @@ export const SaveButton: React.FC = () => {
   );
 };
 
-export const DeleteButton: React.FC = () => {
+export const DraftDeleteButton: React.FC<{ id: any }> = ({ id }) => {
+  const [loading, setLoading] = useState(false);
+  const addNote = useContext(NotePadContext);
+  const router = useRouter();
+
+  async function deleteDraft() {
+    setLoading(true);
+    const res = await deleteFetcher(`/api/quiz/draft/delete?id=${id}`);
+    setLoading(false);
+
+    if (!res)
+      return addNote({
+        type: "error",
+        msg: "It seems there is a connection error",
+        id: `faildeletedraft${id}`,
+      });
+
+    const { success, data, error } = res;
+    if (!success)
+      return addNote({
+        type: "error",
+        msg: error.message,
+        id: `errordeletedraft${id}`,
+      });
+
+    addNote({
+      type: "success",
+      msg: "Draft deleted successfully",
+      id: `successdeletedraft${id}`,
+    });
+
+    return router.push("/admin/drafts");
+  }
+
+  if (loading)
+    return (
+      <button
+        className={`${btnStyles.BtnIcon} ${btnStyles.BtnTertiaryX} ${btnStyles.BtnLoading}`}
+        onClick={deleteDraft}
+      >
+        <span className={btnStyles.Icon}>
+          <DeleteIcon />
+        </span>
+        Deleting <TripleSquareLoader t_colored />
+      </button>
+    );
+
   return (
-    <button className={`${btnStyles.BtnIcon} ${btnStyles.BtnTertiaryX}`}>
+    <button
+      className={`${btnStyles.BtnIcon} ${btnStyles.BtnTertiaryX}`}
+      onClick={deleteDraft}
+    >
       <span className={btnStyles.Icon}>
         <DeleteIcon />
       </span>
@@ -105,7 +158,7 @@ export const DeleteButton: React.FC = () => {
   );
 };
 
-export const PublishButton: React.FC = () => {
+export const DraftPublishButton: React.FC<{ id: any }> = ({ id }) => {
   return (
     <button className={`${btnStyles.BtnIcon} ${btnStyles.BtnSecondaryX}`}>
       <span className={btnStyles.Icon}>

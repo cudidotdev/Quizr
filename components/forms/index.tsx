@@ -1,7 +1,7 @@
 import { EyeOpenIcon, EyeClosedIcon, SearchIcon } from "components/icons";
 import React, { useRef, useState } from "react";
 import styles from "styles/components/forms.module.css";
-import type { inputr, submitr } from "types/components/form";
+import type { inputr, submitr, textarea } from "types/components/form";
 
 export const Inputr: React.FC<inputr> = (props) => {
   const { label = "", name, onChange, type = "text", Icon, clickFn } = props;
@@ -76,6 +76,28 @@ export const Submitr: React.FC<submitr> = (props) => {
     >
       {props.children}
     </button>
+  );
+};
+
+export const TextArea: React.FC<textarea> = (props) => {
+  const { label = "", name, onChange, height } = props;
+  const cstm = useRef<HTMLDivElement>(null);
+
+  return (
+    <div className={`${styles.Cstm}`} ref={cstm}>
+      <label htmlFor={name}>{label}</label>
+      <div className={`${styles.InputBox}`}>
+        <textarea
+          {...props}
+          id={name}
+          name={name}
+          onChange={(ev: any) => onChange && onChange(ev.target.value)}
+          onFocus={() => cstm.current?.classList.add(styles.Color)}
+          onBlur={() => cstm.current?.classList.remove(styles.Color)}
+          style={{ height: `${height || "300px"}` }}
+        />
+      </div>
+    </div>
   );
 };
 

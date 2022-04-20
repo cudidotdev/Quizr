@@ -37,7 +37,7 @@ const AdminDraftsPage: NextPageWithLayout = () => {
 
   return (
     <main className="site-width" style={{ padding: "0.5rem 1rem" }}>
-      <div>
+      <div style={{ maxWidth: "420px" }}>
         <Searchr name="searchDrafts" placeholder="Search..." label="" />
       </div>
       {loading ? (
@@ -62,7 +62,10 @@ const AdminDraftsPage: NextPageWithLayout = () => {
       ) : drafts.length ? (
         <LinkList style={{ padding: "0.5rem 0" }}>
           {drafts.map((draft: any) => (
-            <div key={draft._id} id={`/admin/drafts/editor?id=${draft._id}`}>
+            <div
+              key={draft._id}
+              itemProp={`/admin/drafts/editor?id=${draft._id}`}
+            >
               {draft.title}
             </div>
           ))}

@@ -49,3 +49,13 @@ export interface submitr
   > {
   type?: "submit";
 }
+
+export interface textarea
+  extends React.DetailedHTMLProps<
+    React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+    HTMLTextAreaElement
+  > {
+  label?: string;
+  name: string;
+  height?: string;
+}

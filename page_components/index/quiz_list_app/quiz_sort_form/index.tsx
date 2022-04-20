@@ -6,10 +6,10 @@ const QuizSortForm: React.FC = () => {
   return (
     <div className={`${styles.SortForm} content-width`}>
       <div className={styles.SearchAndCategoryBox}>
-        <div>
+        <div style={{ maxWidth: "420px" }}>
           <Searchr name="quizSearch" />
         </div>
-        <div>
+        <div style={{ maxWidth: "420px" }}>
           <Selectr
             name="quizCategory"
             label="Categories"
@@ -24,7 +24,7 @@ const QuizSortForm: React.FC = () => {
           </Selectr>
         </div>
       </div>
-      <div className={styles.SortBox}>
+      <div className={styles.SortBox} style={{ maxWidth: "420px" }}>
         <Selectr name="quizSort" label="Sort by">
           <Option value="Popularity" />
           <Option value="Difficulty" />

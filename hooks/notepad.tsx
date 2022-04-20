@@ -37,8 +37,8 @@ export default function useNotePad(): [React.FC, (note: note) => void] {
   const Note: React.FC<_note> = ({ msg, type, _new }) => (
     <div
       className={`${styles.Note} ${type === "error" ? styles.Error : ""} ${
-        _new === true && fade ? styles.New : ""
-      }`}
+        type === "success" ? styles.Success : ""
+      } ${_new === true && fade ? styles.New : ""} `}
     >
       <span className={`${styles.Icon} t-medium`}>
         {type === "error" ? "!" : "\u2713"}

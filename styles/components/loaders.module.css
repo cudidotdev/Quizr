@@ -146,3 +146,73 @@
     background-color: rgba(132, 186, 255, 0);
   }
 }
+
+.TripleSquareLoader.TColored span {
+  background-color: var(--color-primary-three);
+}
+
+.TripleSquareLoader.TColored span:first-child {
+  animation-name: tcolored-triplesquare-square-one;
+  animation-duration: 2.5s;
+  animation-iteration-count: infinite;
+}
+.TripleSquareLoader.TColored span:nth-child(2) {
+  animation-name: tcolored-triplesquare-square-two;
+  animation-duration: 2.5s;
+  animation-iteration-count: infinite;
+}
+.TripleSquareLoader.TColored span:last-child {
+  animation-name: tcolored-triplesquare-square-three;
+  animation-duration: 2.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes tcolored-triplesquare-square-one {
+  0% {
+    background-color: rgba(255, 120, 0, 0);
+  }
+
+  20%,
+  50% {
+    background-color: rgba(255, 120, 0, 0.7);
+  }
+
+  80%,
+  100% {
+    background-color: rgba(255, 120, 0, 0);
+  }
+}
+
+@keyframes tcolored-triplesquare-square-two {
+  0%,
+  10% {
+    background-color: rgba(255, 120, 0, 0);
+  }
+
+  30%,
+  60% {
+    background-color: rgba(255, 120, 0, 0.7);
+  }
+
+  85%,
+  100% {
+    background-color: rgba(255, 120, 0, 0);
+  }
+}
+
+@keyframes tcolored-triplesquare-square-three {
+  0%,
+  20% {
+    background-color: rgba(255, 120, 0, 0);
+  }
+
+  40%,
+  70% {
+    background-color: rgba(255, 120, 0, 0.7);
+  }
+
+  90%,
+  100% {
+    background-color: rgba(255, 120, 0, 0);
+  }
+}

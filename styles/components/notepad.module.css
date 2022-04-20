@@ -23,6 +23,9 @@
 .Note.Error {
   color: var(--color-tertiary-one);
 }
+.Note.Success {
+  color: var(--color-secondary-one);
+}
 
 .Note.New {
   animation-name: fade-in;
