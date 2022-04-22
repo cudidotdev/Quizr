@@ -37,7 +37,7 @@ const QuestionForm: React.FC = () => {
         <QuestionOption name="C" />
         <QuestionOption name="D" />
       </div>
-      <div style={{ maxWidth: "240px" }}>
+      <div style={{ maxWidth: "10rem" }}>
         <Selectr name="answer" label="Answer">
           <Option value="A" />
           <Option value="B" />
