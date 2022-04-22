@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import styles from "styles/components/modal.module.css";
 
-export default function useModal(): [React.FC, () => void, () => void] {
+export default function useModal(): [
+  React.FC,
+  (elem: ReactElement) => void,
+  () => void
+] {
   const [disp, setDisp] = useState<boolean>(false);
+  const [child, setChild] = useState<ReactElement>();
+  const [isNew, setNew] = useState<boolean>();
 
-  function runModal() {
+  function runModal(elem: ReactElement) {
     setDisp(true);
+    setChild(elem);
   }
   function removeModal() {
     setDisp(false);
@@ -16,7 +23,16 @@ export default function useModal(): [React.FC, () => void, () => void] {
       <div
         className={`${disp ? styles.ModalContainer : ""}`}
         onClick={removeModal}
-      ></div>
+      >
+        {disp && (
+          <div
+            onClick={(ev) => ev.stopPropagation()}
+            className={styles.ModalChild}
+          >
+            {child}
+          </div>
+        )}
+      </div>
     );
   };
 

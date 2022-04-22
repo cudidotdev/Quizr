@@ -9,7 +9,7 @@
   padding: 0.75rem;
   box-shadow: var(--shadow-one);
   border-radius: 0.25rem;
-  flex: 1 0 360px;
+  width: 100%;
 }
 .List .Index {
   width: 1.75rem;
@@ -23,8 +23,6 @@
   margin-right: 0.75rem;
 }
 
-@media screen and (min-width: 768px) {
-  .ListContainer {
-    grid-template-columns: 1fr 1fr;
-  }
+.ListContainer.Large {
+  grid-template-columns: 1fr 1fr;
 }

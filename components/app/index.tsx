@@ -1,13 +1,12 @@
-import React, { useEffect } from "react";
+import React, { ReactElement, useEffect } from "react";
 import useModal from "hooks/modal";
 import useUser from "hooks/user";
 import useNotePad from "hooks/notepad";
 import { note } from "types/components/notepad";
 
-export const ModalContext = React.createContext<[() => void, () => void]>([
-  () => {},
-  () => {},
-]);
+export const ModalContext = React.createContext<
+  [(elem: ReactElement) => void, () => void]
+>([(elem: ReactElement) => {}, () => {}]);
 //@ts-ignore
 export const UserContext = React.createContext<[any, React.Dispatch<any>]>([]);
 export const NotePadContext = React.createContext<(note: note) => void>(

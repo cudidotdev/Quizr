@@ -95,6 +95,7 @@ export const TextArea: React.FC<textarea> = (props) => {
           onFocus={() => cstm.current?.classList.add(styles.Color)}
           onBlur={() => cstm.current?.classList.remove(styles.Color)}
           style={{ height: `${height || "300px"}` }}
+          className={`${props.className || ""} hide-scroll`}
         />
       </div>
     </div>

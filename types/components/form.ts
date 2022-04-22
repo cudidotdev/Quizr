@@ -58,4 +58,5 @@ export interface textarea
   label?: string;
   name: string;
   height?: string;
+  onChange?: (value: any) => any;
 }

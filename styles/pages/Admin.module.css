@@ -128,6 +128,61 @@
   margin-bottom: 0.5rem;
 }
 
+.QuestionsList {
+  cursor: pointer;
+}
+
+.QuestionForm {
+  height: 90vh;
+  background-color: var(--color-white-one);
+  border-radius: 0.25rem;
+  box-shadow: var(--shadow-one);
+  padding: 1rem;
+  cursor: default;
+  position: relative;
+}
+
+.QuestionForm > * {
+  width: 100%;
+  padding: 0.25rem 0;
+}
+
+.QuestionForm .OptionContainer {
+  transition: all 200ms linear;
+}
+.QuestionForm .OptionContainer:hover {
+  color: var(--color-primary-one);
+}
+
+.QuestionForm .OptionBox {
+  display: flex;
+  padding: 0.25rem 0;
+  align-items: center;
+  color: var(--color-black-two);
+  width: 100%;
+  transition: all 200ms linear;
+}
+.QuestionForm .OptionBox.Color {
+  color: var(--color-primary-one);
+}
+
+.QuestionForm .OptionName {
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  color: inherit;
+}
+
+.QuestionForm .ButtonBox {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
+.QuestionForm .ButtonBox button {
+  margin-left: 0.75rem;
+}
+
 @media screen and (min-width: 480px) {
   .EditorMenu .Padder {
     width: fit-content;

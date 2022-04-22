@@ -10,16 +10,37 @@ import {
   QuizQuestionsForm,
 } from "page_components/admin";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import { getFetcher } from "utils/fetchers";
 import { NotePadContext } from "components/app";
+import type { draftAction, draftData } from "types/pages/admin";
+import { modifyDraftForDisplay } from "utils/quiz";
+
+function DraftReducer(state: draftData, action: draftAction): draftData {
+  if (
+    action.type === "title" ||
+    action.type === "introText" ||
+    action.type === "categories"
+  )
+    return { ...state, [action.type]: action.payload };
+  if (action.type === "questions") {
+    if (state.questions)
+      return { ...state, questions: [...state.questions, action.payload] };
+    return { ...state, questions: [action.payload] };
+  }
+  if (action.type === "all") {
+    const { title, introText, categories, questions } = action.payload;
+    return { title, introText, categories, questions };
+  }
+  return state;
+}
 
 const QuizEditorPage: NextPageWithLayout = () => {
   const router = useRouter();
   const draftId = router.query.id;
   const [loading, setLoading] = useState(false);
   const addNote = useContext(NotePadContext);
-  const [draftData, setDraftData] = useState<any>();
+  const [draftData, draftDispatch] = useReducer(DraftReducer, {});
 
   async function fetchDraftData() {
     if (!draftId) return;
@@ -44,7 +65,7 @@ const QuizEditorPage: NextPageWithLayout = () => {
         id: `errorfetchdraftdata${draftId}`,
       });
 
-    return setDraftData(data);
+    draftDispatch({ type: "all", payload: modifyDraftForDisplay(data) });
   }
 
   /*eslint-disable*/
@@ -58,7 +79,11 @@ const QuizEditorPage: NextPageWithLayout = () => {
       <div className={styles.EditorMenu}>
         <div className={styles.Padder}>
           <DraftExitButton />
-          <DraftSaveButton id={draftId} />
+          <DraftSaveButton
+            id={draftId}
+            data={draftData}
+            dispatch={draftDispatch}
+          />
         </div>
         <div className={styles.Padder}>
           <DraftDeleteButton id={draftId} />
@@ -66,7 +91,11 @@ const QuizEditorPage: NextPageWithLayout = () => {
         </div>
       </div>
       <div className={styles.EditorApp}>
-        <QuizMetaForm loading={loading} draftData={draftData} />
+        <QuizMetaForm
+          loading={loading}
+          data={draftData}
+          dispatch={draftDispatch}
+        />
         <QuizQuestionsForm />
       </div>
     </main>

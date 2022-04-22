@@ -2,12 +2,13 @@ import { QuizDraft, Quiz } from "database/models";
 
 export async function generateUniqueQuizTitle() {
   const Untitleds = await QuizDraft.find({
-    $regex: { title: /^Untitled_\d+$/i },
+    title: { $regex: /^Untitled_\d+$/i },
   })
     .sort("-createdAt")
     .select("title -_id")
     .lean();
   if (!Untitleds.length) return "Untitled_1";
+  console.log(Untitleds);
 
   const numOfLastUntitled = Untitleds.sort((a, b) => {
     const numA = a.title.match(/\d+$/)[0];

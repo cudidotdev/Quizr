@@ -1,4 +1,4 @@
-import { NotePadContext } from "components/app";
+import { ModalContext, NotePadContext } from "components/app";
 import {
   AddIcon,
   DeleteIcon,
@@ -10,7 +10,9 @@ import { TripleSquareLoader } from "components/loaders";
 import { useRouter } from "next/router";
 import React, { useContext, useState } from "react";
 import btnStyles from "styles/components/buttons.module.css";
-import { deleteFetcher, postFetcher } from "utils/fetchers";
+import { draftAction, draftData } from "types/pages/admin";
+import { deleteFetcher, patchFetcher, postFetcher } from "utils/fetchers";
+import { modifyDraftForDisplay, modifyDraftForSave } from "utils/quiz";
 
 export const CreateQuizButton: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -87,9 +89,61 @@ export const DraftExitButton: React.FC = () => {
   );
 };
 
-export const DraftSaveButton: React.FC<{ id: any }> = ({ id }) => {
+export const DraftSaveButton: React.FC<{
+  id: any;
+  data: draftData;
+  dispatch: React.Dispatch<draftAction>;
+}> = ({ id, data, dispatch }) => {
+  const [loading, setLoading] = useState(false);
+  const addNote = useContext(NotePadContext);
+
+  async function saveDraft() {
+    setLoading(true);
+    const res = await patchFetcher(
+      `/api/quiz/draft/edit?id=${id}`,
+      modifyDraftForSave(data)
+    );
+    setLoading(false);
+
+    if (!res)
+      return addNote({
+        type: "error",
+        msg: "It seems there is a connection error",
+        id: `failsavedraft${id}`,
+      });
+
+    const { success, data: savedData, error } = res;
+    if (!success)
+      return addNote({
+        type: "error",
+        msg: error.message,
+        id: `errorsavedraft${id}`,
+      });
+
+    addNote({
+      type: "success",
+      msg: "Saved successfully",
+      id: `successsaveraft${id}`,
+    });
+
+    dispatch({ type: "all", payload: modifyDraftForDisplay(savedData) });
+  }
+  if (loading)
+    return (
+      <button
+        className={`${btnStyles.BtnIcon} ${btnStyles.BtnSecondaryX} ${btnStyles.BtnLoading}`}
+      >
+        <span className={btnStyles.Icon}>
+          <SaveIcon />
+        </span>
+        Saving <TripleSquareLoader s_colored />
+      </button>
+    );
   return (
-    <button className={`${btnStyles.BtnIcon} ${btnStyles.BtnSecondaryX}`}>
+    <button
+      className={`${btnStyles.BtnIcon} ${btnStyles.BtnSecondaryX}`}
+      onClick={saveDraft}
+    >
       <span className={btnStyles.Icon}>
         <SaveIcon />
       </span>
@@ -136,7 +190,6 @@ export const DraftDeleteButton: React.FC<{ id: any }> = ({ id }) => {
     return (
       <button
         className={`${btnStyles.BtnIcon} ${btnStyles.BtnTertiaryX} ${btnStyles.BtnLoading}`}
-        onClick={deleteDraft}
       >
         <span className={btnStyles.Icon}>
           <DeleteIcon />
@@ -165,6 +218,24 @@ export const DraftPublishButton: React.FC<{ id: any }> = ({ id }) => {
         <PublishIcon />
       </span>
       Publish
+    </button>
+  );
+};
+
+export const CancelQuestionButton: React.FC = () => {
+  const [, removeModal] = useContext(ModalContext);
+  return (
+    <button className={`${btnStyles.BtnTertiaryX}`} onClick={removeModal}>
+      Cancel
+    </button>
+  );
+};
+
+export const AddQuestionButton: React.FC = () => {
+  const [, removeModal] = useContext(ModalContext);
+  return (
+    <button className={`${btnStyles.BtnSecondaryX}`} onClick={removeModal}>
+      Add
     </button>
   );
 };

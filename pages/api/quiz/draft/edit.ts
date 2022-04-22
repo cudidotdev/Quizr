@@ -7,7 +7,7 @@ import { modifyError, modifyQuizDraft } from "api_utils";
 
 const handler: NextApiHandlerX = async (req, res) => {
   await connectDB();
-  if (req.method === "PUT") {
+  if (req.method === "PATCH") {
     try {
       await restrictToAdmins(req);
 
@@ -31,7 +31,7 @@ const handler: NextApiHandlerX = async (req, res) => {
     success: false,
     error: {
       name: "method",
-      message: "Only a put request is accepted in this route",
+      message: "Only a patch request is accepted in this route",
     },
   });
 };

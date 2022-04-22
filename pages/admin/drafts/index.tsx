@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { NextPageWithLayout } from "types/next";
 import { getFetcher } from "utils/fetchers";
 import styles from "styles/pages/Admin.module.css";
-import { LinkList } from "components/lists";
+import ListContainer, { LinkList } from "components/lists";
 import { TripleSquareLoader } from "components/loaders";
 import { RefreshIcon, ReloadIcon } from "components/icons";
 
@@ -60,16 +60,16 @@ const AdminDraftsPage: NextPageWithLayout = () => {
           </button>
         </div>
       ) : drafts.length ? (
-        <LinkList style={{ padding: "0.5rem 0" }}>
+        <ListContainer style={{ padding: "0.5rem 0" }}>
           {drafts.map((draft: any) => (
-            <div
+            <LinkList
               key={draft._id}
-              itemProp={`/admin/drafts/editor?id=${draft._id}`}
+              href={`/admin/drafts/editor?id=${draft._id}`}
             >
               {draft.title}
-            </div>
+            </LinkList>
           ))}
-        </LinkList>
+        </ListContainer>
       ) : (
         <div className={styles.MsgContainer}>
           <p className={styles.MsgBox}>You have no drafts</p>

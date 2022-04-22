@@ -13,7 +13,14 @@ const handler: NextApiHandlerX = async (req, res) => {
 
       const { id } = req.query;
       if (!id) throw new ApiError("id", "Please insert quiz id on query", 400);
-      await QuizDraft.findByIdAndDelete(id);
+      const data = await QuizDraft.findByIdAndDelete(id);
+
+      if (!data)
+        throw new ApiError(
+          "id",
+          `Found no quiz draft with an id of ${id}`,
+          400
+        );
 
       return res.status(200).json({ success: true });
     } catch (error: any) {

@@ -51,6 +51,7 @@
   font-family: inherit;
   resize: none;
 }
+
 .Cstm .InputBox input:focus,
 .Cstm .InputBox textarea:focus {
   box-shadow: var(--shadow-two);

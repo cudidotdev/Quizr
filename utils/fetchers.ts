@@ -61,6 +61,30 @@ export async function putFetcher(
   }
 }
 
+export async function patchFetcher(
+  url: string,
+  body: any,
+  headers = {},
+  options = {}
+) {
+  try {
+    const response = await fetch(url, {
+      body: JSON.stringify(body),
+      method: "PATCH",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json",
+        ...headers,
+      },
+      ...options,
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return null;
+  }
+}
+
 export async function deleteFetcher(url: string, headers = {}, options = {}) {
   try {
     const response = await fetch(url, {
