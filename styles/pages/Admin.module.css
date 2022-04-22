@@ -133,7 +133,7 @@
 }
 
 .QuestionForm {
-  height: 90vh;
+  max-height: 90vh;
   background-color: var(--color-white-one);
   border-radius: 0.25rem;
   box-shadow: var(--shadow-one);
@@ -175,9 +175,6 @@
 .QuestionForm .ButtonBox {
   display: flex;
   justify-content: flex-end;
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
 }
 .QuestionForm .ButtonBox button {
   margin-left: 0.75rem;

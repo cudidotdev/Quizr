@@ -179,7 +179,7 @@
   visibility: hidden;
   opacity: 0;
   width: 100%;
-  padding: 1rem;
+  padding: 0.75rem 0.75rem 0.25rem;
   box-shadow: -2px 2px 3px var(--color-primary-transparent),
     2px 2px 3px var(--color-primary-transparent);
   background-color: var(--color-white-one);
