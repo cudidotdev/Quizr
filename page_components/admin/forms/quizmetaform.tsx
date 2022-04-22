@@ -14,7 +14,7 @@ const QuizMetaForm: React.FC<{
       <Inputr
         name="title"
         label="Title"
-        placeholder={`${loading ? "fetching draft data..." : ""}`}
+        placeholder={`${loading ? "fetching data ..." : ""}`}
         className={`${loading ? "t-italic" : ""}`}
         value={`${data.title ? data.title : ""}`}
         onChange={(value) => dispatch({ type: "title", payload: value })}
@@ -23,7 +23,7 @@ const QuizMetaForm: React.FC<{
         name="categories"
         label="Categories"
         className={`${loading ? "t-italic" : ""}`}
-        placeholder={`${loading ? "fetching draft data..." : ""}`}
+        placeholder={`${loading ? "fetching data ..." : ""}`}
         value={`${data.categories ? data.categories : ""}`}
         onChange={(value) => dispatch({ type: "categories", payload: value })}
       />
@@ -32,7 +32,7 @@ const QuizMetaForm: React.FC<{
         label="Introductory Text"
         height="420px"
         className={`${loading ? "t-italic" : ""}`}
-        placeholder={`${loading ? "fetching draft data..." : ""}`}
+        placeholder={`${loading ? "fetching data ..." : ""}`}
         value={`${data.introText ? data.introText : ""}`}
         onChange={(value) => dispatch({ type: "introText", payload: value })}
       />

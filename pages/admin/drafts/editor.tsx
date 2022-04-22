@@ -75,7 +75,7 @@ const QuizEditorPage: NextPageWithLayout = () => {
   /*eslint-enable*/
 
   return (
-    <main className="site-width" style={{ padding: "0.5rem 1rem" }}>
+    <main className="site-width" style={{ padding: "0.5rem 1rem 1rem" }}>
       <div className={styles.EditorMenu}>
         <div className={styles.Padder}>
           <DraftExitButton />
@@ -96,7 +96,11 @@ const QuizEditorPage: NextPageWithLayout = () => {
           data={draftData}
           dispatch={draftDispatch}
         />
-        <QuizQuestionsForm />
+        <QuizQuestionsForm
+          loading={loading}
+          data={draftData.questions || []}
+          dispatch={draftDispatch}
+        />
       </div>
     </main>
   );

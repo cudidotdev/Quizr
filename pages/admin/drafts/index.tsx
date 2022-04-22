@@ -36,7 +36,7 @@ const AdminDraftsPage: NextPageWithLayout = () => {
   }, []);
 
   return (
-    <main className="site-width" style={{ padding: "0.5rem 1rem" }}>
+    <main className="site-width" style={{ padding: "0.5rem 1rem 1rem" }}>
       <div style={{ maxWidth: "420px" }}>
         <Searchr name="searchDrafts" placeholder="Search..." label="" />
       </div>
@@ -65,6 +65,7 @@ const AdminDraftsPage: NextPageWithLayout = () => {
             <LinkList
               key={draft._id}
               href={`/admin/drafts/editor?id=${draft._id}`}
+              style={{ display: "flex", alignItems: "center" }}
             >
               {draft.title}
             </LinkList>

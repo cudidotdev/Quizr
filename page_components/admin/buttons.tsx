@@ -10,7 +10,7 @@ import { TripleSquareLoader } from "components/loaders";
 import { useRouter } from "next/router";
 import React, { useContext, useState } from "react";
 import btnStyles from "styles/components/buttons.module.css";
-import { draftAction, draftData } from "types/pages/admin";
+import { draftAction, draftData, question } from "types/pages/admin";
 import { deleteFetcher, patchFetcher, postFetcher } from "utils/fetchers";
 import { modifyDraftForDisplay, modifyDraftForSave } from "utils/quiz";
 
@@ -231,10 +231,19 @@ export const CancelQuestionButton: React.FC = () => {
   );
 };
 
-export const AddQuestionButton: React.FC = () => {
+export const AddQuestionButton: React.FC<{
+  dispatch: React.Dispatch<draftAction>;
+  question: question;
+}> = ({ dispatch, question }) => {
   const [, removeModal] = useContext(ModalContext);
+
+  function addQuestion() {
+    dispatch({ type: "questions", payload: question });
+    removeModal();
+  }
+
   return (
-    <button className={`${btnStyles.BtnSecondaryX}`} onClick={removeModal}>
+    <button className={`${btnStyles.BtnSecondaryX}`} onClick={addQuestion}>
       Add
     </button>
   );

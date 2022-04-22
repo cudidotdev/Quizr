@@ -1,15 +1,17 @@
 export type page = "overview" | "quizzes" | "drafts" | "users" | "stats";
 
+export type question = {
+  question: string;
+  index: number;
+  options: { A: string; B: string; C: string; D: string };
+  answer: "A" | "B" | "C" | "D";
+};
+
 export type draftData = {
   title?: string;
   categories?: string;
   introText?: string;
-  questions?: {
-    question: string;
-    index: number;
-    options: { A: string; B: string; C: string; D: string };
-    answer: "A" | "B" | "C" | "D";
-  }[];
+  questions?: question[];
 };
 
 export type draftAction =
@@ -19,12 +21,7 @@ export type draftAction =
     }
   | {
       type: "questions";
-      payload: {
-        question: string;
-        index: number;
-        options: { A: string; B: string; C: string; D: string };
-        answer: "A" | "B" | "C" | "D";
-      };
+      payload: question;
     }
   | {
       type: "all";
