@@ -34,7 +34,10 @@
   background-color: var(--color-primary-one);
   color: var(--color-white-one);
 }
-.BtnPrimary:hover {
+.BtnPrimary:hover,
+.BtnPrimary:focus {
+  outline: inherit;
+  border: inherit;
   background-color: var(--color-primary-two);
 }
 
@@ -43,8 +46,11 @@
   color: var(--color-secondary-one);
   box-shadow: 0 0 3px rgba(50, 50, 50, 0.2);
 }
-.BtnSecondaryX:hover {
-  box-shadow: 0 0 3px rgba(0, 194, 97, 0.5);
+.BtnSecondaryX:hover,
+.BtnSecondaryX:focus {
+  outline: inherit;
+  border: inherit;
+  box-shadow: 0 0 3px rgba(0, 194, 97, 0.6);
 }
 
 .BtnTertiaryX {
@@ -52,8 +58,11 @@
   color: var(--color-tertiary-one);
   box-shadow: 0 0 3px rgba(50, 50, 50, 0.2);
 }
-.BtnTertiaryX:hover {
-  box-shadow: 0 0 3px rgba(255, 120, 0, 0.5);
+.BtnTertiaryX:hover,
+.BtnTertiaryX:focus {
+  outline: inherit;
+  border: inherit;
+  box-shadow: 0 0 3px rgba(255, 120, 0, 0.6);
 }
 
 .BtnIcon {

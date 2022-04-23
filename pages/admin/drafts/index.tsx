@@ -65,7 +65,6 @@ const AdminDraftsPage: NextPageWithLayout = () => {
             <LinkList
               key={draft._id}
               href={`/admin/drafts/editor?id=${draft._id}`}
-              style={{ display: "flex", alignItems: "center" }}
             >
               {draft.title}
             </LinkList>

@@ -1,6 +1,7 @@
 import { ModalContext, NotePadContext } from "components/app";
 import {
   AddIcon,
+  CheckIcon,
   DeleteIcon,
   ExitIcon,
   PublishIcon,
@@ -8,11 +9,12 @@ import {
 } from "components/icons";
 import { TripleSquareLoader } from "components/loaders";
 import { useRouter } from "next/router";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import btnStyles from "styles/components/buttons.module.css";
 import { draftAction, draftData, question } from "types/pages/admin";
 import { deleteFetcher, patchFetcher, postFetcher } from "utils/fetchers";
 import { modifyDraftForDisplay, modifyDraftForSave } from "utils/quiz";
+import { doesDiffer } from "utils";
 
 export const CreateQuizButton: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -96,6 +98,22 @@ export const DraftSaveButton: React.FC<{
 }> = ({ id, data, dispatch }) => {
   const [loading, setLoading] = useState(false);
   const addNote = useContext(NotePadContext);
+  const [prevSaved, setPrevSaved] = useState<draftData>(data);
+  const [isSaved, setSaved] = useState(true);
+
+  /*eslint-disable*/
+  useEffect(() => {
+    if (!doesDiffer(prevSaved, {})) setPrevSaved(data);
+  }, [data]);
+
+  useEffect(() => {
+    setSaved(!doesDiffer(data, prevSaved));
+  }, [data, prevSaved]);
+
+  useEffect(() => {
+    console.log(isSaved);
+  }, [isSaved]);
+  /*eslint-enable*/
 
   async function saveDraft() {
     setLoading(true);
@@ -126,8 +144,13 @@ export const DraftSaveButton: React.FC<{
       id: `successsaveraft${id}`,
     });
 
+    const { title, categories, introText, questions } = savedData;
+    setPrevSaved(
+      modifyDraftForDisplay({ title, categories, introText, questions })
+    );
     dispatch({ type: "all", payload: modifyDraftForDisplay(savedData) });
   }
+
   if (loading)
     return (
       <button
@@ -139,6 +162,20 @@ export const DraftSaveButton: React.FC<{
         Saving <TripleSquareLoader s_colored />
       </button>
     );
+
+  if (isSaved)
+    return (
+      <button
+        className={`${btnStyles.BtnIcon} ${btnStyles.BtnSecondaryX}`}
+        style={{ cursor: "default" }}
+      >
+        <span className={btnStyles.Icon}>
+          <CheckIcon />
+        </span>
+        Saved
+      </button>
+    );
+
   return (
     <button
       className={`${btnStyles.BtnIcon} ${btnStyles.BtnSecondaryX}`}
@@ -225,25 +262,19 @@ export const DraftPublishButton: React.FC<{ id: any }> = ({ id }) => {
 export const CancelQuestionButton: React.FC = () => {
   const [, removeModal] = useContext(ModalContext);
   return (
-    <button className={`${btnStyles.BtnTertiaryX}`} onClick={removeModal}>
+    <button
+      className={`${btnStyles.BtnTertiaryX}`}
+      onClick={removeModal}
+      type="button"
+    >
       Cancel
     </button>
   );
 };
 
-export const AddQuestionButton: React.FC<{
-  dispatch: React.Dispatch<draftAction>;
-  question: question;
-}> = ({ dispatch, question }) => {
-  const [, removeModal] = useContext(ModalContext);
-
-  function addQuestion() {
-    dispatch({ type: "questions", payload: question });
-    removeModal();
-  }
-
+export const AddQuestionButton: React.FC = () => {
   return (
-    <button className={`${btnStyles.BtnSecondaryX}`} onClick={addQuestion}>
+    <button className={`${btnStyles.BtnSecondaryX}`} type="submit">
       Add
     </button>
   );

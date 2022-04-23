@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Option, Searchr, Selectr } from "components/forms";
 import styles from "styles/pages/Home.module.css";
 
@@ -10,12 +10,7 @@ const QuizSortForm: React.FC = () => {
           <Searchr name="quizSearch" />
         </div>
         <div style={{ maxWidth: "420px" }}>
-          <Selectr
-            name="quizCategory"
-            label="Categories"
-            value={["Movies", "Science"]}
-            multiple
-          >
+          <Selectr name="quizCategory" label="Categories" multiple>
             <Option value="Movies" />
             <Option value="Science" />
             <Option value="History" />

@@ -117,7 +117,7 @@ function validateQuestions(questions: Array<any>, final: any) {
         if (!options[option])
           throw new ApiError(
             "questions",
-            `Please include an option in ${option}`,
+            `Please include an option in option ${option} of question ${index}`,
             400
           );
 

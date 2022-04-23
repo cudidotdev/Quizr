@@ -59,25 +59,24 @@ const QuestionForm: React.FC<{
 }> = ({ data, dispatch, index }) => {
   const optionContainer = useRef<HTMLDivElement>(null);
   const [question, setQuestion] = useState<question>({
-    question: "",
+    question: data?.question || "",
     index: index,
-    options: { A: "", B: "", C: "", D: "" },
-    answer: "A",
+    options: data?.options || { A: "", B: "", C: "", D: "" },
+    answer: data?.answer || "A",
   });
+  const [, removeModal] = useContext(ModalContext);
 
-  /*eslint-disable */
-  useEffect(() => {
-    setQuestion({
-      question: data?.question || "",
-      index: index,
-      options: data?.options || { A: "", B: "", C: "", D: "" },
-      answer: data?.answer || "A",
-    });
-  }, [data]);
-  /*eslint-enable */
+  function addQuestion(ev: any) {
+    ev.preventDefault();
+    dispatch({ type: "questions", payload: question });
+    removeModal();
+  }
 
   return (
-    <div className={`${styles.QuestionForm} hide-scroll`}>
+    <form
+      className={`${styles.QuestionForm} hide-scroll`}
+      onSubmit={addQuestion}
+    >
       <TextArea
         name="question"
         label="Question"
@@ -101,11 +100,11 @@ const QuestionForm: React.FC<{
           name="answer"
           label="Answer"
           value={question.answer}
-          onChange={(val) =>
+          onChange={(val) => {
             setQuestion((prev) => {
               return { ...prev, answer: val };
-            })
-          }
+            });
+          }}
         >
           <Option value="A" />
           <Option value="B" />
@@ -115,9 +114,9 @@ const QuestionForm: React.FC<{
       </div>
       <div className={styles.ButtonBox}>
         <CancelQuestionButton />
-        <AddQuestionButton dispatch={dispatch} question={question} />
+        <AddQuestionButton />
       </div>
-    </div>
+    </form>
   );
 };
 

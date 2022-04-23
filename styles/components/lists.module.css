@@ -19,8 +19,13 @@
   border-radius: 0.25rem;
   display: flex;
   align-items: center;
+  flex-grow: 0;
+  flex-shrink: 0;
   justify-content: center;
   margin-right: 0.75rem;
+}
+.List .Child {
+  word-break: break-all;
 }
 
 .ListContainer.Large {

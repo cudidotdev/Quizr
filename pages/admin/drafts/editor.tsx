@@ -24,8 +24,19 @@ function DraftReducer(state: draftData, action: draftAction): draftData {
   )
     return { ...state, [action.type]: action.payload };
   if (action.type === "questions") {
-    if (state.questions)
-      return { ...state, questions: [...state.questions, action.payload] };
+    if (state.questions) {
+      const idx = state.questions.find(
+        (q) => q.index === action.payload.index
+      )?.index;
+      if (!idx)
+        return { ...state, questions: [...state.questions, action.payload] };
+      return {
+        ...state,
+        questions: state.questions.map((q) =>
+          q.index === idx ? action.payload : q
+        ),
+      };
+    }
     return { ...state, questions: [action.payload] };
   }
   if (action.type === "all") {

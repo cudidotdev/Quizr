@@ -61,6 +61,103 @@ const Selectr: React.FC<selectr> = ({
 
 export default Selectr;
 
+const DefaultSelectr: React.FC<selectr> = ({
+  children,
+  label,
+  value,
+  name,
+  onChange = () => {},
+}) => {
+  const selectr = useRef<HTMLDivElement>(null);
+  const [showOpts, setShowOpts] = useState<boolean>(false);
+  const [val, setVal] = useState(selectValue());
+
+  function selectValue() {
+    if (typeof value === "string" || typeof value === "number") return value;
+    let val: any = "";
+    React.Children.forEach(children, (child: any, index) => {
+      if (index === 0) val = child.props.value;
+    });
+    return val;
+  }
+
+  /*eslint-disable*/
+  useEffect(() => {
+    setVal(selectValue());
+  }, [value]);
+  /*eslint-enable*/
+
+  return (
+    <div
+      className={`${styles.Cstm} ${styles.MultipleSelectr} disable-focus-outline`}
+      onBlur={() => setShowOpts(false)}
+      onFocusCapture={() => setShowOpts(true)}
+      tabIndex={0}
+      ref={selectr}
+      id={name}
+    >
+      <div>{label}</div>
+      <div className={styles.SelectBox} tabIndex={-1}>
+        <div className={styles.ChosenBox} tabIndex={-1}>
+          <span className={styles.Chosen}>{val}</span>
+        </div>
+        <div
+          className={`${styles.OptionBox} ${showOpts ? styles.Active : ""}`}
+          tabIndex={-1}
+        >
+          {React.Children.map(children, (child: any) => (
+            <MultipleOption
+              value={child.props.value}
+              selected={val === child.props.value}
+              toggleSelection={onChange}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const LinearSelectr: React.FC<selectr> = ({
+  label,
+  name,
+  value,
+  children,
+  onChange = () => {},
+}) => {
+  const [val, setVal] = useState(selectValue());
+
+  function selectValue() {
+    if (typeof value === "string" || typeof value === "number") return value;
+    let val: any = "";
+    React.Children.forEach(children, (child: any, index) => {
+      if (index === 0) val = child.props.value;
+    });
+    return val;
+  }
+
+  /*eslint-disable*/
+  useEffect(() => {
+    setVal(selectValue());
+  }, [value]);
+  /*eslint-enable*/
+
+  return (
+    <div className={`${styles.Cstm} ${styles.LinearSelectr}`} id={name}>
+      <div>{label}</div>
+      <div className={styles.SelectBox}>
+        {React.Children.map(children, (child: any) => (
+          <LinearOption
+            value={child.props.value}
+            selected={val === child.props.value}
+            toggleSelection={onChange}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const MultipleSelectr: React.FC<multiSelectr> = ({
   label,
   name,
@@ -70,31 +167,23 @@ const MultipleSelectr: React.FC<multiSelectr> = ({
 }) => {
   const selectr = useRef<HTMLDivElement>(null);
   const [showOpts, setShowOpts] = useState<boolean>(false);
-  const [selected, setSelected] = useState<Array<string | number>>(value);
   const [numOfOptions, setNumOfOptions] = useState<number>(0);
+  const [vals, setVals] = useState(value);
 
-  function toggleSelection(value: string | number) {
-    setSelected((prev) => {
-      if (!prev.includes(value)) return [...prev, value];
-      return prev.filter((val) => val !== value);
-    });
-  }
+  useEffect(() => {
+    setVals(value);
+  }, [value]);
 
   useEffect(() => {
     /* ---code xcxc- for determining the number of options with unique values */
     const arr: any[] = [];
-    React.Children.forEach(children, (child) => {
-      //@ts-ignore
+    React.Children.forEach(children, (child: any) => {
       if (!arr.includes(child?.props.value)) arr.push(child?.props.value);
     });
     setNumOfOptions(arr.length);
     return () => setNumOfOptions(0);
     /* --end of code xcxc */
   }, [children]);
-
-  useEffect(() => {
-    onChange(selected);
-  }, [selected, onChange]);
 
   return (
     <div
@@ -108,22 +197,23 @@ const MultipleSelectr: React.FC<multiSelectr> = ({
       <div className={styles.SelectBox} tabIndex={-1}>
         <div className={styles.ChosenBox} tabIndex={-1}>
           {/* --the code below renders elements to the chosenbox based on the num of selected options*/}
-          {selected.length === 0 ? (
+          {vals.length === 0 ? (
             <span className={styles.Chosen} style={{ cursor: "pointer" }}>
               Unspecified
             </span>
-          ) : selected.length === numOfOptions ? (
+          ) : vals.length === numOfOptions ? (
             <span className={styles.Chosen}>All</span>
           ) : (
-            selected.map((val) => (
+            vals.map((val) => (
               <span key={val} className={styles.Chosen}>
                 <span>{val}</span>
                 <button
                   className={styles.RemoveButton}
                   onClick={() => {
-                    toggleSelection(val);
+                    onChange(val);
                     selectr.current?.focus();
                   }}
+                  type="button"
                 >
                   <CloseIcon />
                 </button>
@@ -135,16 +225,43 @@ const MultipleSelectr: React.FC<multiSelectr> = ({
           className={`${styles.OptionBox} ${showOpts ? styles.Active : ""}`}
           tabIndex={-1}
         >
-          {React.Children.map(children, (child) => (
+          {React.Children.map(children, (child: any) => (
             <MultipleOption
-              //@ts-ignore
               value={child.props.value}
-              //@ts-ignore
-              selected={selected.includes(child.props.value)}
-              toggleSelection={toggleSelection}
+              selected={vals.includes(child.props.value)}
+              toggleSelection={onChange}
             />
           ))}
         </div>
+      </div>
+    </div>
+  );
+};
+
+const LinearMultipleSelectr: React.FC<multiSelectr> = ({
+  label,
+  name,
+  value = [],
+  onChange = () => {},
+  children,
+}) => {
+  const [vals, setVals] = useState(value);
+
+  useEffect(() => {
+    setVals(value);
+  }, [value]);
+
+  return (
+    <div className={`${styles.Cstm} ${styles.LinearSelectr}`}>
+      <div>{label}</div>
+      <div className={styles.SelectBox}>
+        {React.Children.map(children, (child: any) => (
+          <LinearOption
+            value={child.props.value}
+            selected={vals.includes(child.props.value)}
+            toggleSelection={onChange}
+          />
+        ))}
       </div>
     </div>
   );
@@ -159,56 +276,13 @@ const MultipleOption: React.FC<pOption> = ({
     <button
       className={`${styles.MultipleOption} ${selected ? styles.Selected : ""}`}
       onClick={() => toggleSelection(value)}
+      type="button"
     >
       {value}
     </button>
   );
 };
 
-const LinearSelectr: React.FC<selectr> = ({
-  label,
-  name,
-  value,
-  children,
-  onChange = () => {},
-}) => {
-  const [selected, setSelected] = useState<string | number>(defaultValue());
-
-  function defaultValue() {
-    if (typeof value === "string" || typeof value === "number") return value;
-    let val: any = "";
-    React.Children.forEach(children, (child, index) => {
-      //@ts-ignore
-      if (index === 0) val = child.props.value;
-    });
-    return val;
-  }
-
-  function changeSelection(value: string | number) {
-    setSelected(value);
-  }
-
-  useEffect(() => {
-    onChange(selected);
-  }, [selected, onChange]);
-
-  return (
-    <div className={`${styles.Cstm} ${styles.LinearSelectr}`}>
-      <div>{label}</div>
-      <div className={styles.SelectBox}>
-        {React.Children.map(children, (child) => (
-          <LinearOption
-            //@ts-ignore
-            value={child.props.value}
-            //@ts-ignore
-            selected={selected === child.props.value}
-            toggleSelection={changeSelection}
-          />
-        ))}
-      </div>
-    </div>
-  );
-};
 const LinearOption: React.FC<pOption> = ({
   value,
   selected,
@@ -218,111 +292,9 @@ const LinearOption: React.FC<pOption> = ({
     <button
       className={`${styles.Option} ${selected ? styles.Selected : ""}`}
       onClick={() => toggleSelection(value)}
+      type="button"
     >
       {value}
     </button>
-  );
-};
-
-const LinearMultipleSelectr: React.FC<multiSelectr> = ({
-  label,
-  name,
-  value = [],
-  onChange = () => {},
-  children,
-}) => {
-  const [selected, setSelected] = useState<Array<string | number>>(value);
-
-  function toggleSelection(value: string | number) {
-    setSelected((prev) => {
-      if (!prev.includes(value)) return [...prev, value];
-      return prev.filter((val) => val !== value);
-    });
-  }
-
-  useEffect(() => {
-    onChange(selected);
-  }, [selected, onChange]);
-
-  return (
-    <div className={`${styles.Cstm} ${styles.LinearSelectr}`}>
-      <div>{label}</div>
-      <div className={styles.SelectBox}>
-        {React.Children.map(children, (child) => (
-          <LinearOption
-            //@ts-ignore
-            value={child.props.value}
-            //@ts-ignore
-            selected={selected.includes(child.props.value)}
-            toggleSelection={toggleSelection}
-          />
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const DefaultSelectr: React.FC<selectr> = ({
-  children,
-  label,
-  value,
-  name,
-  onChange = () => {},
-}) => {
-  const selectr = useRef<HTMLDivElement>(null);
-  const [showOpts, setShowOpts] = useState<boolean>(false);
-  const [selected, setSelected] = useState<string | number>(defaultValue());
-
-  function changeSelection(value: string | number) {
-    setSelected(value);
-  }
-
-  function defaultValue() {
-    if (typeof value === "string" || typeof value === "number") return value;
-    let val: any = "";
-    React.Children.forEach(children, (child, index) => {
-      //@ts-ignore
-      if (index === 0) val = child.props.value;
-    });
-    return val;
-  }
-
-  useEffect(() => {
-    onChange(selected);
-  }, [selected, onChange]);
-
-  return (
-    <div
-      className={`${styles.Cstm} ${styles.MultipleSelectr}`}
-      onBlur={() => setShowOpts(false)}
-      onFocusCapture={() => setShowOpts(true)}
-      tabIndex={-1}
-      ref={selectr}
-    >
-      <div>{label}</div>
-      <div className={styles.SelectBox} tabIndex={-1}>
-        <div className={styles.ChosenBox} tabIndex={-1}>
-          {!!selected ? (
-            <span className={styles.Chosen}>{selected}</span>
-          ) : (
-            <span className={styles.Chosen}>Choose</span>
-          )}
-        </div>
-        <div
-          className={`${styles.OptionBox} ${showOpts ? styles.Active : ""}`}
-          tabIndex={-1}
-        >
-          {React.Children.map(children, (child) => (
-            <MultipleOption
-              //@ts-ignore
-              value={child.props.value}
-              //@ts-ignore
-              selected={selected === child.props.value}
-              toggleSelection={changeSelection}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
   );
 };

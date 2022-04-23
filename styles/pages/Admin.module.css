@@ -130,8 +130,8 @@
 
 .QuestionsList {
   cursor: pointer;
-  display: flex;
-  align-items: center;
+  color: var(--color-black-three);
+  font-size: 0.925rem;
 }
 
 .QuestionForm {
