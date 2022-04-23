@@ -4,10 +4,10 @@ export async function validateBody(body: any) {
   const final: any = {};
   const { title, categories, questions, introText } = body;
 
-  if (title) validateTitle(title, final);
-  if (categories) validateCategories(categories, final);
-  if (questions) validateQuestions(questions, final);
-  if (introText) validateIntroText(introText, final);
+  if (title !== undefined) validateTitle(title, final);
+  if (categories !== undefined) validateCategories(categories, final);
+  if (questions !== undefined) validateQuestions(questions, final);
+  if (introText !== undefined) validateIntroText(introText, final);
 
   return final;
 }
@@ -86,6 +86,14 @@ function validateQuestions(questions: Array<any>, final: any) {
         );
     }
 
+    if (options && index && !question) {
+      throw new ApiError(
+        "questions",
+        `Please insert a text in question ${index}`,
+        400
+      );
+    }
+
     if (index) {
       if (index < 1 || index > 10 || !Number.isInteger(index))
         throw new ApiError(
@@ -117,7 +125,7 @@ function validateQuestions(questions: Array<any>, final: any) {
         if (!options[option])
           throw new ApiError(
             "questions",
-            `Please include an option in option ${option} of question ${index}`,
+            `Please insert a text in option ${option} of question ${index}`,
             400
           );
 
@@ -163,6 +171,8 @@ function validateIntroText(introText: string, final: any) {
       "The description should be a string",
       400
     );
+
+  introText = introText.trim();
 
   if (introText.length > 1024)
     throw new ApiError(

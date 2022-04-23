@@ -22,8 +22,8 @@ function validateTitle(title: string, final: any) {
 function validateIntroText(introText: string, final: any) {
   if (!introText)
     throw new ApiError(
-      "description",
-      "A description for the quiz is required",
+      "introText",
+      "A introText for the quiz is required",
       400
     );
 
@@ -31,7 +31,7 @@ function validateIntroText(introText: string, final: any) {
 }
 
 function validateCategories(categories: string[], final: any) {
-  if (!categories)
+  if (!categories || !categories.length)
     throw new ApiError(
       "categories",
       "Choose categories where the quiz belongs",

@@ -76,12 +76,13 @@ export const CreateQuizButton: React.FC = () => {
   );
 };
 
-export const DraftExitButton: React.FC = () => {
-  const router = useRouter();
+export const DraftExitButton: React.FC<{ onClick: (...args: any) => any }> = ({
+  onClick,
+}) => {
   return (
     <button
       className={`${btnStyles.BtnIcon} ${btnStyles.BtnTertiaryX}`}
-      onClick={() => router.push("/admin/drafts")}
+      onClick={onClick}
     >
       <span className={btnStyles.Icon}>
         <ExitIcon />
@@ -92,65 +93,10 @@ export const DraftExitButton: React.FC = () => {
 };
 
 export const DraftSaveButton: React.FC<{
-  id: any;
-  data: draftData;
-  dispatch: React.Dispatch<draftAction>;
-}> = ({ id, data, dispatch }) => {
-  const [loading, setLoading] = useState(false);
-  const addNote = useContext(NotePadContext);
-  const [prevSaved, setPrevSaved] = useState<draftData>(data);
-  const [isSaved, setSaved] = useState(true);
-
-  /*eslint-disable*/
-  useEffect(() => {
-    if (!doesDiffer(prevSaved, {})) setPrevSaved(data);
-  }, [data]);
-
-  useEffect(() => {
-    setSaved(!doesDiffer(data, prevSaved));
-  }, [data, prevSaved]);
-
-  useEffect(() => {
-    console.log(isSaved);
-  }, [isSaved]);
-  /*eslint-enable*/
-
-  async function saveDraft() {
-    setLoading(true);
-    const res = await patchFetcher(
-      `/api/quiz/draft/edit?id=${id}`,
-      modifyDraftForSave(data)
-    );
-    setLoading(false);
-
-    if (!res)
-      return addNote({
-        type: "error",
-        msg: "It seems there is a connection error",
-        id: `failsavedraft${id}`,
-      });
-
-    const { success, data: savedData, error } = res;
-    if (!success)
-      return addNote({
-        type: "error",
-        msg: error.message,
-        id: `errorsavedraft${id}`,
-      });
-
-    addNote({
-      type: "success",
-      msg: "Saved successfully",
-      id: `successsaveraft${id}`,
-    });
-
-    const { title, categories, introText, questions } = savedData;
-    setPrevSaved(
-      modifyDraftForDisplay({ title, categories, introText, questions })
-    );
-    dispatch({ type: "all", payload: modifyDraftForDisplay(savedData) });
-  }
-
+  loading: boolean;
+  isSaved: boolean;
+  onClick: (...args: any) => any;
+}> = ({ loading, isSaved, onClick }) => {
   if (loading)
     return (
       <button
@@ -179,7 +125,7 @@ export const DraftSaveButton: React.FC<{
   return (
     <button
       className={`${btnStyles.BtnIcon} ${btnStyles.BtnSecondaryX}`}
-      onClick={saveDraft}
+      onClick={onClick}
     >
       <span className={btnStyles.Icon}>
         <SaveIcon />
@@ -189,40 +135,10 @@ export const DraftSaveButton: React.FC<{
   );
 };
 
-export const DraftDeleteButton: React.FC<{ id: any }> = ({ id }) => {
-  const [loading, setLoading] = useState(false);
-  const addNote = useContext(NotePadContext);
-  const router = useRouter();
-
-  async function deleteDraft() {
-    setLoading(true);
-    const res = await deleteFetcher(`/api/quiz/draft/delete?id=${id}`);
-    setLoading(false);
-
-    if (!res)
-      return addNote({
-        type: "error",
-        msg: "It seems there is a connection error",
-        id: `faildeletedraft${id}`,
-      });
-
-    const { success, data, error } = res;
-    if (!success)
-      return addNote({
-        type: "error",
-        msg: error.message,
-        id: `errordeletedraft${id}`,
-      });
-
-    addNote({
-      type: "success",
-      msg: "Draft deleted successfully",
-      id: `successdeletedraft${id}`,
-    });
-
-    return router.push("/admin/drafts");
-  }
-
+export const DraftDeleteButton: React.FC<{
+  loading: boolean;
+  onClick: (...args: any) => any;
+}> = ({ loading, onClick }) => {
   if (loading)
     return (
       <button
@@ -238,7 +154,7 @@ export const DraftDeleteButton: React.FC<{ id: any }> = ({ id }) => {
   return (
     <button
       className={`${btnStyles.BtnIcon} ${btnStyles.BtnTertiaryX}`}
-      onClick={deleteDraft}
+      onClick={onClick}
     >
       <span className={btnStyles.Icon}>
         <DeleteIcon />
@@ -248,9 +164,27 @@ export const DraftDeleteButton: React.FC<{ id: any }> = ({ id }) => {
   );
 };
 
-export const DraftPublishButton: React.FC<{ id: any }> = ({ id }) => {
+export const DraftPublishButton: React.FC<{
+  loading: boolean;
+  onClick: (...args: any) => any;
+}> = ({ loading, onClick }) => {
+  if (loading)
+    return (
+      <button
+        className={`${btnStyles.BtnIcon} ${btnStyles.BtnSecondaryX} ${btnStyles.BtnLoading}`}
+      >
+        <span className={btnStyles.Icon}>
+          <PublishIcon />
+        </span>
+        Publishing <TripleSquareLoader s_colored />
+      </button>
+    );
+
   return (
-    <button className={`${btnStyles.BtnIcon} ${btnStyles.BtnSecondaryX}`}>
+    <button
+      className={`${btnStyles.BtnIcon} ${btnStyles.BtnSecondaryX}`}
+      onClick={onClick}
+    >
       <span className={btnStyles.Icon}>
         <PublishIcon />
       </span>
