@@ -135,7 +135,7 @@
 }
 
 .QuestionsList.Filled {
-  box-shadow: 0 0 2px rgba(0, 194, 97, 0.9);
+  box-shadow: 0 0 3px rgba(0, 194, 97, 0.5) !important;
 }
 
 .QuestionForm {
