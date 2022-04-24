@@ -134,6 +134,10 @@
   font-size: 0.925rem;
 }
 
+.QuestionsList.Filled {
+  box-shadow: 0 0 2px rgba(0, 194, 97, 0.9);
+}
+
 .QuestionForm {
   max-height: 90vh;
   background-color: var(--color-white-one);

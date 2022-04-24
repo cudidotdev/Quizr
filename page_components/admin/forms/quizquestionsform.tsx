@@ -4,7 +4,7 @@ import { ModalContext } from "components/app";
 import styles from "styles/pages/Admin.module.css";
 import { Inputr, Option, Selectr, TextArea } from "components/forms";
 import { CancelQuestionButton, AddQuestionButton } from "page_components/admin";
-import type { draftAction, draftData, question } from "types/pages/admin";
+import type { draftAction, question } from "types/pages/admin";
 
 const QuizQuestionsForm: React.FC<{
   loading: boolean;
@@ -32,7 +32,9 @@ const QuizQuestionsForm: React.FC<{
               return (
                 <List
                   key={num}
-                  className={`${styles.QuestionsList}`}
+                  className={`${styles.QuestionsList} ${
+                    question?.question ? styles.Filled : ""
+                  }`}
                   onClick={() =>
                     runModal(
                       <QuestionForm

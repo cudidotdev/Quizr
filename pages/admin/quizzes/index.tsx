@@ -9,70 +9,67 @@ import { getFetcher } from "utils/fetchers";
 import styles from "styles/pages/Admin.module.css";
 
 const AdminQuizzesPage: NextPageWithLayout = () => {
-  const [drafts, setDrafts] = useState([]);
-  const [draftLoadError, setDraftLoadError] = useState({ val: false, msg: "" });
+  const [quizzes, setQuizzes] = useState([]);
+  const [quizLoadError, setQuizLoadError] = useState({ val: false, msg: "" });
   const [loading, setLoading] = useState(false);
 
-  async function fetchDrafts() {
+  async function fetchQuizzes() {
     setLoading(true);
-    const res = await getFetcher("/api/quiz/draft");
+    const res = await getFetcher("/api/quiz");
     setLoading(false);
 
     if (!res)
-      return setDraftLoadError({
+      return setQuizLoadError({
         val: true,
         msg: "It seems there is a connection error",
       });
 
     const { success, data, error } = res;
-    if (!success) return setDraftLoadError({ val: true, msg: error.message });
+    if (!success) return setQuizLoadError({ val: true, msg: error.message });
 
-    setDraftLoadError({ val: false, msg: "" });
-    setDrafts(data);
+    setQuizLoadError({ val: false, msg: "" });
+    setQuizzes(data);
   }
 
   useEffect(() => {
-    fetchDrafts();
+    fetchQuizzes();
   }, []);
 
   return (
     <main className="site-width" style={{ padding: "0.5rem 1rem 1rem" }}>
       <div style={{ maxWidth: "420px" }}>
-        <Searchr name="searchDrafts" placeholder="Search..." label="" />
+        <Searchr name="searchQuizzes" placeholder="Search..." label="" />
       </div>
       {loading ? (
         <div className={styles.MsgContainer}>
           <p className={styles.LoaderBox}>
-            Fetching drafts
+            Fetching quizzes
             <TripleSquareLoader colored />
           </p>
         </div>
-      ) : draftLoadError.val ? (
+      ) : quizLoadError.val ? (
         <div className={styles.MsgContainer}>
           <p className={styles.ErrorBox}>
-            Couldn&apos;t fetch drafts: {draftLoadError.msg}
+            Couldn&apos;t fetch quizzes: {quizLoadError.msg}
           </p>
-          <button className={styles.ReloadButton} onClick={fetchDrafts}>
+          <button className={styles.ReloadButton} onClick={fetchQuizzes}>
             Reload
             <span className={styles.Icon}>
               <ReloadIcon />
             </span>
           </button>
         </div>
-      ) : drafts.length ? (
+      ) : quizzes.length ? (
         <ListContainer style={{ padding: "0.5rem 0" }}>
-          {drafts.map((draft: any) => (
-            <LinkList
-              key={draft._id}
-              href={`/admin/drafts/editor?id=${draft._id}`}
-            >
-              {draft.title}
+          {quizzes.map((quiz: any) => (
+            <LinkList key={quiz._id} href={`/admin/quizzes/${quiz._id}`}>
+              {quiz.title}
             </LinkList>
           ))}
         </ListContainer>
       ) : (
         <div className={styles.MsgContainer}>
-          <p className={styles.MsgBox}>You have no drafts</p>
+          <p className={styles.MsgBox}>You have no quizzes</p>
         </div>
       )}
     </main>
