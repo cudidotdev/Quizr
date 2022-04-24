@@ -10,6 +10,9 @@ const QuizListApp: React.FC = () => {
     const res = await getFetcher("/api/quiz");
     const { success, data, error } = res;
 
+    if (!res) return console.error("connection error");
+    if (!success) return console.error(error.message);
+
     setQuizzes(data);
   }
 

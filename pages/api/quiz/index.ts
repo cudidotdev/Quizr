@@ -7,7 +7,6 @@ const handler: NextApiHandlerX = async (req, res) => {
   await connectDB();
   if (req.method === "GET") {
     try {
-      await restrictToAdmins(req);
       const { id, sort, limit, page } = req.query;
       let data: any;
 
