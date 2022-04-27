@@ -62,6 +62,7 @@ const LoginForm: React.FC = () => {
     });
 
     setUser(data);
+    console.log(router.query);
     router.push(`/${router.query.next || ""}`);
   }
 
