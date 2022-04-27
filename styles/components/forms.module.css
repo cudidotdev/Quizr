@@ -8,12 +8,12 @@
   padding-bottom: 0.5rem;
 }
 
-.Cstm:not(.Cstm.Disabled):hover,
-.Cstm:not(.Cstm.Disabled):focus,
-.Cstm:not(.Cstm.Disabled).Color,
-.Cstm:not(.Cstm.Disabled):hover label,
-.Cstm:not(.Cstm.Disabled):focus label,
-.Cstm:not(.Cstm.Disabled).Color label {
+.Cstm:hover,
+.Cstm:focus,
+.Cstm.Color,
+.Cstm:hover label,
+.Cstm:focus label,
+.Cstm.Color label {
   color: var(--color-primary-one);
 }
 
@@ -24,12 +24,12 @@
   color: currentColor !important;
 }
 
-.Cstm:not(.Cstm.Disabled):hover .InputBox input,
-.Cstm:not(.Cstm.Disabled):focus .InputBox input,
-.Cstm:not(.Cstm.Disabled).Color .InputBox input,
-.Cstm:not(.Cstm.Disabled):hover .InputBox textarea,
-.Cstm:not(.Cstm.Disabled):focus .InputBox textarea,
-.Cstm:not(.Cstm.Disabled).Color .InputBox textarea {
+.Cstm:hover .InputBox input,
+.Cstm:focus .InputBox input,
+.Cstm.Color .InputBox input,
+.Cstm:hover .InputBox textarea,
+.Cstm:focus .InputBox textarea,
+.Cstm.Color .InputBox textarea {
   color: var(--color-primary-one);
   border: 1px solid var(--color-primary-one);
 }

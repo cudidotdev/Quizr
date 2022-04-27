@@ -40,7 +40,7 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: { quiz: quiz }) => {
       </h1>
       <TextBlock className={styles.QuizIntroText}>
         {modify(introText)}
-        <p className={styles.TimeBox}>Time: 10 minutes</p>
+        <Text className={styles.TimeBox}>Time: 10 minutes</Text>
       </TextBlock>
       {startError.value && <ErrorMsg msg={startError.msg} />}
       <div style={{ textAlign: "center" }}>
@@ -55,7 +55,7 @@ export default QuizTakePage;
 
 function modify(string: string) {
   let arr: any[] = string.split("\n");
-  arr = arr.map((string, idx) => <Text key={idx}>{string}</Text>);
+  arr = arr.map((string, idx) => <TextBlock key={idx}>{string}</TextBlock>);
   return arr;
 }
 
