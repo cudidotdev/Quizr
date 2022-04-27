@@ -1,5 +1,5 @@
-.TextBlock {
-  color: var(--color-black-two);
+.TextBlock,
+.TextBlock * {
   text-size-adjust: 90%;
   -moz-text-size-adjust: 90%;
   -webkit-text-size-adjust: 90%;

@@ -53,7 +53,7 @@ export default QuizTakePage;
 
 function modify(string: string) {
   let arr: any[] = string.split("\n");
-  arr = arr.map((string, idx) => <p key={idx}>{string}</p>);
+  arr = arr.map((string, idx) => <TextBlock key={idx}>{string}</TextBlock>);
   return arr;
 }
 
