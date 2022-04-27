@@ -52,3 +52,5 @@ export const ErrorMsg: React.FC<{ msg: string }> = ({ msg }) => {
     </div>
   );
 };
+
+export { default as Header } from "./header";

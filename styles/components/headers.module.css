@@ -175,11 +175,15 @@
   border-radius: 50%;
 }
 
+.AdminHeader .Padder {
+  display: flex;
+  justify-content: space-between;
+}
+
 .AdminHeader .LogoContainer {
   display: flex;
   padding: 0.5rem 1rem;
   align-items: center;
-  width: fit-content;
   transition: all 200ms linear;
 }
 .AdminHeader .LogoContainer .LogoIconBox {
@@ -190,4 +194,8 @@
 }
 .AdminHeader .LogoContainer .LogoText {
   font-size: 1.1rem;
+}
+
+.QuizTakeHeader {
+  box-shadow: 0 1px 2px rgba(50, 50, 50, 0.08);
 }

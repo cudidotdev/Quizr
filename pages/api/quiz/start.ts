@@ -16,9 +16,15 @@ const handler: NextApiHandlerX = async (req, res) => {
       if (!(await Quiz.findById(id).select("_id")))
         throw new ApiError("id", "No quiz found with such id", 400);
 
-      await User.findByIdAndUpdate(req.user._id, {
-        $push: { quizTaking: { quizId: id, timeStarted: Date.now() } },
+      const data = await User.findOne({
+        _id: req.user._id,
+        "quizTaking.quizId": id,
       });
+
+      if (!data)
+        await User.findByIdAndUpdate(req.user._id, {
+          $push: { quizTaking: { quizId: id, timeStarted: Date.now() } },
+        });
 
       return res.status(200).json({ success: true, data: { id } });
     } catch (error: any) {

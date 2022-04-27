@@ -9,12 +9,15 @@ import styles from "styles/pages/Q.module.css";
 import { postFetcher } from "utils/fetchers";
 import { useState } from "react";
 import { ErrorMsg, StartButton } from "page_components/q";
+import { useRouter } from "next/router";
+import Head from "next/head";
 
 //@ts-ignore
 const QuizTakePage: NextPageWithLayout = ({ quiz }: { quiz: quiz }) => {
-  const { title, introText, questions, _id: id } = quiz;
+  const { title, introText, _id: id } = quiz;
   const [startLoading, setStartLoading] = useState(false);
   const [startError, setStartError] = useState({ value: false, msg: "" });
+  const router = useRouter();
 
   async function startQuiz() {
     setStartLoading(true);
@@ -31,6 +34,7 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: { quiz: quiz }) => {
     if (!success) return setStartError({ value: true, msg: error.message });
 
     setStartError({ value: false, msg: "" });
+    router.push(`/q/${router.query.urlName}/take`);
   }
 
   return (
@@ -40,12 +44,15 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: { quiz: quiz }) => {
       </h1>
       <TextBlock className={styles.QuizIntroText}>
         {modify(introText)}
-        <Text className={styles.TimeBox}>Time: 10 minutes</Text>
+        <p className={styles.TimeBox}>Time: 10 minutes</p>
       </TextBlock>
       {startError.value && <ErrorMsg msg={startError.msg} />}
       <div style={{ textAlign: "center" }}>
         <StartButton loading={startLoading} onClick={startQuiz} />
       </div>
+      <Head>
+        <title>Quiz: {title}</title>
+      </Head>
     </main>
   );
 };
@@ -73,12 +80,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   await connectDB();
 
   const quiz: quiz = await Quiz.findOne({ urlName: params!.urlName })
-    .select("title categories introText questions")
+    .select("title introText ")
     .lean();
   if (!quiz) return { notFound: true };
 
   quiz._id = quiz._id.toString();
-  quiz.questions.forEach((question) => delete question.answer);
 
   return { props: { quiz }, revalidate: 24 * 60 * 60 };
 };

@@ -6,6 +6,7 @@ import styles from "styles/pages/Home.module.css";
 import aStyles from "styles/pages/Admin.module.css";
 import { TripleSquareLoader } from "components/loaders";
 import { ReloadIcon } from "components/icons";
+import { Text } from "components/texts";
 
 const QuizListApp: React.FC = () => {
   const [quizzes, setQuizzes] = useState<any[]>([]);
@@ -38,7 +39,7 @@ const QuizListApp: React.FC = () => {
     <div className="pad-bottom-one">
       <QuizSortForm />
       <div style={{ padding: "0.75rem 0" }} className="content-width">
-        <div className={`${styles.QuizListHeading} t-medium`}>Quizzes</div>
+        <Text className={`${styles.QuizListHeading} t-medium`}>Quizzes</Text>
         {loading ? (
           <div className={aStyles.MsgContainer}>
             <p className={aStyles.LoaderBox}>

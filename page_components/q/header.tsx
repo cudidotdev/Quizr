@@ -1,12 +1,11 @@
 import React from "react";
-import type { page } from "types/pages/admin";
 import styles from "styles/components/headers.module.css";
 import { Linkr } from "components/links";
 import { Logo } from "components/icons";
 
-const AdminHeader: React.FC = () => {
+const Header: React.FC = () => {
   return (
-    <header className={styles.AdminHeader}>
+    <header className={`${styles.AdminHeader} ${styles.QuizTakeHeader}`}>
       <div className={`${styles.Padder} site-width`}>
         <Linkr className={styles.LogoContainer} href="/">
           <span className={styles.LogoIconBox}>
@@ -19,4 +18,4 @@ const AdminHeader: React.FC = () => {
   );
 };
 
-export default AdminHeader;
+export default Header;

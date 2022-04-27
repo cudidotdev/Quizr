@@ -12,8 +12,7 @@ import { useRouter } from "next/router";
 
 //@ts-ignore
 const AdminQuizIdPage: NextPageWithLayout = ({ quiz }: { quiz: quiz }) => {
-  const { title, categories, introText, questions } = quiz;
-  const id = quiz._id;
+  const { title, categories, introText, questions, _id: id } = quiz;
   const addNote = useContext(NotePadContext);
   const [editLoading, setEditLoading] = useState(false);
   const router = useRouter();

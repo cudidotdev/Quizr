@@ -6,6 +6,7 @@ import { NotePadContext, UserContext } from "components/app";
 import { useRouter } from "next/router";
 import styles from "styles/pages/Out.module.css";
 import { TripleSquareLoader } from "components/loaders";
+import Head from "next/head";
 
 const LogoutPage: NextPageWithLayout = () => {
   const [msg, setMsg] = useState({ name: "running", value: "Good Bye" });
@@ -51,6 +52,9 @@ const LogoutPage: NextPageWithLayout = () => {
       {msg.name === "error" && (
         <p className={`${styles.Msg} ${styles.Error} t-light`}>{msg.value}</p>
       )}
+      <Head>
+        <title>Quiz: User Logout</title>
+      </Head>
     </main>
   );
 };

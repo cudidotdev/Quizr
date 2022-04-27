@@ -17,11 +17,12 @@
 
 .QuizIntroText .TimeBox {
   color: var(--color-primary-two);
-  padding-top: 0.75rem;
+  padding-top: 0.25rem;
 }
 
 .StartBtn {
   padding: 0.25rem 2rem !important;
+  font-size: 1rem;
 }
 
 .ErrorBox {
