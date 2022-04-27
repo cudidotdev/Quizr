@@ -1,5 +1,5 @@
 import Layout from "components/layouts";
-import { TextBlock } from "components/texts";
+import { TextBlock, Text, TextS } from "components/texts";
 import connectDB from "database/connect";
 import { Quiz } from "database/models";
 import { GetStaticPaths, GetStaticProps } from "next";
@@ -35,7 +35,9 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: { quiz: quiz }) => {
 
   return (
     <main className="content-width" style={{ padding: "1rem" }}>
-      <p className={`${styles.QuizTitle} t-medium`}>{title}</p>
+      <h1 className={`${styles.QuizTitle} t-medium`}>
+        <TextS>{title}</TextS>
+      </h1>
       <TextBlock className={styles.QuizIntroText}>
         {modify(introText)}
         <p className={styles.TimeBox}>Time: 10 minutes</p>
@@ -53,7 +55,7 @@ export default QuizTakePage;
 
 function modify(string: string) {
   let arr: any[] = string.split("\n");
-  arr = arr.map((string, idx) => <TextBlock key={idx}>{string}</TextBlock>);
+  arr = arr.map((string, idx) => <Text key={idx}>{string}</Text>);
   return arr;
 }
 

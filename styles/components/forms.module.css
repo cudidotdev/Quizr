@@ -115,6 +115,7 @@
 .Cstm.Submit:hover,
 .Cstm.Submit:focus {
   outline: none;
+  color: var(--color-white-one);
   background-color: var(--color-primary-two);
   box-shadow: var(--shadow-two);
 }
