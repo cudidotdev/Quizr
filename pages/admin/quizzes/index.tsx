@@ -62,7 +62,7 @@ const AdminQuizzesPage: NextPageWithLayout = () => {
       ) : quizzes.length ? (
         <ListContainer style={{ padding: "0.5rem 0" }}>
           {quizzes.map((quiz: any) => (
-            <LinkList key={quiz._id} href={`/admin/quizzes/${quiz._id}`}>
+            <LinkList key={quiz._id} href={`/admin/quizzes/${quiz.urlName}`}>
               {quiz.title}
             </LinkList>
           ))}

@@ -26,7 +26,8 @@ function DraftReducer(state: draftData, action: draftAction): draftData {
   if (
     action.type === "title" ||
     action.type === "introText" ||
-    action.type === "categories"
+    action.type === "categories" ||
+    action.type === "urlName"
   )
     return { ...state, [action.type]: action.payload };
   if (action.type === "questions") {
@@ -46,8 +47,8 @@ function DraftReducer(state: draftData, action: draftAction): draftData {
     return { ...state, questions: [action.payload] };
   }
   if (action.type === "all") {
-    const { title, introText, categories, questions } = action.payload;
-    return { title, introText, categories, questions };
+    const { title, introText, categories, questions, urlName } = action.payload;
+    return { title, introText, categories, questions, urlName };
   }
   return state;
 }
@@ -122,11 +123,18 @@ const QuizEditorPage: NextPageWithLayout = () => {
       id: `successsaveraft${draftId}`,
     });
 
-    const { title, categories, introText, questions } = savedData;
+    const { title, categories, introText, questions, urlName } = savedData;
     setPrevSaved(
-      modifyDraftForDisplay({ title, categories, introText, questions })
+      modifyDraftForDisplay({
+        title,
+        categories,
+        introText,
+        questions,
+        urlName,
+      })
     );
     draftDispatch({ type: "all", payload: modifyDraftForDisplay(savedData) });
+    console.log(savedData);
     return true;
   }
 

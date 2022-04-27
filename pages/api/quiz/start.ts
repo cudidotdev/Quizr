@@ -13,7 +13,7 @@ const handler: NextApiHandlerX = async (req, res) => {
 
       const { id } = req.query;
       if (!id) throw new ApiError("id", "Please insert an id on query", 400);
-      if (!(await Quiz.findById(id).select(id)))
+      if (!(await Quiz.findById(id).select("_id")))
         throw new ApiError("id", "No quiz found with such id", 400);
 
       await User.findByIdAndUpdate(req.user._id, {

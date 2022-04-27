@@ -8,14 +8,20 @@ export const Inputr: React.FC<inputr> = (props) => {
   const cstm = useRef<HTMLDivElement>(null);
 
   return (
-    <div className={`${styles.Cstm}`} ref={cstm}>
-      <label htmlFor={name}>{label}</label>
+    <div
+      className={`${styles.Cstm} ${props.disabled ? styles.Disabled : ""}`}
+      ref={cstm}
+    >
+      <label htmlFor={name} className={styles.Label}>
+        {label}
+      </label>
       <div className={`${styles.InputBox}`}>
         <input
           {...props}
           autoComplete={props.autoComplete || "off"}
           type={type}
           id={name}
+          className={`${props.className || ""} `}
           name={name}
           onChange={(ev: any) => onChange && onChange(ev.target.value)}
           onFocus={() => cstm.current?.classList.add(styles.Color)}

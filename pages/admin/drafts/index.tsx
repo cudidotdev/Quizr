@@ -65,6 +65,8 @@ const AdminDraftsPage: NextPageWithLayout = () => {
             <LinkList
               key={draft._id}
               href={`/admin/drafts/editor?id=${draft._id}`}
+              /* the ogfile prop signifies that is was from an already published quiz */
+              className={`${draft.ogFile ? styles.MarkDraft : ""}`}
             >
               {draft.title}
             </LinkList>

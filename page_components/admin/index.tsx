@@ -7,6 +7,7 @@ export {
   DraftSaveButton,
   CancelQuestionButton,
   AddQuestionButton,
+  EditQuizButton,
 } from "./buttons";
 export { default as QuizMetaForm } from "./forms/quizmetaform";
 export { default as QuizQuestionsForm } from "./forms/quizquestionsform";

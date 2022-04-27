@@ -2,11 +2,12 @@ import ApiError from "errors/api";
 
 export function validateQuiz(quiz: any) {
   const final: any = {};
-  const { title, introText, categories, questions } = quiz;
+  const { title, introText, categories, questions, urlName } = quiz;
 
   validateTitle(title, final);
   validateIntroText(introText, final);
   validateCategories(categories, final);
+  validateUrlName(urlName, final);
   validateQuestions(questions, final);
 
   return final;
@@ -81,4 +82,9 @@ function validateQuestions(questions: any[], final: any) {
   });
 
   final.questions = questions;
+}
+
+function validateUrlName(urlName: string, final: any) {
+  if (!urlName) throw new ApiError("urlName", "A url name is required", 400);
+  final.urlName = urlName;
 }

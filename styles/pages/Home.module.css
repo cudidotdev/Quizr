@@ -22,6 +22,14 @@
   padding: 0 0.5rem;
 }
 
+.QuizListHeading {
+  text-transform: uppercase;
+  color: var(--color-primary-one);
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--color-grey-three);
+  margin-bottom: 0.75rem;
+}
+
 @media screen and (min-width: 768px) {
   .SearchAndCategoryBox {
     flex-direction: row;

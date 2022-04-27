@@ -5,3 +5,19 @@ export type defaultProps = {
   _style?: React.CSSProperties;
   passProps?: { [key: string]: any };
 };
+
+export type quiz = {
+  _id: string;
+  title: string;
+  categories: string;
+  introText: string;
+  urlName: string;
+  questions: question[];
+};
+
+type question = {
+  question: string;
+  index: number;
+  options: { A: string; B: string; C: string; D: string };
+  answer?: "A" | "B" | "C" | "D";
+};

@@ -7,7 +7,7 @@ import { Quiz, QuizDraft } from "database/models";
 
 const handler: NextApiHandlerX = async (req, res) => {
   await connectDB();
-  if (req.method === "POST") {
+  if (req.method === "PUT") {
     try {
       await restrictToAdmins(req);
 
@@ -20,12 +20,13 @@ const handler: NextApiHandlerX = async (req, res) => {
           .status(201)
           .json({ success: true, data: { id: quiz.editId } });
 
-      const { title, description, categories, questions }: any = quiz;
+      const { title, introText, categories, questions, urlName }: any = quiz;
       const draft = await QuizDraft.create({
         title,
-        description,
+        introText,
         categories,
         questions,
+        urlName,
         ogFile: quiz._id,
       });
 

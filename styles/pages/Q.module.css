@@ -1,0 +1,61 @@
+.QuizTitle {
+  color: var(--color-primary-one);
+  text-align: center;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--color-grey-three);
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.QuizIntroText {
+  color: var(--color-black-three);
+  padding: 0.5rem 0;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--color-grey-three);
+  margin-bottom: 0.5rem;
+}
+
+.QuizIntroText .TimeBox {
+  color: var(--color-primary-two);
+  padding-top: 0.75rem;
+}
+
+.StartBtn {
+  padding: 0.25rem 2rem !important;
+  font-size: 1rem;
+}
+
+.ErrorBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-tertiary-one);
+  padding-bottom: 0.5rem;
+}
+.ErrorBox .Padder {
+  display: flex;
+  align-items: center;
+}
+.ErrorBox .Icon {
+  display: flex;
+  width: 1.75rem;
+  height: 1.75rem;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-right: 0.5rem;
+}
+.ErrorBox .Link {
+  color: var(--color-primary-two);
+  border-bottom: 1px dashed transparent;
+}
+.ErrorBox .Link:hover,
+.ErrorBox .Link:focus {
+  outline: none;
+  border-color: currentColor;
+  transition: all 200ms linear;
+}

@@ -22,20 +22,26 @@ export async function generateUniqueQuizTitle() {
   return `Untitled_${+numOfLastUntitled + 1}`;
 }
 
-export async function getQuizById(id: any) {
-  return await Quiz.findById(id).lean();
+export async function getQuizById(id: any, select: any = "") {
+  return await Quiz.findById(id).select(select).lean();
 }
 
 export async function getQuizDraftById(id: any) {
   return await QuizDraft.findById(id).lean();
 }
 
-export async function getAllQuizes({ sort = "", limit = 0, page = 1 }: any) {
+export async function getAllQuizes({
+  sort = "",
+  limit = 0,
+  page = 1,
+  select = "",
+}: any) {
   page = page > 1 ? Math.floor(page) : 1;
   return await Quiz.find({})
     .sort(sort)
     .limit(+limit)
     .skip((page - 1) * limit)
+    .select(select)
     .lean();
 }
 

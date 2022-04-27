@@ -11,12 +11,13 @@ export type draftData = {
   title?: string;
   categories?: string;
   introText?: string;
+  urlName?: string;
   questions?: question[];
 };
 
 export type draftAction =
   | {
-      type: "title" | "categories" | "introText";
+      type: "title" | "categories" | "introText" | "urlName";
       payload: "string";
     }
   | {

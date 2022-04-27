@@ -1,13 +1,15 @@
+import { Quiz, QuizDraft } from "database/models";
 import ApiError from "errors/api";
 
 export async function validateBody(body: any) {
   const final: any = {};
-  const { title, categories, questions, introText } = body;
+  const { title, categories, questions, introText, urlName } = body;
 
   if (title !== undefined) validateTitle(title, final);
   if (categories !== undefined) validateCategories(categories, final);
   if (questions !== undefined) validateQuestions(questions, final);
   if (introText !== undefined) validateIntroText(introText, final);
+  if (urlName !== undefined) validateUrlName(urlName, final);
 
   return final;
 }
@@ -182,4 +184,23 @@ function validateIntroText(introText: string, final: any) {
     );
 
   final.introText = introText;
+}
+
+function validateUrlName(urlName: string, final: any) {
+  if (typeof urlName !== "string")
+    throw new ApiError("urlName", "The url name should be a string", 400);
+
+  urlName = urlName.trim();
+
+  if (urlName.length > 32)
+    throw new ApiError(
+      "urlName",
+      "The url name should not be more than 32 characters",
+      400
+    );
+
+  if (urlName.includes(" "))
+    throw new ApiError("urlName", "The url name should contain no spaces", 400);
+
+  final.urlName = urlName;
 }

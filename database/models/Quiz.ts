@@ -11,6 +11,7 @@ const QuizSchema = new mongoose.Schema({
         question: { type: String, required: true },
         index: { type: Number, required: true },
         options: {
+          _id: false,
           type: { A: String, B: String, C: String, D: String },
           required: true,
         },
@@ -19,6 +20,7 @@ const QuizSchema = new mongoose.Schema({
     ],
     required: true,
   },
+  urlName: { type: String, required: true },
   createdAt: { type: Date, default: () => Date.now() },
   lastModified: Date,
   currentlyOnEdit: Boolean,

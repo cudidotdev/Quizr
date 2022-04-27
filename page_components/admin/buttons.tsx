@@ -3,18 +3,16 @@ import {
   AddIcon,
   CheckIcon,
   DeleteIcon,
+  EditIcon,
   ExitIcon,
   PublishIcon,
   SaveIcon,
 } from "components/icons";
 import { TripleSquareLoader } from "components/loaders";
 import { useRouter } from "next/router";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import btnStyles from "styles/components/buttons.module.css";
-import { draftAction, draftData, question } from "types/pages/admin";
-import { deleteFetcher, patchFetcher, postFetcher } from "utils/fetchers";
-import { modifyDraftForDisplay, modifyDraftForSave } from "utils/quiz";
-import { doesDiffer } from "utils";
+import { postFetcher, putFetcher } from "utils/fetchers";
 
 export const CreateQuizButton: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -60,7 +58,7 @@ export const CreateQuizButton: React.FC = () => {
         <span className={`${btnStyles.Icon}`}>
           <AddIcon />
         </span>
-        Creating <TripleSquareLoader />
+        Creating <TripleSquareLoader colored />
       </button>
     );
   return (
@@ -210,6 +208,35 @@ export const AddQuestionButton: React.FC = () => {
   return (
     <button className={`${btnStyles.BtnSecondaryX}`} type="submit">
       Add
+    </button>
+  );
+};
+
+export const EditQuizButton: React.FC<{
+  loading: boolean;
+  onClick: (...args: any) => any;
+}> = ({ loading, onClick }) => {
+  if (loading)
+    return (
+      <button
+        className={`${btnStyles.BtnPrimaryX} ${btnStyles.BtnIcon} ${btnStyles.BtnLoading}`}
+      >
+        <span className={btnStyles.Icon}>
+          <EditIcon />
+        </span>
+        Preparing <TripleSquareLoader colored />
+      </button>
+    );
+
+  return (
+    <button
+      className={`${btnStyles.BtnPrimaryX} ${btnStyles.BtnIcon}`}
+      onClick={onClick}
+    >
+      <span className={btnStyles.Icon}>
+        <EditIcon />
+      </span>
+      Edit quiz
     </button>
   );
 };

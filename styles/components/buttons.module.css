@@ -14,6 +14,7 @@
 }
 
 .BtnPrimary,
+.BtnPrimaryX,
 .BtnTertiaryX,
 .BtnSecondaryX {
   border: none;
@@ -25,6 +26,7 @@
 }
 
 .BtnIcon.BtnPrimary,
+.BtnIcon.BtnPrimaryX,
 .BtnIcon.BtnTertiaryX,
 .BtnIcon.BtnSecondaryX {
   padding: 0.375rem 0.75rem;
@@ -39,6 +41,18 @@
   outline: inherit;
   border: inherit;
   background-color: var(--color-primary-two);
+}
+
+.BtnPrimaryX {
+  background-color: transparent;
+  color: var(--color-primary-one);
+  box-shadow: 0 0 3px rgba(50, 50, 50, 0.2);
+}
+.BtnPrimaryX:hover,
+.BtnPrimaryX:focus {
+  outline: inherit;
+  border: inherit;
+  box-shadow: 0 0 3px rgba(81, 149, 251, 0.6);
 }
 
 .BtnSecondaryX {
@@ -75,11 +89,10 @@
   margin-right: 0.5rem;
 }
 
-.BtnPrimary.BtnIcon {
-  padding-left: 0.625rem;
+.BtnLoading {
+  cursor: progress;
 }
 
 .BtnPrimary.BtnLoading {
   background-color: var(--color-primary-two);
-  cursor: progress;
 }
