@@ -4,7 +4,7 @@ import { TextBlock } from "components/texts";
 const Intro: React.FC = () => {
   return (
     <div className="pad-bottom-one content-width">
-      <TextBlock>
+      <TextBlock style={{ paddingBottom: "0.5rem" }}>
         Hi, welcome to Quizr. Take a quiz and test your knowledge on some
         mind-blowing facts.
       </TextBlock>

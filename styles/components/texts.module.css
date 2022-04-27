@@ -5,7 +5,3 @@
   -webkit-text-size-adjust: 90%;
   -ms-text-size-adjust: 90%;
 }
-
-.TextBlock:not(:last-child) {
-  padding-bottom: 0.5rem;
-}

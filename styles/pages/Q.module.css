@@ -4,7 +4,6 @@
   padding-bottom: 0.25rem;
   border-bottom: 1px solid var(--color-grey-three);
   margin-bottom: 0.5rem;
-  font-size: 1rem;
 }
 
 .QuizIntroText {
@@ -22,7 +21,6 @@
 
 .StartBtn {
   padding: 0.25rem 2rem !important;
-  font-size: 1rem;
 }
 
 .ErrorBox {
