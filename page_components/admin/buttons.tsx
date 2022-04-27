@@ -58,7 +58,7 @@ export const CreateQuizButton: React.FC = () => {
         <span className={`${btnStyles.Icon}`}>
           <AddIcon />
         </span>
-        Creating <TripleSquareLoader colored />
+        Creating <TripleSquareLoader />
       </button>
     );
   return (

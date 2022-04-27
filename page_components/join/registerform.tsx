@@ -6,6 +6,7 @@ import React, { useRef, useEffect, useState, useContext } from "react";
 import styles from "styles/pages/In.module.css";
 import { postFetcher } from "utils/fetchers";
 import { NotePadContext, UserContext } from "components/app";
+import { serializeQuery } from "utils";
 
 type registerDetails = {
   username: string;
@@ -77,7 +78,7 @@ const RegisterForm: React.FC = () => {
     if (!loginSuccess) return processError(loginError);
 
     setUser(loginData);
-    router.push("/");
+    router.push(`/${router.query.next || ""}`);
   }
 
   useEffect(() => {
@@ -148,7 +149,10 @@ const RegisterForm: React.FC = () => {
       </form>
       <div className={styles.footer}>
         <p>Already have an account?</p>
-        <Linkr className={styles.link} href="/in">
+        <Linkr
+          className={styles.link}
+          href={`/in?${serializeQuery(router.query)}`}
+        >
           Log in
         </Linkr>
       </div>

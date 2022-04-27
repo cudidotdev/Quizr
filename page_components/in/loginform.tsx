@@ -6,6 +6,7 @@ import React, { useRef, useEffect, useState, useContext } from "react";
 import styles from "styles/pages/In.module.css";
 import { postFetcher } from "utils/fetchers";
 import { NotePadContext, UserContext } from "components/app";
+import { serializeQuery } from "utils";
 
 type loginDetails = {
   user: string;
@@ -61,7 +62,7 @@ const LoginForm: React.FC = () => {
     });
 
     setUser(data);
-    router.push("/");
+    router.push(`/${router.query.next || ""}`);
   }
 
   useEffect(() => {
@@ -102,7 +103,10 @@ const LoginForm: React.FC = () => {
                 <>
                   {" "}
                   Do you want to{" "}
-                  <Linkr className={styles.Link} href="/join">
+                  <Linkr
+                    className={styles.Link}
+                    href={`/join?${serializeQuery(router.query)}`}
+                  >
                     create an account ?
                   </Linkr>
                 </>
@@ -122,7 +126,10 @@ const LoginForm: React.FC = () => {
       </form>
       <div className={styles.footer}>
         <p>Don&apos;t have an account?</p>
-        <Linkr className={styles.link} href="/join">
+        <Linkr
+          className={styles.link}
+          href={`/join?${serializeQuery(router.query)}`}
+        >
           Create account
         </Linkr>
       </div>

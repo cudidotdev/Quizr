@@ -1,7 +1,7 @@
 import type { NextApiHandlerX } from "types/next";
 import { restrictToAdmins } from "api_middlewares";
 import connectDB from "database/connect";
-import { QuizDraft } from "database/models";
+import { Quiz, QuizDraft } from "database/models";
 import { modifyError } from "api_utils";
 import ApiError from "errors/api";
 
@@ -21,6 +21,12 @@ const handler: NextApiHandlerX = async (req, res) => {
           `Found no quiz draft with an id of ${id}`,
           400
         );
+
+      /* the ogfile prop signifies that is was from an already published quiz */
+      if (data.ogFile)
+        await Quiz.findByIdAndUpdate(data.ogFile, {
+          $unset: { currentlyOnEdit: "", editId: "" },
+        });
 
       return res.status(200).json({ success: true });
     } catch (error: any) {

@@ -17,3 +17,13 @@ export function doesDiffer(first: any, second: any): boolean {
 
   return false;
 }
+
+export function serializeQuery(obj: { [key: string]: any }) {
+  let string = "";
+
+  for (const key in obj) {
+    string = `${string}${string !== "" ? "&" : ""}${key}=${obj[key]}`;
+  }
+
+  return string;
+}
