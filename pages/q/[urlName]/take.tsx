@@ -6,10 +6,19 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import connectDB from "database/connect";
 import { Quiz } from "database/models";
 import type { quiz } from "types/app";
+import { useState, useEffect } from "react";
 
-//@ts-ignore
-const QuizTakePage: NextPageWithLayout = ({ quiz }: quiz) => {
+const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
   const { title, questions, _id: id } = quiz;
+  const [idx, setIdx] = useState(1);
+  const [currentQuestion, setCurrentQuestion] = useState<any>();
+
+  useEffect(() => {
+    setCurrentQuestion(
+      questions.find((question: any) => question.index === idx)
+    );
+  }, [idx, questions]);
+
   return (
     <>
       <Header />
@@ -17,6 +26,12 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: quiz) => {
         <h1 className={`${styles.QuizTitle} t-medium`}>
           <TextS>{title}</TextS>
         </h1>
+        <section>
+          <p className={styles.Question}>
+            <span className={styles.Index}>{currentQuestion?.index}</span>
+            <p className={styles.Text}>{currentQuestion.question}</p>
+          </p>
+        </section>
       </main>
     </>
   );

@@ -13,7 +13,7 @@ const QuizDraftSchema = new mongoose.Schema({
       answer: { type: String, enum: ["A", "B", "C", "D"] },
     },
   ],
-  urlName: String,
+  urlName: { type: String, lowercase: true },
   createdAt: { type: Date, default: () => Date.now() },
   lastModified: Date,
   ogFile: mongoose.Schema.Types.ObjectId,

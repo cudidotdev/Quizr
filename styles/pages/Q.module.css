@@ -59,3 +59,23 @@
   border-color: currentColor;
   transition: all 200ms linear;
 }
+
+.Question {
+  display: flex;
+}
+.Question .Index {
+  width: 1.5rem;
+  height: 1.5rem;
+  box-shadow: var(--shadow-one);
+  color: var(--color-tertiary-one);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  margin-right: 1rem;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+.Question .Text {
+  width: 100%;
+}
