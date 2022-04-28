@@ -29,7 +29,7 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
         <section>
           <p className={styles.Question}>
             <span className={styles.Index}>{currentQuestion?.index}</span>
-            <p className={styles.Text}>{currentQuestion.question}</p>
+            <p className={styles.Text}>{currentQuestion?.question}</p>
           </p>
         </section>
       </main>
