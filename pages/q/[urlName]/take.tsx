@@ -1,6 +1,5 @@
 import type { NextPageWithLayout } from "types/next";
-import { Header } from "page_components/q";
-import { TextS } from "components/texts";
+import { Header, Option, Nav } from "page_components/q";
 import styles from "styles/pages/Q.module.css";
 import { GetStaticPaths, GetStaticProps } from "next";
 import connectDB from "database/connect";
@@ -13,24 +12,35 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
   const [idx, setIdx] = useState(1);
   const [currentQuestion, setCurrentQuestion] = useState<any>();
 
+  /* eslint-disable */
   useEffect(() => {
     setCurrentQuestion(
       questions.find((question: any) => question.index === idx)
     );
-  }, [idx, questions]);
+  }, [idx]);
+  /* eslint-enable */
 
   return (
     <>
       <Header />
       <main className="content-width" style={{ padding: "1rem" }}>
-        <h1 className={`${styles.QuizTitle} t-medium`}>
-          <TextS>{title}</TextS>
-        </h1>
+        <h1 className={`${styles.QuizTitle} t-medium`}>{title}</h1>
         <section>
           <p className={styles.Question}>
             <span className={styles.Index}>{currentQuestion?.index}</span>
             <p className={styles.Text}>{currentQuestion?.question}</p>
           </p>
+          <div className={styles.OptionBox}>
+            <Option question={currentQuestion} value="A" />
+            <Option question={currentQuestion} value="B" />
+            <Option question={currentQuestion} value="C" />
+            <Option question={currentQuestion} value="D" />
+          </div>
+        </section>
+        <section className={styles.NavigationBox}>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+            <Nav key={i} idx={i} setIdx={setIdx} />
+          ))}
         </section>
       </main>
     </>

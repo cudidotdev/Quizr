@@ -53,4 +53,27 @@ export const ErrorMsg: React.FC<{ msg: string }> = ({ msg }) => {
   );
 };
 
+export const Option: React.FC<{
+  question: { [key: string]: any };
+  value: "A" | "B" | "C" | "D";
+}> = ({ question, value }) => {
+  return (
+    <div className={styles.Option}>
+      <span className={styles.Index}>{value}</span>
+      <p className={styles.Text}> {question?.options[value]}</p>
+    </div>
+  );
+};
+
+export const Nav: React.FC<{
+  idx: number;
+  setIdx: React.Dispatch<React.SetStateAction<number>>;
+}> = ({ idx, setIdx }) => {
+  return (
+    <span className={styles.Index} onClick={() => setIdx(idx)}>
+      {idx}
+    </span>
+  );
+};
+
 export { default as Header } from "./header";
