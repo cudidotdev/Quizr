@@ -4,6 +4,7 @@ import btnStyles from "styles/components/buttons.module.css";
 import styles from "styles/pages/Q.module.css";
 import { Linkr } from "components/links";
 import { useRouter } from "next/router";
+import { FowardIcon } from "components/icons";
 
 export const StartButton: React.FC<{
   loading: boolean;
@@ -23,6 +24,23 @@ export const StartButton: React.FC<{
       onClick={onClick}
     >
       Start
+    </button>
+  );
+};
+
+export const NextButton: React.FC<{ onClick: (...args: any) => any }> = ({
+  onClick,
+}) => {
+  return (
+    <button
+      className={`${btnStyles.BtnPrimaryX} ${btnStyles.BtnIcon}`}
+      style={{ padding: "0.25rem 0.25rem 0.25rem 1rem" }}
+      onClick={onClick}
+    >
+      <span>Next</span>
+      <span className={btnStyles.IconRight}>
+        <FowardIcon />
+      </span>
     </button>
   );
 };
@@ -56,12 +74,17 @@ export const ErrorMsg: React.FC<{ msg: string }> = ({ msg }) => {
 export const Option: React.FC<{
   question: { [key: string]: any };
   value: "A" | "B" | "C" | "D";
-}> = ({ question, value }) => {
+  onClick: (...args: any) => any;
+  colored: boolean;
+}> = ({ question, value, onClick, colored }) => {
   return (
-    <div className={styles.Option}>
+    <button
+      className={`${styles.Option} ${colored ? styles.Colored : ""}`}
+      onClick={onClick}
+    >
       <span className={styles.Index}>{value}</span>
-      <p className={styles.Text}> {question?.options[value]}</p>
-    </div>
+      <span className={styles.Text}> {question?.options[value]}</span>
+    </button>
   );
 };
 
@@ -70,9 +93,9 @@ export const Nav: React.FC<{
   setIdx: React.Dispatch<React.SetStateAction<number>>;
 }> = ({ idx, setIdx }) => {
   return (
-    <span className={styles.Index} onClick={() => setIdx(idx)}>
+    <button className={styles.Index} onClick={() => setIdx(idx)}>
       {idx}
-    </span>
+    </button>
   );
 };
 

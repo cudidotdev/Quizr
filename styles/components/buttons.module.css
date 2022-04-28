@@ -88,6 +88,12 @@
   width: 1.5rem;
   margin-right: 0.5rem;
 }
+.BtnIcon .IconRight {
+  display: flex;
+  height: 1.5rem;
+  width: 1.5rem;
+  margin-left: 0.5rem;
+}
 
 .BtnLoading {
   cursor: progress;

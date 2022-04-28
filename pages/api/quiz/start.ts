@@ -3,7 +3,7 @@ import { modifyError } from "api_utils";
 import connectDB from "database/connect";
 import { restrictToLogin } from "api_middlewares";
 import ApiError from "errors/api";
-import { Quiz, User } from "database/models";
+import { QuizSheet, Quiz } from "database/models";
 
 const handler: NextApiHandlerX = async (req, res) => {
   await connectDB();
@@ -16,17 +16,26 @@ const handler: NextApiHandlerX = async (req, res) => {
       if (!(await Quiz.findById(id).select("_id")))
         throw new ApiError("id", "No quiz found with such id", 400);
 
-      const data = await User.findOne({
-        _id: req.user._id,
-        "quizTaking.quizId": id,
+      const prev = await QuizSheet.findOne({
+        quizId: id,
+        userId: req.user._id,
       });
 
-      if (!data)
-        await User.findByIdAndUpdate(req.user._id, {
-          $push: { quizTaking: { quizId: id, timeStarted: Date.now() } },
+      if (prev)
+        return res.status(200).json({
+          success: true,
+          data: { id: prev._id, timeStarted: prev.timeStarted },
         });
 
-      return res.status(200).json({ success: true, data: { id } });
+      const sheet = await QuizSheet.create({
+        userId: req.user._id,
+        quizId: id,
+        timeStarted: Date.now() + 15 * 1000,
+      });
+      const { _id, timeStarted } = sheet;
+      return res
+        .status(200)
+        .json({ success: true, data: { id: _id, timeStarted } });
     } catch (error: any) {
       console.log(error);
       const { name, message, status } = modifyError(error);

@@ -34,12 +34,13 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: { quiz: quiz }) => {
     if (!success) return setStartError({ value: true, msg: error.message });
 
     setStartError({ value: false, msg: "" });
+    sessionStorage.setItem(`quiz ${router.query.urlName}`, data.id);
     router.push(`/q/${router.query.urlName}/take`);
   }
 
   return (
     <main className="content-width" style={{ padding: "1rem" }}>
-      <h1 className={`${styles.QuizTitle} t-medium`}>
+      <h1 className={`${styles.QuizTitle} t-regular`}>
         <TextS>{title}</TextS>
       </h1>
       <TextBlock className={styles.QuizIntroText}>

@@ -138,16 +138,15 @@ textarea:hover {
   --color-primary-two: rgb(106, 170, 255);
   --color-primary-three: rgb(116, 180, 255);
   --color-primary-four: rgb(241, 247, 255);
-  --color-primary-transparent: rgb(132, 186, 255, 0.1);
+  --color-primary-transparent: rgb(132, 186, 255, 0.07);
   --color-secondary-one: rgb(0, 194, 97);
   --color-secondary-two: rgb(16, 212, 114);
   --color-tertiary-one: rgb(255, 120, 0);
   --color-tertiary-two: rgb(255, 150, 50);
 
   --shadow-one: 0 0px 3px rgba(50, 50, 50, 0.2);
-  --shadow-two: 0 0px 3px rgba(81, 149, 251, 0.2);
-  --shadow-two-b: 0 0px 2px rgba(81, 149, 251, 0.5);
-  --shadow-three: 0 0 3px rgba(0, 194, 97, 0.2);
+  --shadow-two: 0 0px 3px rgba(81, 149, 251, 0.5);
+  --shadow-three: 0 0 3px rgba(0, 194, 97, 0.5);
   --shadow-four: 0 0 3px rgba(255, 120, 0, 0.2);
   --shadow-bottom-one: 0 2px 1px rgba(50, 50, 50, 0.08);
 
