@@ -82,3 +82,5 @@ export async function gradeQuiz(answerSheet: any[], id: any) {
 
   return score;
 }
+
+export function submitQuiz(sheet: any) {}

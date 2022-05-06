@@ -45,6 +45,17 @@ export const NextButton: React.FC<{ onClick: (...args: any) => any }> = ({
   );
 };
 
+export const SubmitButton: React.FC = () => {
+  return (
+    <button
+      className={`${btnStyles.BtnPrimary}`}
+      style={{ padding: "0.25rem 1.5rem" }}
+    >
+      Submit
+    </button>
+  );
+};
+
 export const ErrorMsg: React.FC<{ msg: string }> = ({ msg }) => {
   const router = useRouter();
   return (

@@ -11,9 +11,7 @@ const UserSchema = new mongoose.Schema({
   },
   isAdmin: Boolean,
   createdAt: { type: Date, default: () => Date.now() },
-  quizTaking: [
-    { _id: false, quizId: mongoose.Schema.Types.ObjectId, timeStarted: Date },
-  ],
+  quizStarted: String,
 });
 
 export default mongoose.models.User ||

@@ -4,6 +4,7 @@ import connectDB from "database/connect";
 import { restrictToLogin } from "api_middlewares";
 import ApiError from "errors/api";
 import { QuizSheet, Quiz } from "database/models";
+import { submitQuiz } from "api_utils/quiz";
 
 const handler: NextApiHandlerX = async (req, res) => {
   await connectDB();
@@ -21,11 +22,15 @@ const handler: NextApiHandlerX = async (req, res) => {
         userId: req.user._id,
       });
 
-      if (prev)
-        return res.status(200).json({
-          success: true,
-          data: { id: prev._id, timeStarted: prev.timeStarted },
-        });
+      if (prev) {
+        if (new Date(prev.timeStarted.getTime() + 10 * 60 * 1000))
+          return res.status(200).json({
+            success: true,
+            data: { id: prev._id, timeStarted: prev.timeStarted },
+          });
+        submitQuiz(prev);
+        throw new ApiError("", "You have taken this quiz", 400);
+      }
 
       const sheet = await QuizSheet.create({
         userId: req.user._id,

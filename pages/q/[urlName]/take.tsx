@@ -1,5 +1,11 @@
 import type { NextPageWithLayout } from "types/next";
-import { Header, Option, Nav, NextButton } from "page_components/q";
+import {
+  Header,
+  Option,
+  Nav,
+  NextButton,
+  SubmitButton,
+} from "page_components/q";
 import styles from "styles/pages/Q.module.css";
 import { GetStaticPaths, GetStaticProps } from "next";
 import connectDB from "database/connect";
@@ -7,6 +13,7 @@ import { Quiz } from "database/models";
 import type { quiz } from "types/app";
 import { useState, useEffect } from "react";
 import { patchFetcher } from "utils/fetchers";
+import Head from "next/head";
 
 type ans = "A" | "B" | "C" | "D";
 
@@ -85,9 +92,15 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
                 <Nav key={i} idx={i} setIdx={setIdx} />
               ))}
             </div>
+            <div className={styles.SubmitBtnBox}>
+              <SubmitButton />
+            </div>
           </section>
         </div>
       </main>
+      <Head>
+        <title>Quiz: {title}</title>
+      </Head>
     </>
   );
 };

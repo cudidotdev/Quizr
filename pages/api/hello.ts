@@ -10,13 +10,13 @@ type Data = {
 };
 
 const handler: NextApiHandlerX = async (req, res) => {
-  await restrictToLogin(req);
-  await User.findByIdAndUpdate(req.user._id, {
-    // quizTaking: {
-    //   $pull: { $elemMatch: { quizId: "6263c392daa5a546928e2468" } },
-    // },
-    $pull: { quizTaking: { quizId: "6263c392daa5a546928e2468" } },
-  });
+  await connectDB();
+  await User.updateMany(
+    {},
+    {
+      $unset: { quizStarted: "" },
+    }
+  );
   return res.status(200).json({ name: "John Doe" });
 };
 
