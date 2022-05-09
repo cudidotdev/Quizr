@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import styles from "styles/pages/Out.module.css";
 import { TripleSquareLoader } from "components/loaders";
 import Head from "next/head";
+import { removeQuizSessions } from "utils/quiz";
 
 const LogoutPage: NextPageWithLayout = () => {
   const [msg, setMsg] = useState({ name: "running", value: "Good Bye" });
@@ -31,6 +32,7 @@ const LogoutPage: NextPageWithLayout = () => {
     addNote({ type: "info", id: "logoutmsg", msg: "Logged out successfully" });
 
     setUser(null);
+    removeQuizSessions();
     router.push("/");
   }
 

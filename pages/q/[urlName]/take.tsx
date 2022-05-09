@@ -10,25 +10,37 @@ import styles from "styles/pages/Q.module.css";
 import { GetStaticPaths, GetStaticProps } from "next";
 import connectDB from "database/connect";
 import { Quiz } from "database/models";
-import type { quiz } from "types/app";
+import type { ans, quiz } from "types/app";
 import { useState, useEffect } from "react";
 import { patchFetcher } from "utils/fetchers";
 import Head from "next/head";
-
-type ans = "A" | "B" | "C" | "D";
+import { useRouter } from "next/router";
+import { serializeAnswers, storeInSession } from "utils/quiz";
 
 const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
   const { title, questions, _id: id, urlName } = quiz;
   const [idx, setIdx] = useState(1);
   const [currentQuestion, setCurrentQuestion] = useState<any>();
   const [sheetId, setSheetId] = useState<string>();
-  const [yAnswer, setyAnswer] = useState<{ [key: number]: ans }>({});
+  const [yAnswer, setYAnswer] = useState<{ [key: number]: ans }>({});
+  const [pending, setPending] = useState<number[]>([]);
+  const router = useRouter();
 
   async function chooseAnswer(answer: ans) {
-    setyAnswer((prev) => {
-      return { ...prev, [idx]: answer };
+    const index: number = idx;
+    setYAnswer((prev) => {
+      return { ...prev, [index]: answer };
     });
-    await patchFetcher(`/api/quiz/tick?id=${sheetId}`, { index: idx, answer });
+    setPending((prev) => [...prev, index]);
+
+    const res = await patchFetcher(`/api/quiz/tick?id=${sheetId}`, {
+      index,
+      answer,
+    });
+    if (!res?.success) return;
+
+    storeInSession({ index, answer }, urlName);
+    setPending((prev) => prev.filter((i) => i != index));
   }
 
   /* eslint-disable */
@@ -39,7 +51,15 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
   }, [idx]);
 
   useEffect(() => {
-    setSheetId(sessionStorage.getItem(`quiz ${urlName}`) || "");
+    (() => {
+      const sheet = JSON.parse(sessionStorage.getItem(`quiz ${urlName}`)!);
+      if (!sheet) return router.push(`/q/${urlName}`);
+
+      setSheetId(sheet.id);
+      setYAnswer((prev) => {
+        return { ...serializeAnswers(sheet.answers), ...prev };
+      });
+    })();
   }, []);
   /* eslint-enable */
 
@@ -89,7 +109,13 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
             </div>
             <div>
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
-                <Nav key={i} idx={i} setIdx={setIdx} />
+                <Nav
+                  key={i}
+                  idx={i}
+                  setIdx={setIdx}
+                  answered={!!yAnswer[i]}
+                  pending={pending.includes(i)}
+                />
               ))}
             </div>
             <div className={styles.SubmitBtnBox}>

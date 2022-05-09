@@ -110,6 +110,9 @@
   color: var(--color-secondary-one);
   box-shadow: var(--shadow-three);
 }
+.Option.Colored:hover {
+  color: var(--color-secondary-two);
+}
 .Option .Index {
   color: var(--color-primary-one);
   display: flex;
@@ -118,6 +121,9 @@
   margin: 0 1.5rem 0 0.5rem;
   flex-grow: 0;
   flex-shrink: 0;
+}
+.Option.Colored .Index {
+  color: var(--color-secondary-one);
 }
 .Option .Text {
   display: flex;
@@ -141,18 +147,26 @@
   height: 1.75rem;
   box-shadow: var(--shadow-one);
   color: var(--color-tertiary-one);
+  background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 0.25rem;
-  margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-right: 0.75rem;
+  margin-bottom: 0.75rem;
   flex-grow: 0;
   flex-shrink: 0;
   cursor: pointer;
   border: none;
-  background-color: transparent;
   transition: all 200ms linear;
+}
+.NavigationBox .Index.Answered {
+  color: var(--color-secondary-one);
+}
+.NavigationBox .Index.Pending {
+  animation-name: blink;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
 }
 
 .NextBtnBox {
@@ -163,4 +177,17 @@
   display: flex;
   margin-top: 0.75rem;
   justify-content: center;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    color: rgb(0, 194, 97);
+    background-color: rgba(16, 212, 114, 0.02);
+  }
+
+  50% {
+    color: rgb(255, 120, 0);
+    background-color: rgba(255, 150, 50, 0.03);
+  }
 }

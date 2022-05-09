@@ -1,0 +1,23 @@
+.ButtonNav {
+  display: flex;
+  justify-content: flex-end;
+}
+.ButtonNav .Small {
+  display: flex;
+}
+.ButtonNav .Large {
+  display: none;
+}
+.ButtonNav button {
+  margin-left: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+@media screen and (min-width: 480px) {
+  .ButtonNav .Small {
+    display: none;
+  }
+  .ButtonNav .Large {
+    display: flex;
+  }
+}

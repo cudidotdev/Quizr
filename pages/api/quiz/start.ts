@@ -23,11 +23,14 @@ const handler: NextApiHandlerX = async (req, res) => {
       });
 
       if (prev) {
-        if (new Date(prev.timeStarted.getTime() + 10 * 60 * 1000))
-          return res.status(200).json({
-            success: true,
-            data: { id: prev._id, timeStarted: prev.timeStarted },
-          });
+        const { _id: id, timeStarted, answers } = prev;
+        if (
+          new Date(timeStarted.getTime() + 10 * 60 * 1000).getTime() >
+          Date.now()
+        )
+          return res
+            .status(200)
+            .json({ success: true, data: { id, timeStarted, answers } });
         submitQuiz(prev);
         throw new ApiError("", "You have taken this quiz", 400);
       }
@@ -40,7 +43,7 @@ const handler: NextApiHandlerX = async (req, res) => {
       const { _id, timeStarted } = sheet;
       return res
         .status(200)
-        .json({ success: true, data: { id: _id, timeStarted } });
+        .json({ success: true, data: { id: _id, timeStarted, answers: [] } });
     } catch (error: any) {
       console.log(error);
       const { name, message, status } = modifyError(error);

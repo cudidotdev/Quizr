@@ -8,6 +8,9 @@ export {
   CancelQuestionButton,
   AddQuestionButton,
   EditQuizButton,
+  DeleteQuizButton,
+  EditQuizButtonS,
+  DeleteQuizButtonS,
 } from "./buttons";
 export { default as QuizMetaForm } from "./forms/quizmetaform";
 export { default as QuizQuestionsForm } from "./forms/quizquestionsform";

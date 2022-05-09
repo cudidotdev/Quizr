@@ -34,7 +34,10 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: { quiz: quiz }) => {
     if (!success) return setStartError({ value: true, msg: error.message });
 
     setStartError({ value: false, msg: "" });
-    sessionStorage.setItem(`quiz ${router.query.urlName}`, data.id);
+    sessionStorage.setItem(
+      `quiz ${router.query.urlName}`,
+      JSON.stringify(data)
+    );
     router.push(`/q/${router.query.urlName}/take`);
   }
 

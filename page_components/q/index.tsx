@@ -102,9 +102,16 @@ export const Option: React.FC<{
 export const Nav: React.FC<{
   idx: number;
   setIdx: React.Dispatch<React.SetStateAction<number>>;
-}> = ({ idx, setIdx }) => {
+  answered: boolean;
+  pending: boolean;
+}> = ({ idx, setIdx, answered, pending }) => {
   return (
-    <button className={styles.Index} onClick={() => setIdx(idx)}>
+    <button
+      className={`${styles.Index} ${answered ? styles.Answered : ""} ${
+        pending ? styles.Pending : ""
+      }`}
+      onClick={() => setIdx(idx)}
+    >
       {idx}
     </button>
   );

@@ -30,6 +30,101 @@
   margin-bottom: 0.75rem;
 }
 
+.QuizLoadingContainer,
+.QuizLoadingContainer * {
+  cursor: progress;
+}
+
+.QuizLoadingContainer .Title {
+  height: 1.5rem;
+  border-radius: 0.25rem;
+  animation-name: blink;
+  animation-duration: 2.5s;
+  animation-iteration-count: infinite;
+  margin-bottom: 0.75rem;
+}
+
+.QuizLoadingContainer .Categories {
+  line-height: 0;
+  margin-bottom: 0.5rem;
+}
+
+.QuizLoadingContainer .Categories span {
+  line-height: 0;
+  display: inline-block;
+  width: 5rem;
+  height: 1.25rem;
+  border-radius: 0.25rem;
+  animation-name: blink;
+  animation-duration: 2.5s;
+  animation-iteration-count: infinite;
+  margin-right: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.QuizLoadingContainer .ScoreBox {
+  display: flex;
+  justify-content: flex-end;
+  color: var(--color-primary-three);
+  font-size: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.QuizLoadingContainer .ScoreBox div {
+  display: flex;
+  align-items: center;
+}
+.QuizLoadingContainer .ScoreBox span {
+  line-height: 0;
+  display: inline-block;
+  width: 2.5rem;
+  height: 1.25rem;
+  border-radius: 0.25rem;
+  animation-name: blink;
+  animation-duration: 2.5s;
+  animation-iteration-count: infinite;
+  margin-left: 0.5rem;
+}
+
+.QuizBox .Title {
+  margin-bottom: 0.5rem;
+}
+.QuizBox .Categories {
+  line-height: 0;
+}
+.QuizBox .Categories span {
+  display: inline-flex;
+  background-color: var(--color-primary-transparent);
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.9rem;
+  color: var(--color-primary-one);
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.QuizBox .ScoreBox {
+  display: flex;
+  justify-content: flex-end;
+  color: var(--color-black-three);
+  font-size: 0.9rem;
+  flex-wrap: wrap;
+}
+.QuizBox .ScoreBox .Score {
+  margin-left: 0.5rem;
+  padding: 0 0.5rem;
+  color: var(--color-secondary-two);
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    background-color: rgb(245, 245, 245);
+  }
+  50% {
+    background-color: rgb(230, 230, 230);
+  }
+}
+
 @media screen and (min-width: 768px) {
   .SearchAndCategoryBox {
     flex-direction: row;

@@ -4,17 +4,24 @@ import { GetStaticProps, GetStaticPaths } from "next";
 import connectDB from "database/connect";
 import { Quiz } from "database/models";
 import { quiz } from "types/app";
-import { EditQuizButton } from "page_components/admin";
+import {
+  EditQuizButton,
+  DeleteQuizButton,
+  EditQuizButtonS,
+  DeleteQuizButtonS,
+} from "page_components/admin";
 import { useContext, useState } from "react";
 import { NotePadContext } from "components/app";
-import { putFetcher } from "utils/fetchers";
+import { deleteFetcher, putFetcher } from "utils/fetchers";
 import { useRouter } from "next/router";
+import styles from "styles/pages/Admin_Quizzes.module.css";
 
 //@ts-ignore
 const AdminQuizIdPage: NextPageWithLayout = ({ quiz }: { quiz: quiz }) => {
   const { title, categories, introText, questions, _id: id } = quiz;
   const addNote = useContext(NotePadContext);
   const [editLoading, setEditLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const router = useRouter();
 
   async function editQuiz() {
@@ -41,10 +48,47 @@ const AdminQuizIdPage: NextPageWithLayout = ({ quiz }: { quiz: quiz }) => {
     router.push(`/admin/drafts/editor?id=${data.id}`);
   }
 
+  async function deleteQuiz() {
+    setDeleteLoading(true);
+    const res = await deleteFetcher(`/api/quiz/delete?id=${id}`, {});
+    setDeleteLoading(false);
+
+    if (!res)
+      return addNote({
+        type: "error",
+        id: `errordeletequiz${id}`,
+        msg: "It seems there is a connection problem",
+      });
+
+    const { success, data, error } = res;
+
+    if (!success)
+      return addNote({
+        type: "error",
+        msg: error.message,
+        id: `faildeletequiz${id}`,
+      });
+
+    addNote({
+      type: "success",
+      id: `successdeletequiz${id}`,
+      msg: "Quiz deleted successfully",
+    });
+
+    router.push(`/admin/quizzes`);
+  }
+
   return (
     <main className="site-width pad-one">
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <EditQuizButton loading={editLoading} onClick={editQuiz} />
+      <div className={styles.ButtonNav}>
+        <div className={styles.Large}>
+          <DeleteQuizButton loading={deleteLoading} onClick={deleteQuiz} />
+          <EditQuizButton loading={editLoading} onClick={editQuiz} />
+        </div>
+        <div className={styles.Small}>
+          <DeleteQuizButtonS loading={deleteLoading} onClick={deleteQuiz} />
+          <EditQuizButtonS loading={editLoading} onClick={editQuiz} />
+        </div>
       </div>
     </main>
   );

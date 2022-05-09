@@ -240,3 +240,94 @@ export const EditQuizButton: React.FC<{
     </button>
   );
 };
+
+export const EditQuizButtonS: React.FC<{
+  loading: boolean;
+  onClick: (...args: any) => any;
+}> = ({ loading, onClick }) => {
+  if (loading)
+    return (
+      <button
+        className={`${btnStyles.BtnPrimaryX} ${btnStyles.BtnLoading}`}
+        style={{ padding: "0.25rem 0.75rem" }}
+      >
+        <span
+          style={{ height: "1.5rem", display: "flex", alignItems: "center" }}
+        >
+          <TripleSquareLoader colored />
+        </span>
+      </button>
+    );
+
+  return (
+    <button
+      className={`${btnStyles.BtnPrimaryX}`}
+      onClick={onClick}
+      style={{ padding: "0.25rem" }}
+    >
+      <span style={{ width: "1.5rem", height: "1.5rem" }}>
+        <EditIcon />
+      </span>
+    </button>
+  );
+};
+
+export const DeleteQuizButton: React.FC<{
+  loading: boolean;
+  onClick: (...args: any) => any;
+}> = ({ loading, onClick }) => {
+  if (loading)
+    return (
+      <button
+        className={`${btnStyles.BtnTertiaryX} ${btnStyles.BtnIcon} ${btnStyles.BtnLoading}`}
+      >
+        <span className={btnStyles.Icon}>
+          <DeleteIcon />
+        </span>
+        Deleting <TripleSquareLoader t_colored />
+      </button>
+    );
+
+  return (
+    <button
+      className={`${btnStyles.BtnTertiaryX} ${btnStyles.BtnIcon}`}
+      onClick={onClick}
+    >
+      <span className={btnStyles.Icon}>
+        <DeleteIcon />
+      </span>
+      Delete quiz
+    </button>
+  );
+};
+
+export const DeleteQuizButtonS: React.FC<{
+  loading: boolean;
+  onClick: (...args: any) => any;
+}> = ({ loading, onClick }) => {
+  if (loading)
+    return (
+      <button
+        className={`${btnStyles.BtnTertiaryX} ${btnStyles.BtnLoading}`}
+        style={{ padding: "0.25rem 0.75rem" }}
+      >
+        <span
+          style={{ height: "1.5rem", display: "flex", alignItems: "center" }}
+        >
+          <TripleSquareLoader t_colored />
+        </span>
+      </button>
+    );
+
+  return (
+    <button
+      className={`${btnStyles.BtnTertiaryX}`}
+      onClick={onClick}
+      style={{ padding: "0.25rem" }}
+    >
+      <span style={{ width: "1.5rem", height: "1.5rem" }}>
+        <DeleteIcon />
+      </span>
+    </button>
+  );
+};

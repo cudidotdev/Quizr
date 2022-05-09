@@ -26,6 +26,7 @@
 }
 .List .Child {
   word-break: break-all;
+  width: 100%;
 }
 
 .ListContainer.Large {
