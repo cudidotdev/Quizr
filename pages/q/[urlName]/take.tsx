@@ -11,11 +11,12 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import connectDB from "database/connect";
 import { Quiz } from "database/models";
 import type { ans, quiz } from "types/app";
-import { useState, useEffect } from "react";
-import { patchFetcher } from "utils/fetchers";
+import { useState, useEffect, useContext } from "react";
+import { getFetcher, patchFetcher, postFetcher } from "utils/fetchers";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { serializeAnswers, storeInSession } from "utils/quiz";
+import { NotePadContext, UserContext } from "components/app";
 
 const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
   const { title, questions, _id: id, urlName } = quiz;
@@ -24,7 +25,14 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
   const [sheetId, setSheetId] = useState<string>();
   const [yAnswer, setYAnswer] = useState<{ [key: number]: ans }>({});
   const [pending, setPending] = useState<number[]>([]);
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [submitMsg, setSubmitMsg] = useState<null | {
+    type: "info" | "error";
+    msg: string;
+  }>(null);
   const router = useRouter();
+  const [user] = useContext(UserContext);
+  const addNote = useContext(NotePadContext);
 
   async function chooseAnswer(answer: ans) {
     const index: number = idx;
@@ -37,10 +45,72 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
       index,
       answer,
     });
-    if (!res?.success) return;
-
-    storeInSession({ index, answer }, urlName);
     setPending((prev) => prev.filter((i) => i != index));
+
+    if (!res) {
+      addNote({
+        type: "error",
+        id: `tickerrori${urlName}`,
+        msg: "It seems there is no internet connection",
+      });
+      setYAnswer((prev) => {
+        return serializeAnswers(
+          JSON.parse(sessionStorage.getItem(`quiz ${urlName}`)!).answers
+        );
+      });
+      if (!submitLoading) setPending([]);
+      return;
+    }
+
+    const { success, error } = res;
+
+    if (!success) {
+      if (error.name === "time") {
+        addNote({
+          type: "error",
+          id: `tickerror${urlName}${idx}`,
+          msg: error.message,
+        });
+        return router.push(`/q/${urlName}/end`);
+      }
+      if (error.name === "sheet") {
+        addNote({
+          type: "error",
+          id: `tickerror${urlName}${idx}`,
+          msg: error.message,
+        });
+        return router.push(`/q/${urlName}`);
+      }
+    }
+
+    setYAnswer((prev) => {
+      return { ...prev, [index]: answer };
+    });
+    storeInSession({ index, answer }, urlName);
+  }
+
+  async function submitQuiz() {
+    setSubmitLoading(true);
+    if (pending.length) {
+      setSubmitMsg({ type: "info", msg: "Waiting for answers to tick" });
+      return;
+    }
+
+    const res = await postFetcher(`/api/quiz/submit?id=${sheetId}`, {});
+    setSubmitLoading(false);
+
+    if (!res)
+      return setSubmitMsg({
+        type: "error",
+        msg: "It seems there is no internet connection",
+      });
+
+    const { success, data, error } = res;
+    if (!success) return setSubmitMsg({ type: "error", msg: error.message });
+
+    setSubmitMsg(null);
+    sessionStorage.removeItem(`quiz ${urlName}`);
+    router.push(`/q/${urlName}/end`);
   }
 
   /* eslint-disable */
@@ -51,9 +121,15 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
   }, [idx]);
 
   useEffect(() => {
-    (() => {
+    (async () => {
+      if (!pending.length && submitLoading) await submitQuiz();
+    })();
+  }, [pending]);
+
+  useEffect(() => {
+    (async () => {
       const sheet = JSON.parse(sessionStorage.getItem(`quiz ${urlName}`)!);
-      if (!sheet) return router.push(`/q/${urlName}`);
+      if (!sheet || !user) return router.push(`/q/${urlName}`);
 
       setSheetId(sheet.id);
       setYAnswer((prev) => {
@@ -118,8 +194,20 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
                 />
               ))}
             </div>
-            <div className={styles.SubmitBtnBox}>
-              <SubmitButton />
+            <div
+              className={styles.SubmitBtnBox}
+              style={{ cursor: `${submitLoading ? "progress" : "default"}` }}
+            >
+              {!!submitMsg && (
+                <p
+                  className={`${
+                    submitMsg.type === "error" ? styles.Error : styles.Info
+                  }`}
+                >
+                  {submitMsg.msg}
+                </p>
+              )}
+              <SubmitButton loading={submitLoading} onClick={submitQuiz} />
             </div>
           </section>
         </div>

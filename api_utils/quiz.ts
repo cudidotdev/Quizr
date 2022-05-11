@@ -1,4 +1,5 @@
-import { QuizDraft, Quiz } from "database/models";
+import { QuizDraft, Quiz, QuizSheet } from "database/models";
+import { ScoreBoard } from "database/models";
 
 export async function generateUniqueQuizTitle() {
   const Untitleds = await QuizDraft.find({
@@ -68,19 +69,54 @@ export async function modifyQuizDraft({ id, body }: { id: any; body: any }) {
   ).lean();
 }
 
-export async function gradeQuiz(answerSheet: any[], id: any) {
-  const quiz: any[] = (await Quiz.findById(id).select("questions -_id").lean())
+export async function gradeQuiz(uAnswers: any[], quizId: any) {
+  let score = 0;
+
+  const questions = (await Quiz.findById(quizId).select("questions").lean())
     .questions;
-  let score: number = 0;
 
-  answerSheet.forEach((answerObj) => {
-    const { index, answer } = answerObj;
+  const correction = questions.map((question: any) => {
+    const final: any = {};
+    const uAnswer = uAnswers.find((obj: any) => obj.index === question.index);
 
-    if (quiz.find((question) => question.index === index)?.answer === answer)
-      score++;
+    final.index = question.index;
+    final.question = question.question;
+
+    if (uAnswer === undefined) final.correct = 0;
+    else {
+      if (uAnswer.answer === question.answer) {
+        score++;
+        final.correct = 1;
+      } else {
+        final.correct = -1;
+      }
+      final.uAnswer = {
+        val: uAnswer.answer,
+        text: question.options[uAnswer.answer],
+      };
+    }
+
+    return final;
   });
 
-  return score;
+  return { score, correction };
 }
 
-export function submitQuiz(sheet: any) {}
+export async function submitQuiz(sheet: any, timeSubmited: number) {
+  const { score, correction } = await gradeQuiz(sheet.answers, sheet.quizId);
+  const quizTime = Math.min(
+    Math.max(0, timeSubmited - sheet.timeStarted),
+    10 * 60 * 1000
+  );
+
+  await ScoreBoard.create({
+    user: sheet.userId,
+    quiz: sheet.quizId,
+    score,
+    correction,
+    quizTime,
+  });
+  await QuizSheet.findByIdAndDelete(sheet._id);
+
+  return { score, correction };
+}

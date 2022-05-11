@@ -21,7 +21,8 @@
   padding-top: 0.25rem;
 }
 
-.StartBtn {
+.StartBtn,
+.SubmitBtn {
   padding: 0.25rem 2rem !important;
   font-size: 1rem;
 }
@@ -175,8 +176,19 @@
 
 .SubmitBtnBox {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 0.75rem;
   justify-content: center;
+}
+
+.SubmitBtnBox .Info {
+  color: var(--color-primary-one);
+  margin-bottom: 0.25rem;
+}
+.SubmitBtnBox .Error {
+  color: var(--color-tertiary-one);
+  margin-bottom: 0.25rem;
 }
 
 @keyframes blink {

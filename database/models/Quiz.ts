@@ -28,4 +28,4 @@ const QuizSchema = new mongoose.Schema({
 });
 
 export default mongoose.models.Quiz ||
-  mongoose.model("Quiz", QuizSchema, "quizes");
+  mongoose.model("Quiz", QuizSchema, "quizzes");

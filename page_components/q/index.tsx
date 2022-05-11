@@ -45,11 +45,23 @@ export const NextButton: React.FC<{ onClick: (...args: any) => any }> = ({
   );
 };
 
-export const SubmitButton: React.FC = () => {
+export const SubmitButton: React.FC<{
+  loading: boolean;
+  onClick: (...args: any) => any;
+}> = ({ loading, onClick }) => {
+  if (loading)
+    return (
+      <button
+        className={`${btnStyles.BtnPrimary} ${btnStyles.BtnLoading} ${styles.SubmitBtn}`}
+      >
+        Submitting <TripleSquareLoader />
+      </button>
+    );
   return (
     <button
-      className={`${btnStyles.BtnPrimary}`}
+      className={`${btnStyles.BtnPrimary} ${styles.SubmitBtn}`}
       style={{ padding: "0.25rem 1.5rem" }}
+      onClick={onClick}
     >
       Submit
     </button>

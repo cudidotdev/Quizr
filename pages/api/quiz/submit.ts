@@ -3,8 +3,9 @@ import { modifyError, gradeQuiz } from "api_utils";
 import connectDB from "database/connect";
 import { restrictToLogin } from "api_middlewares";
 import ApiError from "errors/api";
-import { Quiz, User } from "database/models";
+import { Quiz, QuizSheet, User } from "database/models";
 import { validateAnswers } from "validators/quiz/submit";
+import { submitQuiz } from "api_utils/quiz";
 
 const handler: NextApiHandlerX = async (req, res) => {
   const timeSubmited = Date.now();
@@ -16,35 +17,18 @@ const handler: NextApiHandlerX = async (req, res) => {
       const { id } = req.query;
       if (!id) throw new ApiError("id", "Please insert an id on query", 400);
 
-      const quizTaking = (
-        await User.findOne({
-          _id: req.user._id,
-          "quizTaking.quizId": id,
-        })
-          .select("quizTaking -_id")
-          .lean()
-      ).quizTaking;
-
-      if (!quizTaking)
+      const sheet = await QuizSheet.findById(id).lean();
+      if (!sheet)
+        throw new ApiError("sheet", "No sheet found with such id", 404);
+      if (sheet.userId.toString() != req.user._id.toString())
         throw new ApiError(
-          "id",
-          "The user isn't taking any quiz with this id",
+          "sheet",
+          "This sheet does not correspond to the current user",
           400
         );
 
-      const answerSheet = validateAnswers(req.body);
-      const score = await gradeQuiz(answerSheet, id);
-      const timeStarted: Date = quizTaking.find(
-        (q: any) => q.quizId == id
-      ).timeStarted;
-      const timeTaken =
-        new Date(timeSubmited - timeStarted.getTime()).getTime() / 1000;
-      const exp = (score * 180) / timeTaken;
-
-      return res.status(200).json({
-        success: true,
-        data: { score, timeTaken, exp },
-      });
+      const data = await submitQuiz(sheet, timeSubmited);
+      return res.status(200).json({ success: true, data: data });
     } catch (error: any) {
       console.log(error);
       const { name, message, status } = modifyError(error);

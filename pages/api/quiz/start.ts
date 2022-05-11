@@ -17,25 +17,25 @@ const handler: NextApiHandlerX = async (req, res) => {
       if (!(await Quiz.findById(id).select("_id")))
         throw new ApiError("id", "No quiz found with such id", 400);
 
-      const prev = await QuizSheet.findOne({
+      let sheet = await QuizSheet.findOne({
         quizId: id,
         userId: req.user._id,
       });
 
-      if (prev) {
-        const { _id: id, timeStarted, answers } = prev;
-        if (
-          new Date(timeStarted.getTime() + 10 * 60 * 1000).getTime() >
-          Date.now()
-        )
-          return res
-            .status(200)
-            .json({ success: true, data: { id, timeStarted, answers } });
-        submitQuiz(prev);
-        throw new ApiError("", "You have taken this quiz", 400);
+      if (sheet) {
+        const { _id: id, timeStarted, answers } = sheet;
+
+        if (sheet.timeStarted + 10 * 60 * 1000 < Date.now()) {
+          await submitQuiz(sheet, Date.now());
+          throw new ApiError("time", "Quiz time is exceeded", 400);
+        }
+
+        return res
+          .status(200)
+          .json({ success: true, data: { id, timeStarted, answers } });
       }
 
-      const sheet = await QuizSheet.create({
+      sheet = await QuizSheet.create({
         userId: req.user._id,
         quizId: id,
         timeStarted: Date.now() + 15 * 1000,

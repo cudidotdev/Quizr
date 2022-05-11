@@ -1,10 +1,23 @@
 import type { NextPageWithLayout } from "types/next";
 import Layout from "components/layouts";
 
-const HelpPage: NextPageWithLayout = () => {
-  return <></>;
+const QuizEndPage: NextPageWithLayout = () => {
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: "200px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: "1.1rem",
+      }}
+    >
+      Ended
+    </div>
+  );
 };
 
-HelpPage.Layout = Layout;
+QuizEndPage.Layout = Layout;
 
-export default HelpPage;
+export default QuizEndPage;

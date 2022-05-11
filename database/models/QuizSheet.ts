@@ -6,11 +6,11 @@ const QuizSheetSchema = new mongoose.Schema({
   answers: [
     {
       _id: false,
-      index: Number,
-      answer: { type: String, enum: ["A", "B", "C", "D"] },
+      index: { type: Number, required: true },
+      answer: { type: String, required: true, enum: ["A", "B", "C", "D"] },
     },
   ],
-  timeStarted: { type: Date, default: () => Date.now() },
+  timeStarted: { type: Number, default: () => Date.now() },
 });
 
 export default mongoose.models.QuizSheet ||

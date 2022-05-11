@@ -14,7 +14,7 @@ import Head from "next/head";
 
 //@ts-ignore
 const QuizTakePage: NextPageWithLayout = ({ quiz }: { quiz: quiz }) => {
-  const { title, introText, _id: id } = quiz;
+  const { title, introText, _id: id, urlName } = quiz;
   const [startLoading, setStartLoading] = useState(false);
   const [startError, setStartError] = useState({ value: false, msg: "" });
   const router = useRouter();
@@ -31,14 +31,17 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: { quiz: quiz }) => {
       });
 
     const { success, data, error } = res;
-    if (!success) return setStartError({ value: true, msg: error.message });
+    if (!success) {
+      if (error.name === "time") return router.push(`/q/${urlName}/end`);
+      return setStartError({ value: true, msg: error.message });
+    }
 
     setStartError({ value: false, msg: "" });
     sessionStorage.setItem(
       `quiz ${router.query.urlName}`,
       JSON.stringify(data)
     );
-    router.push(`/q/${router.query.urlName}/take`);
+    router.push(`/q/${urlName}/take`);
   }
 
   return (
@@ -84,7 +87,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   await connectDB();
 
   const quiz: quiz = await Quiz.findOne({ urlName: params!.urlName })
-    .select("title introText ")
+    .select("title introText urlName")
     .lean();
   if (!quiz) return { notFound: true };
 

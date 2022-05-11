@@ -18,6 +18,26 @@ export function doesDiffer(first: any, second: any): boolean {
   return false;
 }
 
+export function clone(item: any) {
+  if (typeof item !== "object") return item;
+
+  if (item === null) return null;
+
+  if (Array.isArray(item)) {
+    const newItem: any[] = [];
+    item.forEach((elem, idx) => {
+      newItem[idx] = clone(elem);
+    });
+    return newItem;
+  }
+
+  const newItem: { [key: string]: any } = {};
+  for (let key in item) {
+    newItem[key] = clone(item[key]);
+  }
+  return newItem;
+}
+
 export function serializeQuery(obj: { [key: string]: any }) {
   let string = "";
 
