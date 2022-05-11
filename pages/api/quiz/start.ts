@@ -20,14 +20,16 @@ const handler: NextApiHandlerX = async (req, res) => {
       let sheet = await QuizSheet.findOne({
         quizId: id,
         userId: req.user._id,
-      });
+      }).lean();
 
       if (sheet) {
         const { _id: id, timeStarted, answers } = sheet;
 
+        if (sheet.submitted === true)
+          throw new ApiError("taken", "You have already taken this quiz", 403);
         if (sheet.timeStarted + 10 * 60 * 1000 < Date.now()) {
           await submitQuiz(sheet, Date.now());
-          throw new ApiError("time", "Quiz time is exceeded", 400);
+          throw new ApiError("time", "Quiz time is exceeded", 403);
         }
 
         return res

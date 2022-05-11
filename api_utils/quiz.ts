@@ -116,7 +116,7 @@ export async function submitQuiz(sheet: any, timeSubmited: number) {
     correction,
     quizTime,
   });
-  await QuizSheet.findByIdAndDelete(sheet._id);
+  await QuizSheet.findByIdAndUpdate(sheet._id, { submitted: true });
 
   return { score, correction };
 }

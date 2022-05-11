@@ -136,6 +136,8 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
         return { ...serializeAnswers(sheet.answers), ...prev };
       });
     })();
+    router.prefetch(`/q/${urlName}`);
+    router.prefetch(`/q/${urlName}/end`);
   }, []);
   /* eslint-enable */
 

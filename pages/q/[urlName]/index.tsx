@@ -7,7 +7,7 @@ import type { quiz } from "types/app";
 import { NextPageWithLayout } from "types/next";
 import styles from "styles/pages/Q.module.css";
 import { postFetcher } from "utils/fetchers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ErrorMsg, StartButton } from "page_components/q";
 import { useRouter } from "next/router";
 import Head from "next/head";
@@ -43,6 +43,12 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: { quiz: quiz }) => {
     );
     router.push(`/q/${urlName}/take`);
   }
+
+  /* eslint-disable */
+  useEffect(() => {
+    router.prefetch(`/q/${urlName}/take`);
+  }, []);
+  /* eslint-enable */
 
   return (
     <main className="content-width" style={{ padding: "1rem" }}>

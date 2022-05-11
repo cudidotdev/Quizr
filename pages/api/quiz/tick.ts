@@ -25,12 +25,12 @@ const handler: NextApiHandlerX = async (req, res) => {
         throw new ApiError(
           "sheet",
           "This sheet does not correspond to the current user",
-          400
+          403
         );
 
       if (sheet.timeStarted + 10 * 60 * 1000 < Date.now()) {
         await submitQuiz(sheet, Date.now());
-        throw new ApiError("time", "Quiz time is exceeded", 400);
+        throw new ApiError("time", "Quiz time is exceeded", 403);
       }
 
       if (sheet.answers.some((obj: any) => obj.index == body.index))

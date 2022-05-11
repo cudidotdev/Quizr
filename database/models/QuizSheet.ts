@@ -11,6 +11,7 @@ const QuizSheetSchema = new mongoose.Schema({
     },
   ],
   timeStarted: { type: Number, default: () => Date.now() },
+  submitted: Boolean,
 });
 
 export default mongoose.models.QuizSheet ||
