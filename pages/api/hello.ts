@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { restrictToLogin } from "api_middlewares";
 import connectDB from "database/connect";
-import { User } from "database/models";
+import { quizSearchIndex, User } from "database/models";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { NextApiHandlerX } from "types/next";
 
@@ -11,12 +11,7 @@ type Data = {
 
 const handler: NextApiHandlerX = async (req, res) => {
   await connectDB();
-  await User.updateMany(
-    {},
-    {
-      $unset: { quizStarted: "" },
-    }
-  );
+  // await quizSearchIndex.deleteMany({});
   return res.status(200).json({ name: "John Doe" });
 };
 

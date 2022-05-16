@@ -6,6 +6,7 @@ export {
   getQuizById,
   getAllQuizes,
   gradeQuiz,
+  indexQuiz,
 } from "./quiz";
 
 export { default as modifyError } from "./error";

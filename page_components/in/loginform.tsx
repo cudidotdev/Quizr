@@ -23,7 +23,6 @@ const LoginForm: React.FC = () => {
   const loginForm = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [, setUser] = useContext(UserContext);
-  const addNote = useContext(NotePadContext);
 
   function changeLoginDetails(key: string, value: string) {
     setLoginDetails((prev) => {
@@ -54,12 +53,6 @@ const LoginForm: React.FC = () => {
     if (!res) return processError({ name: "not resolved" });
     const { success, data, error } = res;
     if (!success) return processError(error);
-
-    addNote({
-      type: "info",
-      id: "loginsuccess",
-      msg: "Logged in successfully",
-    });
 
     setUser(data);
     router.push(`/${router.query.next || ""}`);

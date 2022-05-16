@@ -15,6 +15,15 @@ export type quiz = {
   questions: question[];
 };
 
+export type quizType2 = {
+  _id: string;
+  title: string;
+  categories: string[];
+  introText: string;
+  urlName: string;
+  questions: question[];
+};
+
 type question = {
   question: string;
   index: number;

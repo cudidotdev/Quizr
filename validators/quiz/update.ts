@@ -18,7 +18,11 @@ function validateTitle(title: string, final: any) {
   if (typeof title !== "string")
     throw new ApiError("title", "The title should be a string");
 
-  title = title.trim();
+  //removes extra white spaces in text
+  title = title
+    .split(" ")
+    .filter((e) => e !== "")
+    .join(" ");
 
   if (title.length > 100)
     throw new ApiError(
@@ -41,9 +45,25 @@ function validateCategories(categories: string[], final: any) {
       400
     );
 
+  const prevCategoriesInserted: string[] = [];
+
   categories = categories
-    .map((category) => category.trim())
-    .filter((category) => category !== "");
+    .map((category) =>
+      //removes extra white spaces in text
+      category
+        .split(" ")
+        .filter((e) => e !== "")
+        .join(" ")
+    )
+    .filter((category) =>
+      //removes duplicates (case-insensitive) in categories array or empty text
+      prevCategoriesInserted.some((c) =>
+        //case-insensitive search
+        new RegExp(`^${c}$`, "i").test(category)
+      )
+        ? false
+        : category !== "" && prevCategoriesInserted.push(category)
+    );
 
   if (categories.length > 7)
     throw new ApiError("categories", "The categories should not exceed 7", 400);

@@ -17,8 +17,6 @@ const handler: NextApiHandlerX = async (req, res) => {
       const body = await validateBody(req.body);
       const data = await modifyQuizDraft({ id, body });
 
-      console.log(req.body.urlName, body.urlName, data.urlName);
-
       return res.status(200).json({ success: true, data });
     } catch (error: any) {
       console.log(error);

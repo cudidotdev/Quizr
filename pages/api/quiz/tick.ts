@@ -33,10 +33,10 @@ const handler: NextApiHandlerX = async (req, res) => {
         throw new ApiError("time", "Quiz time is exceeded", 403);
       }
 
-      if (sheet.answers.some((obj: any) => obj.index == body.index))
-        sheet.answers = sheet.answers.map((obj: any) =>
-          obj.index === body.index ? body : obj
-        );
+      const idx = sheet.answers.findIndex(
+        (obj: any) => obj.index === body.index
+      );
+      if (idx > -1) sheet.answers[idx] = body;
       else sheet.answers.push(body);
 
       await QuizSheet.findByIdAndUpdate(id, sheet);

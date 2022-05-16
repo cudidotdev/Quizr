@@ -1,5 +1,6 @@
-import { QuizDraft, Quiz, QuizSheet } from "database/models";
+import { QuizDraft, Quiz, QuizSheet, quizSearchIndex } from "database/models";
 import { ScoreBoard } from "database/models";
+import { quiz, quizType2 } from "types/app";
 
 export async function generateUniqueQuizTitle() {
   const Untitleds = await QuizDraft.find({
@@ -119,4 +120,51 @@ export async function submitQuiz(sheet: any, timeSubmited: number) {
   await QuizSheet.findByIdAndUpdate(sheet._id, { submitted: true });
 
   return { score, correction };
+}
+
+export async function indexQuiz(quiz: quizType2, isNew: boolean) {
+  const { title, categories, questions } = quiz;
+  const indexArr: { name: string; score: number }[] = [];
+
+  function index(name: string, score: number, type?: string) {
+    if (/^the$/i.test(name) || name.length < 3) return;
+    name = name
+      .split("")
+      .filter((e) => /\w+/.test(e))
+      .join("");
+    const prevIndex = indexArr.findIndex((obj) =>
+      new RegExp(`^${name}$`, "i").test(obj.name)
+    );
+    if (prevIndex > -1) {
+      const prevScore = indexArr[prevIndex].score;
+      indexArr[prevIndex] = { name, score: prevScore + score };
+    } else indexArr.push({ name, score });
+  }
+
+  title.split(" ").forEach((word) => index(word, 8));
+  categories.forEach((category) => index(category, 10));
+  questions.forEach((question) => {
+    question.question.split(" ").forEach((word) => index(word, 4));
+    question.options.A.split(" ").forEach((word) => index(word, 2));
+    question.options.B.split(" ").forEach((word) => index(word, 2));
+    question.options.C.split(" ").forEach((word) => index(word, 2));
+    question.options.D.split(" ").forEach((word) => index(word, 2));
+  });
+
+  if (!isNew) {
+    await quizSearchIndex.updateMany(
+      {},
+      { $pull: { quizzes: { quizId: quiz._id } } }
+    );
+  }
+
+  indexArr.forEach(async ({ name, score }) => {
+    await quizSearchIndex.findOneAndUpdate(
+      { name },
+      {
+        $push: { quizzes: { quizId: quiz._id, score } },
+      },
+      { upsert: true }
+    );
+  });
 }
