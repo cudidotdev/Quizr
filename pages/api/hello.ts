@@ -11,7 +11,7 @@ type Data = {
 
 const handler: NextApiHandlerX = async (req, res) => {
   await connectDB();
-  // await quizSearchIndex.deleteMany({});
+
   return res.status(200).json({ name: "John Doe" });
 };
 

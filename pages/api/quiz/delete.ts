@@ -1,7 +1,7 @@
 import type { NextApiHandlerX } from "types/next";
 import { restrictToAdmins } from "api_middlewares";
 import connectDB from "database/connect";
-import { Quiz, QuizDraft } from "database/models";
+import { Quiz, QuizDraft, quizSearchIndex } from "database/models";
 import { modifyError } from "api_utils";
 import ApiError from "errors/api";
 
@@ -23,6 +23,12 @@ const handler: NextApiHandlerX = async (req, res) => {
         );
 
       if (data.currentlyOnEdit) await QuizDraft.findByIdAndDelete(data.editId);
+
+      //remove from search indexes
+      await quizSearchIndex.updateMany(
+        {},
+        { $pull: { quizzes: { quizId: id } } }
+      );
 
       return res.status(200).json({ success: true });
     } catch (error: any) {

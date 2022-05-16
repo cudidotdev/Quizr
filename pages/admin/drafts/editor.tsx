@@ -134,7 +134,6 @@ const QuizEditorPage: NextPageWithLayout = () => {
       })
     );
     draftDispatch({ type: "all", payload: modifyDraftForDisplay(savedData) });
-    console.log(savedData);
     return true;
   }
 

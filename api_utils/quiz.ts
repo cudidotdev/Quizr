@@ -126,7 +126,7 @@ export async function indexQuiz(quiz: quizType2, isNew: boolean) {
   const { title, categories, questions } = quiz;
   const indexArr: { name: string; score: number }[] = [];
 
-  function index(name: string, score: number, type?: string) {
+  function index(name: string, score: number) {
     if (/^the$/i.test(name) || name.length < 3) return;
     name = name
       .split("")
@@ -142,7 +142,9 @@ export async function indexQuiz(quiz: quizType2, isNew: boolean) {
   }
 
   title.split(" ").forEach((word) => index(word, 8));
-  categories.forEach((category) => index(category, 10));
+  categories.forEach((category) =>
+    category.split(" ").forEach((word) => index(word, 10))
+  );
   questions.forEach((question) => {
     question.question.split(" ").forEach((word) => index(word, 4));
     question.options.A.split(" ").forEach((word) => index(word, 2));

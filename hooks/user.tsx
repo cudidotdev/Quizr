@@ -31,9 +31,9 @@ export default function useUser(): [any, React.Dispatch<any>] {
     //@ts-ignore
     setUser(JSON.parse(localStorage.getItem("user")));
     fetchUser();
-    window.addEventListener("focus", fetchUser);
+    // window.addEventListener("focus", fetchUser);
 
-    return () => window.removeEventListener("focus", fetchUser);
+    // return () => window.removeEventListener("focus", fetchUser);
   }, []);
 
   useEffect(() => {
@@ -47,5 +47,3 @@ export default function useUser(): [any, React.Dispatch<any>] {
 
   return [user, setUser];
 }
-
-//const [user] = useUser
