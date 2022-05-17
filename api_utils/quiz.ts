@@ -147,6 +147,8 @@ export async function indexQuiz(quiz: quizType2, isNew: boolean) {
     } else indexArr.push({ name, score });
   }
 
+  console.time("indexing");
+
   title.split(" ").forEach((word) => index(word, 8));
   categories.forEach((category) =>
     category.split(" ").forEach((word) => index(word, 10))
@@ -165,6 +167,8 @@ export async function indexQuiz(quiz: quizType2, isNew: boolean) {
       { $pull: { quizzes: { quizId: quiz._id } } }
     );
   }
+
+  console.timeEnd("indexing");
 
   indexArr.forEach(async ({ name, score }) => {
     await quizSearchIndex.findOneAndUpdate(
