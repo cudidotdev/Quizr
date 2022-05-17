@@ -183,4 +183,5 @@ export async function indexQuiz(quiz: quizType2, isNew: boolean) {
   for (let name in NameScoreMap) {
     insert(name);
   }
+  console.log("last");
 }
