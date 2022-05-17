@@ -135,10 +135,9 @@ export async function indexQuiz(quiz: quizType2, isNew: boolean) {
       name.length < 3
     )
       return;
-    name = name
-      .split("")
-      .filter((e) => /\w+/.test(e))
-      .join("");
+
+    name = name.match(/\w+/g)!?.join();
+    if (!name) return;
 
     const lName = name.toLowerCase();
     if (lName in NameScoreMap)
@@ -170,6 +169,7 @@ export async function indexQuiz(quiz: quizType2, isNew: boolean) {
   }
 
   async function insert(name: string) {
+    console.time(`inserting ${name}`);
     await quizSearchIndex.findOneAndUpdate(
       { name },
       {
@@ -177,6 +177,7 @@ export async function indexQuiz(quiz: quizType2, isNew: boolean) {
       },
       { upsert: true }
     );
+    console.timeEnd(`inserting ${name}`);
   }
 
   for (let name in NameScoreMap) {
