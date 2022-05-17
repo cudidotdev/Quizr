@@ -124,7 +124,8 @@ export async function submitQuiz(sheet: any, timeSubmited: number) {
 
 export async function indexQuiz(quiz: quizType2, isNew: boolean) {
   const { title, categories, questions } = quiz;
-  const indexArr: { name: string; score: number }[] = [];
+  // const indexArr: { name: string; score: number }[] = [];
+  const NameScoreMap: { [key: string]: number } = {};
 
   function index(name: string, score: number) {
     if (
@@ -138,13 +139,11 @@ export async function indexQuiz(quiz: quizType2, isNew: boolean) {
       .split("")
       .filter((e) => /\w+/.test(e))
       .join("");
-    const prevIndex = indexArr.findIndex((obj) =>
-      new RegExp(`^${name}$`, "i").test(obj.name)
-    );
-    if (prevIndex > -1) {
-      const prevScore = indexArr[prevIndex].score;
-      indexArr[prevIndex] = { name, score: prevScore + score };
-    } else indexArr.push({ name, score });
+
+    const lName = name.toLowerCase();
+    if (lName in NameScoreMap)
+      NameScoreMap[lName] = NameScoreMap[lName] + score;
+    else NameScoreMap[lName] = score;
   }
 
   title.split(" ").forEach((word) => index(word, 8));
@@ -166,13 +165,17 @@ export async function indexQuiz(quiz: quizType2, isNew: boolean) {
     );
   }
 
-  indexArr.forEach(async ({ name, score }) => {
+  async function insert(name: string) {
     await quizSearchIndex.findOneAndUpdate(
       { name },
       {
-        $push: { quizzes: { quizId: quiz._id, score } },
+        $push: { quizzes: { quizId: quiz._id, score: NameScoreMap[name] } },
       },
       { upsert: true }
     );
-  });
+  }
+
+  for (let name in NameScoreMap) {
+    insert(name);
+  }
 }
