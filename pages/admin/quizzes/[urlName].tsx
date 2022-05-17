@@ -10,7 +10,7 @@ import {
   EditQuizButtonS,
   DeleteQuizButtonS,
 } from "page_components/admin";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NotePadContext } from "components/app";
 import { deleteFetcher, putFetcher } from "utils/fetchers";
 import { useRouter } from "next/router";
@@ -77,6 +77,12 @@ const AdminQuizIdPage: NextPageWithLayout = ({ quiz }: { quiz: quiz }) => {
 
     router.push(`/admin/quizzes`);
   }
+
+  /*eslint-disable*/
+  useEffect(() => {
+    router.prefetch("/admin/drafts/editor");
+  }, []);
+  /*eslint-enable*/
 
   return (
     <main className="site-width pad-one">

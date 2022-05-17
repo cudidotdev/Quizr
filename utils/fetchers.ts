@@ -21,9 +21,8 @@ export async function postFetcher(
 ) {
   try {
     const response = await fetch(url, {
-      body: JSON.stringify(body).replace(
-        /\\\\u[\d|"a"|"b"|"c"|"d"|"e"|"f"]{4}/g,
-        (x: string) => x.slice(1, x.length)
+      body: JSON.stringify(body).replace(/\\\\u[\dabcdef]{4}/g, (x: string) =>
+        x.slice(1, x.length)
       ),
       method: "POST",
       credentials: "same-origin",

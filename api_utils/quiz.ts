@@ -127,7 +127,13 @@ export async function indexQuiz(quiz: quizType2, isNew: boolean) {
   const indexArr: { name: string; score: number }[] = [];
 
   function index(name: string, score: number) {
-    if (/^the$/i.test(name) || name.length < 3) return;
+    if (
+      /^(the|are|was|were|this|that|these|those|what|why|whose|which|who|how)$/i.test(
+        name
+      ) ||
+      name.length < 3
+    )
+      return;
     name = name
       .split("")
       .filter((e) => /\w+/.test(e))
@@ -146,11 +152,11 @@ export async function indexQuiz(quiz: quizType2, isNew: boolean) {
     category.split(" ").forEach((word) => index(word, 10))
   );
   questions.forEach((question) => {
-    question.question.split(" ").forEach((word) => index(word, 4));
-    question.options.A.split(" ").forEach((word) => index(word, 2));
-    question.options.B.split(" ").forEach((word) => index(word, 2));
-    question.options.C.split(" ").forEach((word) => index(word, 2));
-    question.options.D.split(" ").forEach((word) => index(word, 2));
+    question.question.split(" ").forEach((word) => index(word, 6));
+    question.options.A.split(" ").forEach((word) => index(word, 1));
+    question.options.B.split(" ").forEach((word) => index(word, 1));
+    question.options.C.split(" ").forEach((word) => index(word, 1));
+    question.options.D.split(" ").forEach((word) => index(word, 1));
   });
 
   if (!isNew) {
