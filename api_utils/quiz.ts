@@ -146,6 +146,8 @@ export async function indexQuiz(quiz: quizType2, isNew: boolean) {
     else NameScoreMap[lName] = score;
   }
 
+  console.time("indexing");
+
   title.split(" ").forEach((word) => index(word, 8));
   categories.forEach((category) =>
     category.split(" ").forEach((word) => index(word, 10))
@@ -157,6 +159,8 @@ export async function indexQuiz(quiz: quizType2, isNew: boolean) {
     question.options.C.split(" ").forEach((word) => index(word, 1));
     question.options.D.split(" ").forEach((word) => index(word, 1));
   });
+
+  console.timeEnd("indexing");
 
   if (!isNew) {
     await quizSearchIndex.updateMany(
