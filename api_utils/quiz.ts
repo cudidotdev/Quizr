@@ -60,7 +60,7 @@ export async function getAllQuizes({
   const query: any = {};
 
   if (search) {
-    search = `(${search
+    search = `^(${search
       .split(" ")
       .filter((e) => e !== "")
       .join("|")})`;
@@ -91,17 +91,24 @@ export async function getAllQuizes({
 function calculateRanks(data: any[]): [string[], { [key: string]: number }] {
   const IdScoreMap: { [key: string]: number } = {};
   const IdRankMap: { [key: string]: number } = {};
+  let maxScore: number = 0;
+  let minScore: number = Infinity;
 
   data.forEach((e) =>
     e.quizzes.forEach(({ quizId: id, score }: any) => {
       id = id.toString();
       IdScoreMap[id] = IdScoreMap[id] ? IdScoreMap[id] + score : score;
+      maxScore = Math.max(IdScoreMap[id], maxScore);
+      minScore = Math.min(IdScoreMap[id], minScore);
     })
   );
 
   Object.entries(IdScoreMap)
+    .filter((e) => e[1] > (maxScore - minScore) / 2)
     .sort((a, b) => b[1] - a[1])
     .forEach(([id], idx) => (IdRankMap[id] = idx));
+
+  console.log(IdScoreMap, IdRankMap);
 
   return [Object.keys(IdScoreMap), IdRankMap];
 }
@@ -202,7 +209,7 @@ export async function indexQuiz(quiz: quizType2, isNew: boolean) {
       ) ||
       name.length < 3
     )
-      score = 0.5;
+      score = 0.1;
 
     name = name.match(/\w+/g)!?.join();
     if (!name) return;
@@ -218,7 +225,7 @@ export async function indexQuiz(quiz: quizType2, isNew: boolean) {
     category.split(" ").forEach((word) => index(word, 10))
   );
   questions.forEach((question) => {
-    question.question.split(" ").forEach((word) => index(word, 4));
+    question.question.split(" ").forEach((word) => index(word, 6));
     question.options.A.split(" ").forEach((word) => index(word, 1));
     question.options.B.split(" ").forEach((word) => index(word, 1));
     question.options.C.split(" ").forEach((word) => index(word, 1));
