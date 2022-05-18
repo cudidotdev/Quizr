@@ -1,4 +1,4 @@
-import { QuizDraft, Quiz, QuizSheet, quizSearchIndex } from "database/models";
+import { QuizDraft, Quiz, QuizSheet, QuizSearchIndex } from "database/models";
 import { ScoreBoard } from "database/models";
 import { quiz, quizType2 } from "types/app";
 
@@ -37,14 +37,83 @@ export async function getAllQuizes({
   limit = 0,
   page = 1,
   select = "",
-}: any) {
-  page = page > 1 ? Math.floor(page) : 1;
-  return await Quiz.find({})
+  categories = "",
+  search = "",
+}: {
+  [key: string]: string | number;
+}) {
+  let searchRanks: { [key: string]: number } = {};
+  const sortMap: { [key: string]: string } = {
+    ["Most Relevant"]: "numOfSubmission",
+    Hardest: "",
+    Easiest: "",
+    ["A-Z"]: "title",
+    ["Z-A"]: "-title",
+  };
+
+  page = page > 1 ? Math.floor(+page) : 1;
+  sort = sortMap[sort] || "";
+  limit = +limit;
+  search = search.toString();
+  categories = categories.toString();
+
+  const query: any = {};
+
+  if (search) {
+    search = `(${search
+      .split(" ")
+      .filter((e) => e !== "")
+      .join("|")})`;
+    const passed = await QuizSearchIndex.find({
+      name: {
+        $regex: new RegExp(search, "i"),
+      },
+    }).select("quizzes");
+
+    const [ids, ranks] = calculateRanks(passed);
+    query._id = { $in: ids };
+    searchRanks = ranks;
+  }
+
+  if (categories) query.categories = { $in: categories.split(",") };
+
+  const data = await Quiz.find(query)
     .sort(sort)
-    .limit(+limit)
+    .limit(limit)
     .skip((page - 1) * limit)
     .select(select)
     .lean();
+
+  if (search && sort === "numOfSubmission") return rankQuiz(data, searchRanks);
+  return data;
+}
+
+function calculateRanks(data: any[]): [string[], { [key: string]: number }] {
+  const IdScoreMap: { [key: string]: number } = {};
+  const IdRankMap: { [key: string]: number } = {};
+
+  data.forEach((e) =>
+    e.quizzes.forEach(({ quizId: id, score }: any) => {
+      id = id.toString();
+      IdScoreMap[id] = IdScoreMap[id] ? IdScoreMap[id] + score : score;
+    })
+  );
+
+  Object.entries(IdScoreMap)
+    .sort((a, b) => b[1] - a[1])
+    .forEach(([id], idx) => (IdRankMap[id] = idx));
+
+  return [Object.keys(IdScoreMap), IdRankMap];
+}
+
+function rankQuiz(arg: any[], rankMap: any) {
+  const newArr: any[] = [];
+
+  arg.forEach((obj) => {
+    newArr[rankMap[obj._id.toString()]] = obj;
+  });
+
+  return newArr;
 }
 
 export async function getAllQuizDrafts({
@@ -128,12 +197,12 @@ export async function indexQuiz(quiz: quizType2, isNew: boolean) {
 
   function index(name: string, score: number) {
     if (
-      /^(the|are|was|were|this|that|these|those|what|why|whose|which|who|how)$/i.test(
+      /^(the|are|was|were|this|that|these|those|what|why|whose|which|who|how|there)$/i.test(
         name
       ) ||
       name.length < 3
     )
-      return;
+      score = 0.5;
 
     name = name.match(/\w+/g)!?.join();
     if (!name) return;
@@ -144,12 +213,12 @@ export async function indexQuiz(quiz: quizType2, isNew: boolean) {
     else NameScoreMap[lName] = score;
   }
 
-  title.split(" ").forEach((word) => index(word, 8));
+  title.split(" ").forEach((word) => index(word, 12));
   categories.forEach((category) =>
     category.split(" ").forEach((word) => index(word, 10))
   );
   questions.forEach((question) => {
-    question.question.split(" ").forEach((word) => index(word, 6));
+    question.question.split(" ").forEach((word) => index(word, 4));
     question.options.A.split(" ").forEach((word) => index(word, 1));
     question.options.B.split(" ").forEach((word) => index(word, 1));
     question.options.C.split(" ").forEach((word) => index(word, 1));
@@ -157,14 +226,14 @@ export async function indexQuiz(quiz: quizType2, isNew: boolean) {
   });
 
   if (!isNew) {
-    await quizSearchIndex.updateMany(
+    await QuizSearchIndex.updateMany(
       {},
       { $pull: { quizzes: { quizId: quiz._id } } }
     );
   }
 
   async function insert(name: string) {
-    await quizSearchIndex.findOneAndUpdate(
+    await QuizSearchIndex.findOneAndUpdate(
       { name },
       {
         $push: { quizzes: { quizId: quiz._id, score: NameScoreMap[name] } },

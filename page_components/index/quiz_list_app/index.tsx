@@ -1,12 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { getFetcher } from "utils/fetchers";
 import QuizSortForm from "./quiz_sort_form";
 import QuizList from "./quiz_list";
+
+export type query = {
+  search: string;
+  categories: string[];
+  sort: string;
+};
 
 const QuizListApp: React.FC = () => {
   const [quizzes, setQuizzes] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [quizLoadError, setQuizLoadError] = useState({ val: false, msg: "" });
+  const [query, setQuery] = useState<query>({
+    search: "",
+    categories: [],
+    sort: "Most Relevant",
+  });
 
   async function fetchQuizzes() {
     setLoading(true);
@@ -32,7 +43,7 @@ const QuizListApp: React.FC = () => {
 
   return (
     <div className="pad-bottom-one">
-      <QuizSortForm />
+      <QuizSortForm query={query} setQuery={setQuery} />
       <QuizList
         loading={loading}
         quizLoadError={quizLoadError}

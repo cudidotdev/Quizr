@@ -168,12 +168,13 @@ const MultipleSelectr: React.FC<multiSelectr> = ({
   const selectr = useRef<HTMLDivElement>(null);
   const [showOpts, setShowOpts] = useState<boolean>(false);
   const [numOfOptions, setNumOfOptions] = useState<number>(0);
-  const [vals, setVals] = useState(value);
+  const [vals, setVals] = useState<(string | number)[]>([]);
 
   useEffect(() => {
     setVals(value);
   }, [value]);
 
+  /*eslint-disable*/
   useEffect(() => {
     /* ---code xcxc- for determining the number of options with unique values */
     const arr: any[] = [];
@@ -181,9 +182,13 @@ const MultipleSelectr: React.FC<multiSelectr> = ({
       if (!arr.includes(child?.props.value)) arr.push(child?.props.value);
     });
     setNumOfOptions(arr.length);
-    return () => setNumOfOptions(0);
+
+    setVals(value.filter((e) => arr.includes(e)));
     /* --end of code xcxc */
+
+    return () => setNumOfOptions(0);
   }, [children]);
+  /*eslint-enable*/
 
   return (
     <div
@@ -210,7 +215,7 @@ const MultipleSelectr: React.FC<multiSelectr> = ({
                 <button
                   className={styles.RemoveButton}
                   onClick={() => {
-                    onChange(val);
+                    onChange(vals.filter((e) => e !== val));
                     selectr.current?.focus();
                   }}
                   type="button"
@@ -229,7 +234,11 @@ const MultipleSelectr: React.FC<multiSelectr> = ({
             <MultipleOption
               value={child.props.value}
               selected={vals.includes(child.props.value)}
-              toggleSelection={onChange}
+              toggleSelection={(value) => {
+                const arr = vals.filter((e) => e !== value);
+                if (arr.length === vals.length) arr.push(value);
+                onChange(arr);
+              }}
             />
           ))}
         </div>
@@ -259,7 +268,11 @@ const LinearMultipleSelectr: React.FC<multiSelectr> = ({
           <LinearOption
             value={child.props.value}
             selected={vals.includes(child.props.value)}
-            toggleSelection={onChange}
+            toggleSelection={(value) => {
+              const arr = vals.filter((e) => e !== value);
+              if (arr.length === vals.length) arr.push(value);
+              onChange(arr);
+            }}
           />
         ))}
       </div>

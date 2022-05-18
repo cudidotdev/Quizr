@@ -7,11 +7,12 @@ const handler: NextApiHandlerX = async (req, res) => {
   await connectDB();
   if (req.method === "GET") {
     try {
-      const { id, sort, limit, page, select } = req.query;
+      const { id, select }: any = req.query;
       let data: any;
 
       if (id) data = await getQuizById(id, select);
-      else data = await getAllQuizes({ sort, limit, page, select });
+      //@ts-ignore
+      else data = await getAllQuizes(req.query);
 
       return res.status(200).json({ success: true, data });
     } catch (error: any) {
