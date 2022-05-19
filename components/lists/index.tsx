@@ -16,10 +16,6 @@ const ListContainer: React.FC<
 
   useLayoutEffect(() => {
     resetWidth();
-    () => setWidth(0);
-  }, []);
-
-  useEffect(() => {
     window.addEventListener("resize", resetWidth);
     () => window.removeEventListener("resize", resetWidth);
   }, []);
