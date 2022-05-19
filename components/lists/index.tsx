@@ -12,6 +12,7 @@ const ListContainer: React.FC<
 
   function resetWidth() {
     setWidth(listContainer.current?.parentElement?.clientWidth);
+    console.log("resized");
   }
 
   useLayoutEffect(() => {
@@ -21,7 +22,7 @@ const ListContainer: React.FC<
   }, []);
 
   useEffect(() => {
-    resetWidth();
+    setTimeout(resetWidth, 2000);
   }, []);
 
   return (
