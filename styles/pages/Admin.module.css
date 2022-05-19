@@ -135,7 +135,7 @@
 }
 
 .QuestionsList.Filled {
-  box-shadow: 0 0 3px rgba(0, 194, 97, 0.2) !important;
+  box-shadow: 0 0 2px rgba(0, 194, 97) !important;
 }
 
 .QuestionForm {
@@ -187,7 +187,7 @@
 }
 
 .MarkDraft {
-  box-shadow: var(--shadow-four) !important;
+  box-shadow: 0 0 2px rgb(255, 120, 0) !important;
 }
 
 @media screen and (min-width: 480px) {
