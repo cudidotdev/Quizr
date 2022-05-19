@@ -15,7 +15,7 @@ const AdminQuizzesPage: NextPageWithLayout = () => {
 
   async function fetchQuizzes() {
     setLoading(true);
-    const res = await getFetcher("/api/quiz");
+    const res = await getFetcher("/api/quiz?sort=A-Z");
     setLoading(false);
 
     if (!res)

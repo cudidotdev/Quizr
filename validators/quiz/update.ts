@@ -98,7 +98,10 @@ function validateQuestions(questions: Array<any>, final: any) {
       if (typeof question !== "string")
         throw new ApiError("questions", "The question should be a string");
 
-      question = question.trim();
+      question = question
+        .split(" ")
+        .filter((e) => e !== "")
+        .join(" ");
 
       if (question.length > 256)
         throw new ApiError(
@@ -154,7 +157,10 @@ function validateQuestions(questions: Array<any>, final: any) {
         if (typeof options[option] !== "string")
           throw new ApiError("questions", "All options should be strings", 400);
 
-        options[option] = options[option].trim();
+        options[option] = options[option]
+          .split(" ")
+          .filter((e: any) => e !== "")
+          .join(" ");
 
         if (options[option].length > 256)
           throw new ApiError(
