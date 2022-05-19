@@ -20,6 +20,10 @@ const ListContainer: React.FC<
     () => window.removeEventListener("resize", resetWidth);
   }, []);
 
+  useEffect(() => {
+    resetWidth();
+  }, []);
+
   return (
     <div
       {...props}
