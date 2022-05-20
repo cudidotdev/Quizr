@@ -242,7 +242,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   quiz._id = quiz._id.toString();
   quiz.questions.forEach((question) => delete question.answer);
 
-  return { props: { quiz }, revalidate: 24 * 60 * 60 };
+  return { props: { quiz }, revalidate: 30 * 60 };
 };
 
 export default QuizTakePage;

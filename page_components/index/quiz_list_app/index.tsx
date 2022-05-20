@@ -9,7 +9,18 @@ export type query = {
   sort: string;
 };
 
-const QuizListApp: React.FC = () => {
+type quiz = {
+  _id: string;
+  title: string;
+  categories: string[];
+  questions: {
+    question: string;
+    index: number;
+    option: { A: string; B: string; C: string; D: string };
+  }[];
+};
+
+const QuizListApp: React.FC<{ quizzes: quiz[] }> = ({ quizzes }) => {
   const [quizzes, setQuizzes] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [quizLoadError, setQuizLoadError] = useState({ val: false, msg: "" });

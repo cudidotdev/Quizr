@@ -99,5 +99,5 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   quiz._id = quiz._id.toString();
 
-  return { props: { quiz }, revalidate: 24 * 60 * 60 };
+  return { props: { quiz }, revalidate: 30 * 60 };
 };
