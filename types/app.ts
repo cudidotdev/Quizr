@@ -32,3 +32,7 @@ type question = {
 };
 
 export type ans = "A" | "B" | "C" | "D";
+
+export type searchIndex = {
+  [name: string]: { quizId: string; score: number }[];
+};

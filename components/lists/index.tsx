@@ -1,14 +1,28 @@
 import { Linkr } from "components/links";
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import styles from "styles/components/lists.module.css";
 import { linkr } from "types/components/link";
 
-const ListContainer: React.FC<
-  React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
-> = (props) => {
-  const { children } = props;
+interface list
+  extends React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLDivElement>,
+    HTMLDivElement
+  > {
+  start?: number;
+  reverse?: boolean;
+}
+
+const ListContainer: React.FC<list> = (props) => {
+  const { children, start = 1, reverse = false } = props;
   const [width, setWidth] = useState<number | undefined>();
   const listContainer = useRef<HTMLDivElement>(null);
+  const n_children = useMemo(() => React.Children.count(children), [children]);
 
   function resetWidth() {
     setWidth(listContainer.current?.parentElement?.clientWidth);
@@ -33,7 +47,9 @@ const ListContainer: React.FC<
       ref={listContainer}
     >
       {React.Children.map(children, (child: any, index) =>
-        React.cloneElement(child, { index })
+        React.cloneElement(child, {
+          index: reverse ? start - 1 - index : index + (start - 1),
+        })
       )}
     </div>
   );

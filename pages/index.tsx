@@ -4,13 +4,15 @@ import { Intro, QuizListApp } from "page_components/index";
 import { GetStaticProps } from "next";
 import { Quiz } from "database/models";
 import connectDB from "database/connect";
+import type { quizType2 as quiz } from "types/app";
 
 const Home: NextPageWithLayout = (props: any) => {
-  const quizzes: any[] = props.quizzes;
+  const quizzes: quiz[] = props.quizzes;
+
   return (
     <main className="site-width pad-one">
       <Intro />
-      <QuizListApp />
+      <QuizListApp quizzes={quizzes} />
     </main>
   );
 };

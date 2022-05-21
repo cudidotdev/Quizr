@@ -143,6 +143,7 @@ textarea:hover {
   --color-secondary-two: rgb(16, 212, 114);
   --color-tertiary-one: rgb(255, 120, 0);
   --color-tertiary-two: rgb(255, 150, 50);
+  --color-tertiary-three: rgb(255, 180, 110);
 
   --shadow-one: 0 0px 3px rgba(50, 50, 50, 0.2);
   --shadow-two: 0 0px 3px rgba(81, 149, 251, 0.5);

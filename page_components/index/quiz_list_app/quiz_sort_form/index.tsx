@@ -6,32 +6,35 @@ import { query } from "..";
 const QuizSortForm: React.FC<{
   query: query;
   setQuery: React.Dispatch<React.SetStateAction<query>>;
-}> = ({ query, setQuery }) => {
+  categories: string[];
+}> = ({ query, setQuery, categories }) => {
   return (
     <div className={`${styles.SortForm} content-width`}>
       <div className={styles.SearchAndCategoryBox}>
-        <div style={{ maxWidth: "420px" }}>
-          <Searchr name="quizSearch" />
-        </div>
-        <div style={{ maxWidth: "420px" }}>
-          <Selectr
-            name="quizCategory"
-            label="Categories"
-            multiple
-            value={query.categories}
+        <div style={{ maxWidth: "600px" }}>
+          <Searchr
+            name="quizSearch"
+            value={query.search}
             onChange={(value) =>
-              setQuery((prev) => {
-                return { ...prev, categories: value };
-              })
+              setQuery({ search: value, categories: [], sort: "Most Relevant" })
             }
-          >
-            <Option value="movies" />
-            <Option value="science" />
-            <Option value="history" />
-            <Option value="geography" />
-            <Option value="entertainment & pop culture" />
-          </Selectr>
+          />
         </div>
+        <Selectr
+          name="quizCategory"
+          label="Categories"
+          multiple
+          value={query.categories}
+          onChange={(value) =>
+            setQuery((prev) => {
+              return { ...prev, categories: value };
+            })
+          }
+        >
+          {categories.map((category) => (
+            <Option value={category} key={category} />
+          ))}
+        </Selectr>
       </div>
       <div className={styles.SortBox} style={{ maxWidth: "420px" }}>
         <Selectr

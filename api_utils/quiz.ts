@@ -44,16 +44,20 @@ export async function getAllQuizes({
 }) {
   let searchRanks: { [key: string]: number } = {};
   const sortMap: { [key: string]: string } = {
-    ["Most Relevant"]: "numOfSubmission",
-    Hardest: "",
-    Easiest: "",
-    ["A-Z"]: "title",
-    ["Z-A"]: "-title",
+    ["Most Relevant"]: "numOfSubmission ",
+    Hardest: "averageScore ",
+    Easiest: "-averageScore ",
+    ["A-Z"]: "title ",
+    ["Z-A"]: "-title ",
   };
 
   page = page > 1 ? Math.floor(+page) : 1;
-  sort = sortMap[sort] || "";
   limit = +limit;
+  sort = sort
+    .toString()
+    .split(",")
+    .map((s) => sortMap[s.trim()] || s)
+    .join(" ");
   search = search.toString();
   categories = categories.toString();
 
@@ -84,7 +88,8 @@ export async function getAllQuizes({
     .select(select)
     .lean();
 
-  if (search && sort === "numOfSubmission") return rankQuiz(data, searchRanks);
+  if (search && sort.split(" ").includes("numOfSubmission"))
+    return rankQuiz(data, searchRanks);
   return data;
 }
 
@@ -108,9 +113,7 @@ function calculateRanks(data: any[]): [string[], { [key: string]: number }] {
     .sort((a, b) => b[1] - a[1])
     .forEach(([id], idx) => (IdRankMap[id] = idx));
 
-  console.log(IdScoreMap, IdRankMap);
-
-  return [Object.keys(IdScoreMap), IdRankMap];
+  return [Object.keys(IdRankMap), IdRankMap];
 }
 
 function rankQuiz(arg: any[], rankMap: any) {

@@ -1,75 +1,57 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import ListContainer, { LinkList, List } from "components/lists";
-import { getFetcher } from "utils/fetchers";
 import styles from "styles/pages/Home.module.css";
-import aStyles from "styles/pages/Admin.module.css";
-import { TripleSquareLoader } from "components/loaders";
-import { ReloadIcon } from "components/icons";
 import { Text } from "components/texts";
+import type { quizType2 as quiz } from "types/app";
 
-const QuizList: React.FC<quizListProps> = ({
-  loading,
-  quizLoadError,
-  fetchQuizzes,
-  quizzes,
-}) => {
+const QuizList: React.FC<{ quizzes: quiz[] }> = ({ quizzes }) => {
+  const [idx, setIdx] = useState(0);
+
+  const maxPerPage = 6;
+  const pages = Math.ceil(quizzes.length / maxPerPage);
+
+  const $quizzes = useMemo(() => {
+    const $: quiz[][] = new Array(pages).fill(0).map((n) => []);
+
+    quizzes.forEach((quiz, idx) => {
+      const n = Math.floor(idx / maxPerPage);
+      const nn = idx % maxPerPage;
+      $[n][nn] = quiz;
+    });
+
+    return $;
+  }, [quizzes, pages]);
+
+  useEffect(() => {
+    setIdx(0);
+  }, [quizzes]);
+
   return (
     <div style={{ padding: "0.75rem 0" }} className="content-width">
       <Text className={`${styles.QuizListHeading} t-medium`}>Quizzes</Text>
-      {loading ? (
-        <ListContainer>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
-            <List key={n}>
-              <QuizLoadingComponent />
-            </List>
-          ))}
-        </ListContainer>
-      ) : quizLoadError.val ? (
-        <div className={aStyles.MsgContainer}>
-          <p className={aStyles.ErrorBox}>
-            Couldn&apos;t fetch quizzes: {quizLoadError.msg}
-          </p>
-          <button className={aStyles.ReloadButton} onClick={fetchQuizzes}>
-            Reload
-            <span className={aStyles.Icon}>
-              <ReloadIcon />
-            </span>
-          </button>
-        </div>
+
+      {$quizzes.length ? (
+        <>
+          <PaginationBox
+            $quizzes={$quizzes}
+            idx={idx}
+            setIdx={setIdx}
+            style={{ marginTop: 0 }}
+          />
+
+          <ListContainer start={idx < pages ? idx * maxPerPage + 1 : 1}>
+            {$quizzes[idx < pages ? idx : 0].map((quiz) => (
+              <LinkList key={quiz._id} href={`/q/${quiz.urlName}`}>
+                <QuizBox {...quiz} />
+              </LinkList>
+            ))}
+          </ListContainer>
+
+          <PaginationBox $quizzes={$quizzes} idx={idx} setIdx={setIdx} />
+        </>
       ) : (
-        <ListContainer>
-          {quizzes.map((quiz) => (
-            <LinkList key={quiz._id} href={`/q/${quiz.urlName}`}>
-              <QuizBox {...quiz} />
-            </LinkList>
-          ))}
-        </ListContainer>
+        <p>No quizzes</p>
       )}
-    </div>
-  );
-};
-
-type quizListProps = {
-  loading: boolean;
-  quizLoadError: { val: boolean; msg: string };
-  fetchQuizzes: () => any;
-  quizzes: any[];
-};
-
-const QuizLoadingComponent: React.FC = () => {
-  return (
-    <div className={styles.QuizLoadingContainer}>
-      <div className={styles.Title}></div>
-      <div className={styles.Categories}>
-        {[1, 2, 3, 4, 5, 6, 7].map((n) => (
-          <span key={n}></span>
-        ))}
-      </div>
-      <div className={styles.ScoreBox}>
-        <div>
-          Avg. Score:<span></span>
-        </div>
-      </div>
     </div>
   );
 };
@@ -91,5 +73,24 @@ const QuizBox: React.FC<any> = ({ title, categories }) => {
     </div>
   );
 };
+
+const PaginationBox: React.FC<{
+  $quizzes: quiz[][];
+  idx: number;
+  setIdx: React.Dispatch<React.SetStateAction<number>>;
+  style?: React.CSSProperties;
+}> = ({ $quizzes, idx, setIdx, style }) => (
+  <div className={styles.PaginationBox} style={style}>
+    {$quizzes.map((e, index) => (
+      <span
+        key={index}
+        onClick={() => setIdx(index)}
+        className={idx === index ? styles.Active : ""}
+      >
+        {index + 1}
+      </span>
+    ))}
+  </div>
+);
 
 export default QuizList;
