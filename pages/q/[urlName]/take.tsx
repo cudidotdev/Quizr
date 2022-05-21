@@ -23,11 +23,12 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
   const [idx, setIdx] = useState(1);
   const [currentQuestion, setCurrentQuestion] = useState<any>();
   const [sheetId, setSheetId] = useState<string>();
-  const [yAnswer, setYAnswer] = useState<{ [key: number]: ans }>({});
+  const [uAnswer, SetUAnswer] = useState<{ [key: number]: ans }>({});
   const [pending, setPending] = useState<number[]>([]);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [submitMsg, setSubmitMsg] = useState<null | {
     type: "info" | "error";
+    name?: string;
     msg: string;
   }>(null);
   const router = useRouter();
@@ -36,10 +37,12 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
 
   async function chooseAnswer(answer: ans) {
     const index: number = idx;
-    setYAnswer((prev) => {
+    SetUAnswer((prev) => {
       return { ...prev, [index]: answer };
     });
     setPending((prev) => [...prev, index]);
+
+    setSubmitMsg(null);
 
     const res = await patchFetcher(`/api/quiz/tick?id=${sheetId}`, {
       index,
@@ -53,7 +56,7 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
         id: `tickerrori${urlName}`,
         msg: "It seems there is no internet connection",
       });
-      setYAnswer((prev) => {
+      SetUAnswer((prev) => {
         return serializeAnswers(
           JSON.parse(sessionStorage.getItem(`quiz ${urlName}`)!).answers
         );
@@ -68,7 +71,7 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
       if (error.name === "time") {
         addNote({
           type: "error",
-          id: `tickerror${urlName}${idx}`,
+          id: `tickerror${urlName}`,
           msg: error.message,
         });
         return router.push(`/q/${urlName}/end`);
@@ -76,21 +79,33 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
       if (error.name === "sheet") {
         addNote({
           type: "error",
-          id: `tickerror${urlName}${idx}`,
+          id: `tickerror${urlName}`,
           msg: error.message,
         });
         return router.push(`/q/${urlName}`);
       }
     }
 
-    setYAnswer((prev) => {
+    SetUAnswer((prev) => {
       return { ...prev, [index]: answer };
     });
     storeInSession({ index, answer }, urlName);
   }
 
-  async function submitQuiz() {
+  async function submitQuiz(force = false) {
     setSubmitLoading(true);
+
+    const totalAnswerd = Object.keys(uAnswer).length;
+    if (totalAnswerd < 10 && !force) {
+      setSubmitLoading(false);
+      setSubmitMsg({
+        type: "error",
+        name: "not finished",
+        msg: `You have ${10 - totalAnswerd} unanswered questions`,
+      });
+      return;
+    }
+
     if (pending.length) {
       setSubmitMsg({ type: "info", msg: "Waiting for answers to tick" });
       return;
@@ -132,7 +147,7 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
       if (!sheet || !user) return router.push(`/q/${urlName}`);
 
       setSheetId(sheet.id);
-      setYAnswer((prev) => {
+      SetUAnswer((prev) => {
         return { ...serializeAnswers(sheet.answers), ...prev };
       });
     })();
@@ -157,25 +172,25 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
                 question={currentQuestion}
                 value="A"
                 onClick={() => chooseAnswer("A")}
-                colored={yAnswer[idx] === "A"}
+                colored={uAnswer[idx] === "A"}
               />
               <Option
                 question={currentQuestion}
                 value="B"
                 onClick={() => chooseAnswer("B")}
-                colored={yAnswer[idx] === "B"}
+                colored={uAnswer[idx] === "B"}
               />
               <Option
                 question={currentQuestion}
                 value="C"
                 onClick={() => chooseAnswer("C")}
-                colored={yAnswer[idx] === "C"}
+                colored={uAnswer[idx] === "C"}
               />
               <Option
                 question={currentQuestion}
                 value="D"
                 onClick={() => chooseAnswer("D")}
-                colored={yAnswer[idx] === "D"}
+                colored={uAnswer[idx] === "D"}
               />
             </div>
           </section>
@@ -191,7 +206,7 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
                   key={i}
                   idx={i}
                   setIdx={setIdx}
-                  answered={!!yAnswer[i]}
+                  answered={!!uAnswer[i]}
                   pending={pending.includes(i)}
                 />
               ))}
@@ -207,9 +222,23 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
                   }`}
                 >
                   {submitMsg.msg}
+                  {submitMsg.name === "not finished" && (
+                    <>
+                      ,{" "}
+                      <span
+                        className={styles.Link}
+                        onClick={() => submitQuiz(true)}
+                      >
+                        submit anyway?
+                      </span>
+                    </>
+                  )}
                 </p>
               )}
-              <SubmitButton loading={submitLoading} onClick={submitQuiz} />
+              <SubmitButton
+                loading={submitLoading}
+                onClick={() => submitQuiz()}
+              />
             </div>
           </section>
         </div>

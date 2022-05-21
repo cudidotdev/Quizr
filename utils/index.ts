@@ -99,7 +99,7 @@ function indexQuiz(quiz: quizType2) {
     category.split(" ").forEach((word) => index(word, 10))
   );
   questions.forEach((question) => {
-    question.question.split(" ").forEach((word) => index(word, 6));
+    question.question.split(" ").forEach((word) => index(word, 4));
     question.options.A.split(" ").forEach((word) => index(word, 1));
     question.options.B.split(" ").forEach((word) => index(word, 1));
     question.options.C.split(" ").forEach((word) => index(word, 1));
@@ -140,7 +140,7 @@ export function searchQuizzes({
   }
 
   Object.entries(IdScoreMap)
-    .filter((e) => e[1] > (maxScore - minScore) / 2)
+    .filter((e) => e[1] > (maxScore - minScore) / 2.5)
     .sort((a, b) => b[1] - a[1])
     .forEach(([id], idx) => (IdRankMap[id] = idx));
 
@@ -149,6 +149,8 @@ export function searchQuizzes({
 
   const newQuizzes: quizType2[] = [];
   filterQuiz.forEach((quiz) => (newQuizzes[IdRankMap[quiz._id]] = quiz));
+
+  console.log(IdScoreMap);
 
   return newQuizzes;
 }

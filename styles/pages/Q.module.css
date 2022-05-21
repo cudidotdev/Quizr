@@ -190,6 +190,15 @@
   color: var(--color-tertiary-one);
   margin-bottom: 0.25rem;
 }
+.SubmitBtnBox .Link {
+  color: var(--color-primary-one);
+  border-bottom: 1px dashed transparent;
+  cursor: pointer;
+  transition: all 200ms linear;
+}
+.SubmitBtnBox .Link:hover {
+  border-color: currentColor;
+}
 
 @keyframes blink {
   0%,
