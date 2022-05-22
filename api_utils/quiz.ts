@@ -163,18 +163,17 @@ export async function gradeQuiz(uAnswers: any[], quizId: any) {
     final.question = question.question;
 
     if (uAnswer === undefined) final.correct = 0;
-    else {
-      if (uAnswer.answer === question.answer) {
-        score++;
-        final.correct = 1;
-      } else {
-        final.correct = -1;
-      }
-      final.uAnswer = {
-        val: uAnswer.answer,
-        text: question.options[uAnswer.answer],
-      };
+    else if (uAnswer.answer === question.answer) {
+      score++;
+      final.correct = 1;
+    } else {
+      final.correct = -1;
     }
+
+    final.answer = {
+      val: question.answer,
+      text: question.options[question.answer],
+    };
 
     return final;
   });

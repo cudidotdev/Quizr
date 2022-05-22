@@ -267,7 +267,7 @@
 .ResultBox .QuestionText {
   color: var(--color-black-three);
 }
-.ResultBox .UAnswer {
+.ResultBox .Answer {
   font-size: 0.9rem;
   display: flex;
 }

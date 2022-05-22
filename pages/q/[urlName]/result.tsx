@@ -90,14 +90,12 @@ const Result: React.FC<{ result: any }> = ({ result }) => {
             <div className={styles.QuestionText}>
               <Text>{obj.question}</Text>
             </div>
-            {!!obj.uAnswer && (
-              <Text className={styles.UAnswer}>
-                <span>{obj.uAnswer.val}:</span>
-                <span style={{ marginLeft: "0.75rem", fontStyle: "italic" }}>
-                  {obj.uAnswer.text}
-                </span>
-              </Text>
-            )}
+            <Text className={styles.Answer}>
+              <span>{obj.answer.val}:</span>
+              <span style={{ marginLeft: "0.75rem", fontStyle: "italic" }}>
+                {obj.answer.text}
+              </span>
+            </Text>
           </div>
         </div>
       ))}
