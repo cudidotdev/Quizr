@@ -19,8 +19,12 @@ export async function attachUser(req: NextApiRequestX) {
   req.user = user;
 }
 
-export async function restrictToLogin(req: NextApiRequestX) {
+export async function restrictToLogin(req: NextApiRequestX, errorMsg?: string) {
   await attachUser(req);
   if (!req.user)
-    throw new ApiError("login", "No user is logged-in currently", 401);
+    throw new ApiError(
+      "login",
+      errorMsg || "No user is logged-in currently",
+      401
+    );
 }

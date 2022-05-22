@@ -40,7 +40,7 @@ const handler: NextApiHandlerX = async (req, res) => {
       sheet = await QuizSheet.create({
         userId: req.user._id,
         quizId: id,
-        timeStarted: Date.now() + 15 * 1000,
+        timeStarted: Date.now() + 5 * 1000,
       });
       const { _id, timeStarted } = sheet;
       return res

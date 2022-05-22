@@ -128,7 +128,6 @@
 }
 .Option .Text {
   display: flex;
-  align-items: center;
   color: inherit;
 }
 
@@ -165,7 +164,7 @@
   color: var(--color-secondary-one);
 }
 .NavigationBox .Index.Pending {
-  animation-name: blink;
+  animation-name: color_blink;
   animation-duration: 2s;
   animation-iteration-count: infinite;
 }
@@ -200,7 +199,106 @@
   border-color: currentColor;
 }
 
-@keyframes blink {
+.ResultLeaderBoardBox {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.ResultContainer {
+  border-radius: 0.25rem;
+  box-shadow: var(--shadow-one);
+  padding-top: 0.5rem;
+  padding: 0.75rem;
+  display: grid;
+  grid-template-columns: auto;
+  gap: 0.5rem;
+}
+
+.ResultContainer .ScoreBox {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary-one);
+}
+
+.ResultContainer .ScoreBox.High {
+  color: var(--color-secondary-one);
+}
+
+.ResultContainer .ScoreBox.Low {
+  color: var(--color-tertiary-one);
+}
+
+.ResultBox.A {
+  color: var(--color-secondary-two);
+}
+.ResultBox.B {
+  color: var(--color-black-three);
+}
+.ResultBox.C {
+  color: var(--color-tertiary-one);
+}
+
+.ResultBox {
+  display: flex;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 0 2px currentColor;
+}
+
+.ResultBox .Index {
+  width: 1.75rem;
+  height: 1.75rem;
+  color: currentColor;
+  box-shadow: 0 0 3px currentColor;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  flex-grow: 0;
+  flex-shrink: 0;
+  justify-content: center;
+  margin-right: 0.75rem;
+}
+.ResultBox .Child {
+  width: 100%;
+}
+.ResultBox .QuestionText {
+  color: var(--color-black-three);
+}
+.ResultBox .UAnswer {
+  font-size: 0.9rem;
+  display: flex;
+}
+
+.ResultContainer.FallBack span:not(.Side) {
+  display: flex;
+  height: 1.35rem;
+  width: 100%;
+  animation-name: fallback_blink;
+  animation-iteration-count: infinite;
+  animation-duration: 2s;
+  border-radius: 0.25rem;
+}
+.ResultContainer.FallBack span:not(:last-child) {
+  margin-bottom: 0.5rem;
+}
+.ResultContainer.FallBack .ScoreBox span {
+  display: inline-flex;
+  width: 3rem;
+  margin-left: 0.5rem;
+}
+.ResultContainer.FallBack span.Side {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+.ResultContainer.FallBack span.Side span {
+  max-width: 10rem;
+}
+
+@keyframes color_blink {
   0%,
   100% {
     color: rgb(0, 194, 97);
@@ -210,5 +308,21 @@
   50% {
     color: rgb(255, 120, 0);
     background-color: rgba(255, 150, 50, 0.03);
+  }
+}
+
+@keyframes fallback_blink {
+  0%,
+  100% {
+    background-color: rgb(245, 245, 245);
+  }
+  50% {
+    background-color: rgb(230, 230, 230);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .ResultLeaderBoardBox {
+    grid-template-columns: 1fr 1fr;
   }
 }

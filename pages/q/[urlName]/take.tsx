@@ -74,7 +74,7 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
           id: `tickerror${urlName}`,
           msg: error.message,
         });
-        return router.push(`/q/${urlName}/end`);
+        return router.push(`/q/${urlName}/result`);
       }
       if (error.name === "sheet") {
         addNote({
@@ -125,7 +125,7 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
 
     setSubmitMsg(null);
     sessionStorage.removeItem(`quiz ${urlName}`);
-    router.push(`/q/${urlName}/end`);
+    router.push(`/q/${urlName}/result`);
   }
 
   /* eslint-disable */
@@ -152,7 +152,7 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
       });
     })();
     router.prefetch(`/q/${urlName}`);
-    router.prefetch(`/q/${urlName}/end`);
+    router.prefetch(`/q/${urlName}/result`);
   }, []);
   /* eslint-enable */
 

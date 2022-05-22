@@ -32,7 +32,7 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: { quiz: quiz }) => {
 
     const { success, data, error } = res;
     if (!success) {
-      if (error.name === "time") return router.push(`/q/${urlName}/end`);
+      if (error.name === "time") return router.push(`/q/${urlName}/result`);
       return setStartError({ value: true, msg: error.message });
     }
 
@@ -47,6 +47,7 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: { quiz: quiz }) => {
   /* eslint-disable */
   useEffect(() => {
     router.prefetch(`/q/${urlName}/take`);
+    router.prefetch(`/q/${urlName}/result`);
   }, []);
   /* eslint-enable */
 

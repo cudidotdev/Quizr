@@ -1,4 +1,9 @@
-import { EyeOpenIcon, EyeClosedIcon, SearchIcon } from "components/icons";
+import {
+  EyeOpenIcon,
+  EyeClosedIcon,
+  SearchIcon,
+  CloseIcon,
+} from "components/icons";
 import React, { useRef, useState } from "react";
 import styles from "styles/components/forms.module.css";
 import type { inputr, submitr, textarea } from "types/components/form";
@@ -42,14 +47,16 @@ export const Inputr: React.FC<inputr> = (props) => {
 };
 
 export const Searchr: React.FC<inputr> = (props) => {
-  const { label = "Search", clickFn } = props;
+  const { label = "Search", clickFn, onChange } = props;
   return (
     <Inputr
       {...props}
       label={label}
-      Icon={SearchIcon}
-      clickFn={clickFn}
-      onKeyDown={(ev: any) => ev.key === "Enter" && clickFn && clickFn()}
+      Icon={props.value ? CloseIcon : undefined}
+      clickFn={() => {
+        if (onChange) onChange("");
+        if (clickFn) clickFn();
+      }}
     />
   );
 };

@@ -185,7 +185,7 @@ export async function gradeQuiz(uAnswers: any[], quizId: any) {
 export async function submitQuiz(sheet: any, timeSubmited: number) {
   const { score, correction } = await gradeQuiz(sheet.answers, sheet.quizId);
   const quizTime = Math.min(
-    Math.max(0, timeSubmited - sheet.timeStarted),
+    Math.max(5 * 1000, timeSubmited - sheet.timeStarted),
     10 * 60 * 1000
   );
 
