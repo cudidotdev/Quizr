@@ -234,9 +234,6 @@
 .ResultBox.A {
   color: var(--color-secondary-two);
 }
-.ResultBox.B {
-  color: var(--color-black-three);
-}
 .ResultBox.C {
   color: var(--color-tertiary-one);
 }
@@ -245,6 +242,7 @@
   display: flex;
   padding: 0.5rem;
   border-radius: 0.25rem;
+  color: var(--color-black-three);
   box-shadow: 0 0 2px currentColor;
 }
 
