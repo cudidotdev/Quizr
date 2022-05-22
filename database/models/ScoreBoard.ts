@@ -11,7 +11,7 @@ const ScoreBoardSchema = new mongoose.Schema({
         index: { type: Number, required: true },
         question: { type: String, required: true },
         correct: { type: Number, enum: [-1, 0, 1], required: true },
-        uAnswer: {
+        answer: {
           _id: false,
           val: { type: String, enum: ["A", "B", "C", "D"] },
           text: { type: String },
