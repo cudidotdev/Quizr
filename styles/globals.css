@@ -64,6 +64,11 @@
   font-family: PoppinsExtraBoldItalic;
   src: url("../fonts/Poppins/Poppins-ExtraBoldItalic.ttf");
 }
+
+@font-face {
+  font-family: SourceCode;
+  src: url("../fonts/Source_Code_Pro/static/SourceCodePro-Regular.ttf");
+}
 /* #endregion */
 
 * {
@@ -318,6 +323,11 @@ textarea:hover {
     Helvetica Neue, sans-serif;
   font-weight: 800;
   font-style: italic;
+}
+
+.t-mono {
+  font-family: SourceCode, consolas, monospace;
+  font-weight: 400;
 }
 
 /*#endregion */

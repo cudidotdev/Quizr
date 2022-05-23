@@ -203,4 +203,5 @@
 .QuizTakeHeader .Timer {
   font-size: 1.1rem;
   padding: 0.5rem 1rem;
+  color: var(--color-black-three);
 }
