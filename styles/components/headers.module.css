@@ -178,6 +178,7 @@
 .AdminHeader .Padder {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .AdminHeader .LogoContainer {
@@ -198,4 +199,8 @@
 
 .QuizTakeHeader {
   box-shadow: 0 1px 2px rgba(50, 50, 50, 0.08);
+}
+.QuizTakeHeader .Timer {
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
 }

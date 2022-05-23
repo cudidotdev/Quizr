@@ -175,8 +175,6 @@ export async function gradeQuiz(uAnswers: any[], quizId: any) {
       text: question.options[question.answer],
     };
 
-    console.log(final);
-
     return final;
   });
 

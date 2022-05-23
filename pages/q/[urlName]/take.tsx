@@ -74,6 +74,7 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
           id: `tickerror${urlName}`,
           msg: error.message,
         });
+        sessionStorage.removeItem(`quiz ${urlName}`);
         return router.push(`/q/${urlName}/result`);
       }
       if (error.name === "sheet") {
@@ -82,6 +83,7 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
           id: `tickerror${urlName}`,
           msg: error.message,
         });
+        sessionStorage.removeItem(`quiz ${urlName}`);
         return router.push(`/q/${urlName}`);
       }
     }
@@ -158,7 +160,7 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
 
   return (
     <>
-      <Header />
+      <Header urlName={urlName} submitFn={() => submitQuiz(true)} />
       <main className="content-width" style={{ padding: "1rem" }}>
         <div className={styles.QuizBoard}>
           <h1 className={`${styles.QuizTitle} t-regular`}>{title}</h1>

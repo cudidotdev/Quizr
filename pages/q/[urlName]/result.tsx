@@ -88,7 +88,7 @@ const Result: React.FC<{ result: any }> = ({ result }) => {
           <div className={styles.Index}>{obj.index}</div>
           <div className={styles.Child}>
             <div className={styles.QuestionText}>{obj.question}</div>
-            <span>{obj.answer.val}:</span>
+            <span style={{ fontStyle: "italic" }}>{obj.answer.val}:</span>
             <span style={{ marginLeft: "0.75rem", fontStyle: "italic" }}>
               {obj.answer.text}
             </span>
