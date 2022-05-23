@@ -147,7 +147,12 @@
 .QuizBox .ScoreBox .Score {
   margin-left: 0.5rem;
   padding: 0 0.5rem;
+}
+.QuizBox .ScoreBox .Score.A {
   color: var(--color-secondary-two);
+}
+.QuizBox .ScoreBox .Score.B {
+  color: var(--color-tertiary-two);
 }
 
 @keyframes blink {

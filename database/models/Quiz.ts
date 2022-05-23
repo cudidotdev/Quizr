@@ -21,6 +21,8 @@ const QuizSchema = new mongoose.Schema({
     required: true,
   },
   urlName: { type: String, required: true },
+  averageScore: Number,
+  timesTaken: Number,
   createdAt: { type: Date, default: () => Date.now() },
   lastModified: Date,
   currentlyOnEdit: Boolean,

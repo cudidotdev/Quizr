@@ -22,7 +22,7 @@ Home.Layout = Layout;
 export const getStaticProps: GetStaticProps = async () => {
   await connectDB();
   const quizzes = await Quiz.find()
-    .select("title categories questions urlName")
+    .select("title categories questions urlName averageScore timesTaken")
     .lean();
   quizzes.forEach((q) => {
     q._id = q._id.toString();

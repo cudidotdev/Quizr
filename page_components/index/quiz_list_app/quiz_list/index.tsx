@@ -56,7 +56,7 @@ const QuizList: React.FC<{ quizzes: quiz[] }> = ({ quizzes }) => {
   );
 };
 
-const QuizBox: React.FC<any> = ({ title, categories }) => {
+const QuizBox: React.FC<any> = ({ title, categories, averageScore }) => {
   return (
     <div className={styles.QuizBox}>
       <div className={styles.Title}>{title}</div>
@@ -67,7 +67,18 @@ const QuizBox: React.FC<any> = ({ title, categories }) => {
       </div>
       <div className={styles.ScoreBox}>
         <div>
-          Avg. Score:<span className={styles.Score}>6/10</span>
+          Avg. Score:
+          <span
+            className={`${styles.Score} ${
+              averageScore >= 5
+                ? styles.A
+                : averageScore !== undefined
+                ? styles.B
+                : ""
+            }`}
+          >
+            {averageScore === undefined ? "-/-" : `${averageScore}/10`}
+          </span>
         </div>
       </div>
     </div>

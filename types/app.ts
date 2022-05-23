@@ -22,6 +22,7 @@ export type quizType2 = {
   introText: string;
   urlName: string;
   questions: question[];
+  averageScore?: number;
 };
 
 type question = {

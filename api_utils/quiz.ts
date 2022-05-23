@@ -197,6 +197,13 @@ export async function submitQuiz(sheet: any, timeSubmited: number) {
   });
   await QuizSheet.findByIdAndUpdate(sheet._id, { submitted: true });
 
+  const quiz = await Quiz.findById(sheet.quizId);
+  if (!quiz.timesTaken) quiz.timesTaken = quiz.averageScore = 0;
+
+  quiz.averageScore =
+    (quiz.averageScore * quiz.timesTaken + score) / ++quiz.timesTaken;
+  await quiz.save();
+
   return { score, correction };
 }
 
