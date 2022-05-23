@@ -6,6 +6,7 @@ import { NotePadContext } from "components/app";
 import styles from "styles/pages/Q.module.css";
 import { getFetcher } from "utils/fetchers";
 import { Text } from "components/texts";
+import Pagination from "components/pagination";
 
 const QuizEndPage: NextPageWithLayout = () => {
   const router = useRouter();
@@ -64,6 +65,9 @@ const QuizEndPage: NextPageWithLayout = () => {
             <></>
           )}
         </div>
+        <div>
+          <LeaderBoards />
+        </div>
       </div>
     </main>
   );
@@ -117,6 +121,17 @@ const FallBack: React.FC = () => {
           </div>
         </div>
       ))}
+    </div>
+  );
+};
+
+const LeaderBoards: React.FC = () => {
+  const [idx, setIdx] = useState(1);
+  return (
+    <div className={styles.LeaderBoard}>
+      <h2 className={`${styles.Title} t-regular`}>LEADERBOARD</h2>
+      <Pagination from={1} to={6} idx={idx} setIdx={setIdx} />
+      <Pagination from={1} to={6} idx={idx} setIdx={setIdx} />
     </div>
   );
 };

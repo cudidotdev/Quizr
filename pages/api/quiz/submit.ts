@@ -27,8 +27,8 @@ const handler: NextApiHandlerX = async (req, res) => {
           400
         );
 
-      const data = await submitQuiz(sheet, timeSubmited);
-      return res.status(200).json({ success: true, data: data });
+      await submitQuiz(sheet, timeSubmited);
+      return res.status(201).json({ success: true });
     } catch (error: any) {
       console.log(error);
       const { name, message, status } = modifyError(error);

@@ -3,9 +3,10 @@ import ListContainer, { LinkList, List } from "components/lists";
 import styles from "styles/pages/Home.module.css";
 import { Text } from "components/texts";
 import type { quizType2 as quiz } from "types/app";
+import Pagination from "components/pagination";
 
 const QuizList: React.FC<{ quizzes: quiz[] }> = ({ quizzes }) => {
-  const [idx, setIdx] = useState(0);
+  const [idx, setIdx] = useState(1);
 
   const maxPerPage = 6;
   const pages = Math.ceil(quizzes.length / maxPerPage);
@@ -23,35 +24,44 @@ const QuizList: React.FC<{ quizzes: quiz[] }> = ({ quizzes }) => {
   }, [quizzes, pages]);
 
   useEffect(() => {
-    setIdx(0);
+    setIdx(1);
   }, [quizzes]);
 
   return (
     <div style={{ padding: "0.75rem 0" }} className="content-width">
       <Text className={`${styles.QuizListHeading} t-medium`}>Quizzes</Text>
 
+      <Pagination
+        from={1}
+        to={pages}
+        idx={idx}
+        setIdx={setIdx}
+        style={{ marginBottom: "0.75rem" }}
+      />
+
       {$quizzes.length ? (
-        <>
-          <PaginationBox
-            $quizzes={$quizzes}
-            idx={idx}
-            setIdx={setIdx}
-            style={{ marginTop: 0 }}
-          />
-
-          <ListContainer start={idx < pages ? idx * maxPerPage + 1 : 1}>
-            {$quizzes[idx < pages ? idx : 0].map((quiz) => (
-              <LinkList key={quiz._id} href={`/q/${quiz.urlName}`}>
-                <QuizBox {...quiz} />
-              </LinkList>
-            ))}
-          </ListContainer>
-
-          <PaginationBox $quizzes={$quizzes} idx={idx} setIdx={setIdx} />
-        </>
+        <ListContainer start={idx <= pages ? (idx - 1) * maxPerPage + 1 : 1}>
+          {$quizzes[idx <= pages ? idx - 1 : 0].map((quiz) => (
+            <LinkList key={quiz._id} href={`/q/${quiz.urlName}`}>
+              <QuizBox {...quiz} />
+            </LinkList>
+          ))}
+        </ListContainer>
       ) : (
-        <p>No quizzes</p>
+        <Text
+          style={{ color: "var(--color-primary-two)", textAlign: "center" }}
+        >
+          No quizzes found
+        </Text>
       )}
+
+      <Pagination
+        from={1}
+        to={pages}
+        idx={idx}
+        setIdx={setIdx}
+        style={{ marginTop: "0.75rem" }}
+      />
     </div>
   );
 };
@@ -84,24 +94,5 @@ const QuizBox: React.FC<any> = ({ title, categories, averageScore }) => {
     </div>
   );
 };
-
-const PaginationBox: React.FC<{
-  $quizzes: quiz[][];
-  idx: number;
-  setIdx: React.Dispatch<React.SetStateAction<number>>;
-  style?: React.CSSProperties;
-}> = ({ $quizzes, idx, setIdx, style }) => (
-  <div className={styles.PaginationBox} style={style}>
-    {$quizzes.map((e, index) => (
-      <span
-        key={index}
-        onClick={() => setIdx(index)}
-        className={idx === index ? styles.Active : ""}
-      >
-        {index + 1}
-      </span>
-    ))}
-  </div>
-);
 
 export default QuizList;

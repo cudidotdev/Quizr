@@ -296,6 +296,22 @@
   max-width: 10rem;
 }
 
+.LeaderBoard {
+  border-radius: 0.25rem;
+  box-shadow: var(--shadow-one);
+  padding-top: 0.5rem;
+  padding: 0.75rem;
+  display: grid;
+  grid-template-columns: auto;
+  gap: 0.5rem;
+}
+
+.LeaderBoard .Title {
+  color: var(--color-primary-one);
+  font-size: inherit;
+  text-align: center;
+}
+
 @keyframes color_blink {
   0%,
   100% {

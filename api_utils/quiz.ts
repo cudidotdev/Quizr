@@ -188,21 +188,24 @@ export async function submitQuiz(sheet: any, timeSubmited: number) {
     10 * 60 * 1000
   );
 
-  await ScoreBoard.create({
-    user: sheet.userId,
-    quiz: sheet.quizId,
-    score,
-    correction,
-    quizTime,
-  });
-  await QuizSheet.findByIdAndUpdate(sheet._id, { submitted: true });
+  try {
+    await ScoreBoard.create({
+      user: sheet.userId,
+      quiz: sheet.quizId,
+      score,
+      correction,
+      quizTime,
+    });
 
-  const quiz = await Quiz.findById(sheet.quizId);
-  if (!quiz.timesTaken) quiz.timesTaken = quiz.averageScore = 0;
+    await QuizSheet.findByIdAndUpdate(sheet._id, { submitted: true });
 
-  quiz.averageScore =
-    (quiz.averageScore * quiz.timesTaken + score) / ++quiz.timesTaken;
-  await quiz.save();
+    const quiz = await Quiz.findById(sheet.quizId);
+    if (!quiz.timesTaken) quiz.timesTaken = quiz.averageScore = 0;
+
+    quiz.averageScore =
+      (quiz.averageScore * quiz.timesTaken + score) / ++quiz.timesTaken;
+    await quiz.save();
+  } catch (error) {}
 
   return { score, correction };
 }
