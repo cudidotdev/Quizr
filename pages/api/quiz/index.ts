@@ -1,15 +1,17 @@
 import { NextApiHandlerX } from "types/next";
 import connectDB from "database/connect";
 import { getQuizById, getAllQuizes, modifyError } from "api_utils";
+import { Quiz } from "database/models";
 
 const handler: NextApiHandlerX = async (req, res) => {
   await connectDB();
   if (req.method === "GET") {
     try {
-      const { id, select }: any = req.query;
+      const { id, select, urlName }: any = req.query;
       let data: any;
 
       if (id) data = await getQuizById(id, select);
+      else if (urlName) data = await Quiz.findOne({ urlName }).select(select);
       //@ts-ignore
       else data = await getAllQuizes(req.query);
 

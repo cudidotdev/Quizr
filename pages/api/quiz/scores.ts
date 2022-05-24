@@ -16,8 +16,8 @@ const handler: NextApiHandlerX = async (req, res) => {
         ? "title timesTaken averageScore"
         : "username profilePicture quizzesTaken averageScore EXP";
 
-      if (qId) query.qId = qId;
-      if (uId) query.uId = uId;
+      if (qId) query.quiz = qId;
+      if (uId) query.user = uId;
 
       const data = await ScoreBoard.find(query)
         .populate(popualteQuery, popualteSelect)

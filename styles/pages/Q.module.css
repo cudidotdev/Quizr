@@ -289,7 +289,7 @@
 }
 .ResultContainer.FallBack span.Side {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   width: 100%;
 }
 .ResultContainer.FallBack span.Side span {
@@ -310,6 +310,111 @@
   color: var(--color-primary-one);
   font-size: inherit;
   text-align: center;
+}
+
+.LeaderBoard .FallBack .Blink {
+  display: flex;
+  height: 1.5rem;
+  width: 100%;
+  animation-name: fallback_blink_grey;
+  animation-iteration-count: infinite;
+  animation-duration: 2s;
+  border-radius: 0.25rem;
+}
+
+.LeaderBoard .FallBack .Container {
+  display: flex;
+  font-size: 0.9rem;
+  line-height: 1.5rem;
+}
+.LeaderBoard .FallBack .Container > div {
+  width: 100%;
+}
+.LeaderBoard .FallBack .Container .DP {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin-right: 0.5rem;
+  animation-name: fallback_blink_blue;
+}
+.LeaderBoard .FallBack .Username {
+  max-width: 10rem;
+  margin-bottom: 0.25rem;
+  animation-name: fallback_blink_blue;
+}
+.LeaderBoard .FallBack .ST {
+  max-width: 10rem;
+  align-items: center;
+  margin-bottom: 0.25rem;
+  color: rgb(160, 160, 160);
+  padding: 0 1rem;
+}
+.LeaderBoard .FallBack .ST span {
+  max-width: 5rem;
+  margin-left: 0.5rem;
+}
+.LeaderBoard .FallBack .EXPBox {
+  max-width: 3rem;
+}
+.LeaderBoard .FallBack .EXPBox span {
+  animation-name: fallback_blink_green;
+}
+
+.LeaderBoard .ScoreBox {
+  display: flex;
+  line-height: 1.5rem;
+  font-size: 0.9rem;
+}
+.LeaderBoard .ScoreBox > div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.LeaderBoard .ScoreBox .DP {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  background-color: rgba(81, 149, 251, 0.01);
+  border: 1px solid rgba(81, 149, 251, 0.1);
+  padding: 0.125rem;
+  margin-right: 0.5rem;
+}
+.LeaderBoard .ScoreBox .Username {
+  display: inline-flex;
+  margin-bottom: 0.25rem;
+  background-color: rgba(81, 149, 251, 0.01);
+  border: 1px solid rgba(81, 149, 251, 0.1);
+  border-radius: 0.25rem;
+  padding: 0 1rem;
+  color: var(--color-primary-two);
+}
+.LeaderBoard .ScoreBox .ST {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 0.25rem;
+  border: 1px solid rgb(200, 200, 200);
+  background-color: rgb(253, 253, 253);
+  color: rgb(160, 160, 160);
+  border-radius: 0.25rem;
+  padding: 0 1rem;
+}
+.LeaderBoard .ScoreBox .ST span {
+  margin-left: 0.5rem;
+}
+.LeaderBoard .ScoreBox .EXPBox {
+  background-color: rgba(0, 194, 97, 0.01);
+  border: 1px solid rgba(0, 194, 97, 0.1);
+  border-radius: 0.25rem;
+  padding: 0 1rem;
+  color: var(--color-secondary-one);
 }
 
 @keyframes color_blink {
@@ -334,7 +439,39 @@
     background-color: rgb(230, 230, 230);
   }
 }
-
+@keyframes fallback_blink_grey {
+  0%,
+  100% {
+    border: 1px solid rgb(220, 220, 220);
+    background-color: rgb(255, 255, 255);
+  }
+  50% {
+    border: 1px solid rgb(200, 200, 200);
+    background-color: rgb(253, 253, 253);
+  }
+}
+@keyframes fallback_blink_green {
+  0%,
+  100% {
+    background-color: rgba(0, 194, 97, 0.01);
+    border: 1px solid rgba(0, 194, 97, 0.1);
+  }
+  50% {
+    background-color: rgba(0, 194, 97, 0.05);
+    border: 1px solid rgba(0, 194, 97, 0.2);
+  }
+}
+@keyframes fallback_blink_blue {
+  0%,
+  100% {
+    background-color: rgba(81, 149, 251, 0.01);
+    border: 1px solid rgba(81, 149, 251, 0.1);
+  }
+  50% {
+    background-color: rgba(81, 149, 251, 0.05);
+    border: 1px solid rgba(81, 149, 251, 0.2);
+  }
+}
 @media screen and (min-width: 768px) {
   .ResultLeaderBoardBox {
     grid-template-columns: 1fr 1fr;

@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import styles from "styles/components/headers.module.css";
 import { Linkr } from "components/links";
 import { Logo } from "components/icons";
+import { modifyTimeForDisplay } from "utils";
 
 const Header: React.FC<{ urlName: string; submitFn: () => any }> = ({
   urlName,
@@ -19,17 +20,6 @@ const Header: React.FC<{ urlName: string; submitFn: () => any }> = ({
         () => setTime(Math.max(0, firstTime - (Date.now() - timeStarted))),
         1000
       );
-  }
-
-  function modifyTimeForDisplay(time: number) {
-    time = Math.floor(time / 1000);
-    let mins: any = Math.floor(time / 60);
-    let secs: any = time % 60;
-
-    if (mins < 10) mins = `0${mins}`;
-    if (secs < 10) secs = `0${secs}`;
-
-    return `${mins}:${secs}`;
   }
 
   /*eslint-disable*/

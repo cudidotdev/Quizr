@@ -1,12 +1,16 @@
 import type { NextPageWithLayout } from "types/next";
 import Layout from "components/layouts";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { NotePadContext } from "components/app";
 import styles from "styles/pages/Q.module.css";
 import { getFetcher } from "utils/fetchers";
-import { Text } from "components/texts";
 import Pagination from "components/pagination";
+import Head from "next/head";
+import Image from "next/image";
+import ListContainer, { LinkList, List } from "components/lists";
+import { modifyTimeForDisplay } from "utils";
+import { calculateEXP } from "utils/quiz";
 
 const QuizEndPage: NextPageWithLayout = () => {
   const router = useRouter();
@@ -54,22 +58,27 @@ const QuizEndPage: NextPageWithLayout = () => {
   /*eslint-enable*/
 
   return (
-    <main className={`site-width pad-one`}>
-      <div className={styles.ResultLeaderBoardBox}>
-        <div>
-          {resultLoading ? (
-            <FallBack />
-          ) : result ? (
-            <Result result={result} />
-          ) : (
-            <></>
-          )}
+    <>
+      <main className={`site-width pad-one`}>
+        <div className={styles.ResultLeaderBoardBox}>
+          <div>
+            {resultLoading ? (
+              <FallBack />
+            ) : result ? (
+              <Result result={result} />
+            ) : (
+              <></>
+            )}
+          </div>
+          <div>
+            <LeaderBoards />
+          </div>
         </div>
-        <div>
-          <LeaderBoards />
-        </div>
-      </div>
-    </main>
+      </main>
+      <Head>
+        <title>Quizr: Result page</title>
+      </Head>
+    </>
   );
 };
 
@@ -114,7 +123,6 @@ const FallBack: React.FC = () => {
           <div className={styles.Index}>{n}</div>
           <div className={styles.Child}>
             <span></span>
-            <span></span>
             <span className={styles.Side}>
               <span></span>
             </span>
@@ -127,14 +135,136 @@ const FallBack: React.FC = () => {
 
 const LeaderBoards: React.FC = () => {
   const [idx, setIdx] = useState(1);
+  const [error, setError] = useState<string>();
+  const [quizId, setQuizId] = useState<string>();
+  const [scores, setScores] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  const maxPerPage = 10;
+  const pages = Math.ceil(scores.length / maxPerPage);
+  const $scores = useMemo(() => {
+    const $: any[][] = new Array(pages).fill(0).map((n) => []);
+
+    scores.forEach((score, idx) => {
+      const n = Math.floor(idx / maxPerPage);
+      const nn = idx % maxPerPage;
+      $[n][nn] = score;
+    });
+
+    return $;
+  }, [scores, pages]);
+
+  async function getQuizId(urlName: any) {
+    const res = await getFetcher(`/api/quiz?urlName=${urlName}&select=_id`);
+    if (!res) return setError("It seems there is no internet connection");
+
+    const { success, data, error } = res;
+    if (error) return setError(error.message);
+
+    setQuizId(data._id);
+  }
+
+  async function getScores(quizId: string) {
+    const res = await getFetcher(`/api/quiz/scores?qId=${quizId}`);
+    if (!res) return setError("It seems there is no internet connection");
+
+    const { success, data, error } = res;
+    if (!success) return setError(error.message);
+
+    setLoading(false);
+    setScores(
+      data.sort(
+        (a: any, b: any) =>
+          calculateEXP(b.score, b.quizTime) - calculateEXP(a.score, a.quizTime)
+      )
+    );
+  }
+
+  useEffect(() => {
+    if (quizId) getScores(quizId);
+  }, [quizId]);
+
+  useEffect(() => {
+    if (router.query.urlName) getQuizId(router.query.urlName);
+  }, [router]);
+
   return (
     <div className={styles.LeaderBoard}>
       <h2 className={`${styles.Title} t-regular`}>LEADERBOARD</h2>
-      <Pagination from={1} to={6} idx={idx} setIdx={setIdx} />
-      <Pagination from={1} to={6} idx={idx} setIdx={setIdx} />
+      <Pagination from={1} to={pages} idx={idx} setIdx={setIdx} />
+      {loading ? (
+        <LeaderBoardsFallBack />
+      ) : $scores.length ? (
+        <ScoreContainer
+          scores={$scores[idx - 1]}
+          start={(idx - 1) * maxPerPage + 1}
+        />
+      ) : (
+        <></>
+      )}
+      <Pagination from={1} to={pages} idx={idx} setIdx={setIdx} />
     </div>
   );
 };
+
+const ScoreContainer: React.FC<any> = ({ scores, start }) => {
+  return (
+    <ListContainer start={start}>
+      {scores.map((score: any, idx: any) => (
+        <LinkList href={`/u/${score.user.username}`} key={idx}>
+          <div className={`${styles.ScoreBox} t-mono`}>
+            <div className={styles.DP}>
+              <Image
+                src={score.user.profilePicture}
+                alt={`${score.user.username} profilePicture`}
+                width="100%"
+                height="100%"
+              />
+            </div>
+            <div>
+              <div className={styles.Username}>{score.user.username}</div>
+              <div className={`${styles.ST} `}>
+                Score:<span>{score.score}</span>
+              </div>
+              <div className={`${styles.ST} `}>
+                Time:
+                <span>{modifyTimeForDisplay(score.quizTime)}</span>
+              </div>
+              <div className={`${styles.EXPBox}`}>
+                +{calculateEXP(score.score, score.quizTime)} EXP
+              </div>
+            </div>
+          </div>
+        </LinkList>
+      ))}
+    </ListContainer>
+  );
+};
+
+const LeaderBoardsFallBack: React.FC = () => (
+  <ListContainer className={styles.FallBack}>
+    {new Array(10).fill(0).map((e, idx) => (
+      <List key={idx}>
+        <div className={styles.Container}>
+          <div className={`${styles.DP} ${styles.Blink}`}></div>
+          <div>
+            <div className={`${styles.Username} ${styles.Blink}`}></div>
+            <div className={`${styles.ST} ${styles.Blink}`}>
+              Score: <span></span>
+            </div>
+            <div className={`${styles.ST} ${styles.Blink}`}>
+              Time: <span></span>
+            </div>
+            <div className={styles.EXPBox}>
+              <span className={styles.Blink}></span>
+            </div>
+          </div>
+        </div>
+      </List>
+    ))}
+  </ListContainer>
+);
 
 QuizEndPage.Layout = Layout;
 

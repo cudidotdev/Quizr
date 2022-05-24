@@ -56,6 +56,17 @@ export function setify(arr: (string | number)[]) {
   return Object.keys(setObj);
 }
 
+export function modifyTimeForDisplay(time: number) {
+  time = Math.floor(time / 1000);
+  let mins: any = Math.floor(time / 60);
+  let secs: any = time % 60;
+
+  if (mins < 10) mins = `0${mins}`;
+  if (secs < 10) secs = `0${secs}`;
+
+  return `${mins}:${secs}`;
+}
+
 export function indexQuizzes(quizzes: quizType2[]) {
   const DB: searchIndex = {};
 
