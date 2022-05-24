@@ -129,6 +129,7 @@
 .Option .Text {
   display: flex;
   color: inherit;
+  text-align: left;
 }
 
 .NavigationBox {
