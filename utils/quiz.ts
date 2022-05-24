@@ -50,5 +50,5 @@ export function storeInSession(body: any, urlName: string) {
 }
 
 export function calculateEXP(score: number, quizTime: number) {
-  return Number(((score * 60 * 1000) / quizTime).toFixed(2));
+  return Number(((score * 10 * 1000) / quizTime).toFixed(2));
 }
