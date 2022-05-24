@@ -86,7 +86,15 @@ export const ErrorMsg: React.FC<{ msg: string }> = ({ msg }) => {
               </Linkr>
             </>
           ) : (
-            msg
+            msg === "You have already taken this quiz"?<>
+               {msg},{" "}
+              <Linkr
+                className={styles.Link}
+                href={`/q/${router.query.urlName || ""}/result`}
+              >
+                View result.
+              </Linkr>
+            </>:msg
           )}
         </div>
       </div>
