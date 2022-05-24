@@ -18,7 +18,7 @@ const QuizEndPage: NextPageWithLayout = () => {
   async function getResult() {
     const { urlName, user } = router.query;
 
-    let url = `/api/quiz/fetch_score?urlName=${urlName}`;
+    let url = `/api/quiz/result?urlName=${urlName}`;
     if (user) url = url.concat(`&user=${user}`);
 
     const res = await getFetcher(url);

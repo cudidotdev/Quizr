@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const ScoreBoardSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  quiz: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  quiz: { type: mongoose.Schema.Types.ObjectId, ref: "Quiz", required: true },
   score: { type: Number, required: true },
   correction: {
     type: [

@@ -1,6 +1,13 @@
-import { QuizDraft, Quiz, QuizSheet, QuizSearchIndex } from "database/models";
+import {
+  QuizDraft,
+  Quiz,
+  QuizSheet,
+  QuizSearchIndex,
+  User,
+} from "database/models";
 import { ScoreBoard } from "database/models";
 import { quiz, quizType2 } from "types/app";
+import { calculateEXP } from "utils/quiz";
 
 export async function generateUniqueQuizTitle() {
   const Untitleds = await QuizDraft.find({
@@ -201,10 +208,17 @@ export async function submitQuiz(sheet: any, timeSubmited: number) {
 
     const quiz = await Quiz.findById(sheet.quizId);
     if (!quiz.timesTaken) quiz.timesTaken = quiz.averageScore = 0;
-
     quiz.averageScore =
       (quiz.averageScore * quiz.timesTaken + score) / ++quiz.timesTaken;
     await quiz.save();
+
+    const user = await User.findById(sheet.userId);
+    if (!user.quizzesTaken)
+      user.quizzesTaken = user.averageScore = user.EXP = 0;
+    user.averageScore =
+      (user.averageScore * user.quizzesTaken + score) / ++user.quizzesTaken;
+    user.EXP = user.EXP + calculateEXP(score, quizTime);
+    await user.save();
   } catch (error) {}
 
   return { score, correction };
