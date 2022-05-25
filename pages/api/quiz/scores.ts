@@ -13,7 +13,7 @@ const handler: NextApiHandlerX = async (req, res) => {
 
       let popualteQuery: string = uId ? "quiz" : "user";
       let popualteSelect: string = uId
-        ? "title timesTaken averageScore"
+        ? "title timesTaken averageScore urlName"
         : "username profilePicture quizzesTaken averageScore EXP";
 
       if (qId) query.quiz = qId;

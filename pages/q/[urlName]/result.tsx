@@ -150,7 +150,7 @@ const LeaderBoards: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  const maxPerPage = 10;
+  const maxPerPage = 5;
   const pages = Math.ceil(scores.length / maxPerPage);
   const $scores = useMemo(() => {
     const $: any[][] = new Array(pages).fill(0).map((n) => []);

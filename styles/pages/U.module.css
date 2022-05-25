@@ -26,7 +26,7 @@
 .ProfileInfoBox .DataBox {
   margin-bottom: 0.5rem;
 }
-.ProfileInfoBox .Data {
+.DataBox .Data {
   display: inline-flex;
   line-height: 1.2rem;
   padding: 0.25rem 1rem;
@@ -36,10 +36,49 @@
   border: 1px solid var(--color-primary-transparent-two);
 }
 
+.DataBox .Data.Green {
+  color: var(--color-secondary-two);
+  background-color: var(--color-secondary-transparent-one);
+  border: 1px solid var(--color-secondary-transparent-two);
+}
+
 .LogoutBox {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 0.5rem;
+}
+
+.ProfileNav {
+  border-top: 1px solid var(--color-grey-three);
+  border-bottom: 1px solid var(--color-grey-three);
+  padding: 0.25rem 0;
+  margin-bottom: 0.75rem;
+}
+
+.ProfileNav a {
+  color: var(--color-black-three);
+  transition: all 200ms;
+}
+.ProfileNav a:not(:last-child) {
+  margin-right: 1rem;
+}
+.ProfileNav a.Active {
+  color: var(--color-primary-two);
+}
+.ProfileNav a:hover {
+  color: var(--color-primary-three);
+}
+
+.QuizTakenContainer {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.QuizTakenContainer .LoaderBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary-one);
 }
 
 @media screen and (min-width: 320px) {
