@@ -142,14 +142,14 @@ export const ProfileNav: React.FC<any> = ({ user, page }) => {
   return (
     <nav className={styles.ProfileNav}>
       <Linkr
-        href={`/u/${user.username}`}
+        href={`/u/${user?.username}`}
         className={page === "home" ? styles.Active : ""}
       >
         Quizzes
       </Linkr>
       {currentUser?._id == user?._id && (
         <Linkr
-          href={`/u/${user.username}/settings`}
+          href={`/u/${user?.username}/settings`}
           className={page === "settings" ? styles.Active : ""}
         >
           Settings
