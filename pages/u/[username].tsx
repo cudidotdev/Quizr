@@ -49,7 +49,7 @@ const ProfileContainer: React.FC<any> = ({ user: _user, width }) => {
   }
 
   async function refreshUser() {
-    const res = await getFetcher(`/api/user`);
+    const res = await getFetcher(`/api/user?id=${user._id}`);
     if (!res) return;
     if (!res.success) return;
     setUser(res.data);
