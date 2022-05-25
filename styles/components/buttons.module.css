@@ -38,8 +38,8 @@
 }
 .BtnPrimary:hover,
 .BtnPrimary:focus {
-  outline: inherit;
-  border: inherit;
+  outline: none;
+  border: none;
   background-color: var(--color-primary-two);
 }
 
@@ -50,8 +50,8 @@
 }
 .BtnPrimaryX:hover,
 .BtnPrimaryX:focus {
-  outline: inherit;
-  border: inherit;
+  outline: none;
+  border: none;
   box-shadow: 0 0 3px rgba(81, 149, 251, 0.6);
 }
 

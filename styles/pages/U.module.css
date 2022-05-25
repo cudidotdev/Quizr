@@ -81,6 +81,84 @@
   color: var(--color-primary-one);
 }
 
+.ProfileFormContainer {
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.ProfileFormContainer h2 {
+  color: var(--color-primary-one);
+  font-size: 1.05rem;
+  text-align: center;
+  border-bottom: 1px solid var(--color-grey-three);
+  margin-bottom: 0.5rem;
+}
+
+.ProfilePictureChanger {
+  color: var(--color-black-three);
+  margin-bottom: 0.75rem;
+}
+.ProfilePictureChanger,
+.ProfilePictureChanger * {
+  transition: all 200ms;
+}
+.ProfilePictureChanger:hover,
+.ProfilePictureChanger.Color {
+  color: var(--color-primary-one);
+}
+
+.ProfilePictureChanger > div {
+  padding: 0.5rem;
+
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-grey-two);
+}
+.ProfilePictureChanger > div:focus {
+  outline: none;
+  border-color: var(--color-primary-one);
+  box-shadow: var(--shadow-two);
+}
+
+.ProfileFormContainer .PictureContainer {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: auto auto auto;
+}
+.PictureContainer > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.PictureContainer .Picture {
+  display: inline-flex;
+  padding: 0.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  transition: all 500ms;
+  cursor: pointer;
+}
+.Picture:hover,
+.Picture:focus {
+  background-color: var(--color-primary-transparent-two);
+  border-color: var(--color-primary-three);
+  outline: none;
+}
+.Picture.Selected {
+  background-color: var(--color-secondary-transparent-two);
+  border-color: var(--color-secondary-two);
+}
+
+.NextBtnBox {
+  width: 100%;
+  border-top: 1px solid var(--color-grey-two);
+  padding-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+}
+
 @media screen and (min-width: 320px) {
   .DPBox {
     width: 5rem;

@@ -4,20 +4,21 @@ import React, {
   useEffect,
   useLayoutEffect,
   useMemo,
+  useRef,
 } from "react";
 import { UserContext } from "components/app";
-import { getFetcher } from "utils/fetchers";
+import { getFetcher, patchFetcher } from "utils/fetchers";
 import styles from "styles/pages/U.module.css";
 import Image from "next/image";
 import { Linkr } from "components/links";
-import { ExitIcon } from "components/icons";
+import { ExitIcon, ReloadIcon } from "components/icons";
 import BtnStyles from "styles/components/buttons.module.css";
 import ListContainer, { LinkList } from "components/lists";
 import { TripleSquareLoader } from "components/loaders";
 import Pagination from "components/pagination";
-import { useRouter } from "next/router";
 import { modifyTimeForDisplay } from "utils";
 import { calculateEXP } from "utils/quiz";
+import { Inputr, Passwordr, Submitr } from "components/forms";
 
 export const ProfileContainer: React.FC<any> = ({ user, width }) => {
   const [currentUser] = useContext(UserContext);
@@ -209,6 +210,160 @@ export const QuizzesTakenComponent: React.FC<any> = ({ user }) => {
         <p className={styles.LoaderBox}>No quizzes</p>
       )}
       <Pagination from={1} to={pages} idx={idx} setIdx={setIdx} />
+    </div>
+  );
+};
+
+export const UpdateProfileForm: React.FC<{ user: any }> = ({ user }) => {
+  const [data, setData] = useState<any>({
+    username: "",
+    email: "",
+    password: "",
+    currentPassword: "",
+    profilePicture: "",
+  });
+  const [pictures, setPictures] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  function refreshPictures() {
+    setPictures(
+      new Array(12)
+        .fill(0)
+        .map(
+          (e) => `https://avatars.dicebear.com/api/bottts/${Math.random()}.svg`
+        )
+    );
+  }
+
+  async function updateUser() {
+    setLoading(true);
+    const res = await patchFetcher(`/api/user/update`, data);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    refreshPictures();
+  }, []);
+
+  return (
+    <div className={styles.ProfileFormContainer}>
+      <h2 className="t-regular">UPDATE PROFILE</h2>
+      <form>
+        <Inputr
+          name="username"
+          label={`Change Username ${data.username ? "(modified)" : ""}`}
+          value={data.username}
+          onChange={(value) =>
+            setData((prev: any) => {
+              return { ...prev, username: value };
+            })
+          }
+        />
+        <Inputr
+          type="email"
+          label={`Change Email ${data.email ? "(modified)" : ""}`}
+          name="email"
+          value={data.email}
+          onChange={(value) =>
+            setData((prev: any) => {
+              return { ...prev, email: value };
+            })
+          }
+        />
+        <Passwordr
+          name="password"
+          label={`Change Password ${data.password ? "(modified)" : ""}`}
+          value={data.password}
+          onChange={(value) =>
+            setData((prev: any) => {
+              return { ...prev, password: value };
+            })
+          }
+        />
+        <ProfilePictureChanger
+          pictures={pictures}
+          $picture={data.profilePicture}
+          set$picture={(value) =>
+            setData((prev: any) => {
+              return { ...prev, profilePicture: value };
+            })
+          }
+          refreshPictures={refreshPictures}
+        />
+        <div
+          style={{
+            borderTop: "1px solid var(--color-grey-three)",
+            paddingTop: "0.375rem",
+          }}
+        >
+          <Passwordr
+            label="Enable Update By Entering Current Password"
+            name="currentPassword"
+            value={data.currentPassword}
+            onChange={(value) =>
+              setData((prev: any) => {
+                return { ...prev, currentPassword: value };
+              })
+            }
+            required
+          />
+          <Submitr onClick={updateUser}>Update</Submitr>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+const ProfilePictureChanger: React.FC<{
+  pictures: string[];
+  $picture: string | undefined;
+  set$picture: (value: string) => any;
+  refreshPictures: () => any;
+}> = ({ pictures, $picture, refreshPictures, set$picture }) => {
+  const parent = useRef<HTMLDivElement>(null);
+
+  return (
+    <div className={styles.ProfilePictureChanger} ref={parent}>
+      <label>Change Profile Picture {!!$picture && "(modified)"}</label>
+      <div
+        tabIndex={0}
+        onFocus={() => parent.current?.classList.add(styles.Color)}
+        onBlur={() => parent.current?.classList.remove(styles.Color)}
+      >
+        <div className={styles.PictureContainer}>
+          {pictures.map((picture, idx) => (
+            <div key={idx}>
+              <span
+                className={`${styles.Picture} ${
+                  $picture === picture ? styles.Selected : ""
+                }`}
+                tabIndex={0}
+                onClick={() => set$picture(picture)}
+                onKeyDown={(e) => e.key === "Enter" && set$picture(picture)}
+              >
+                <Image
+                  src={picture}
+                  alt="profile pictures"
+                  width="100%"
+                  height="100%"
+                />
+              </span>
+            </div>
+          ))}
+        </div>
+        <div className={styles.NextBtnBox}>
+          <button
+            className={`${BtnStyles.BtnPrimaryX} ${BtnStyles.BtnIcon}`}
+            type="button"
+            onClick={refreshPictures}
+          >
+            Refresh
+            <span className={BtnStyles.IconRight}>
+              <ReloadIcon />
+            </span>
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

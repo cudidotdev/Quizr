@@ -36,6 +36,7 @@ export const NextButton: React.FC<{ onClick: (...args: any) => any }> = ({
       className={`${btnStyles.BtnPrimaryX} ${btnStyles.BtnIcon}`}
       style={{ padding: "0.25rem 0.25rem 0.25rem 1rem" }}
       onClick={onClick}
+      type="button"
     >
       <span>Next</span>
       <span className={btnStyles.IconRight}>

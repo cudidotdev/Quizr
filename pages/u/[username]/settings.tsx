@@ -6,7 +6,7 @@ import { User } from "database/models";
 import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { UserContext } from "components/app";
 import NotFoundComponent from "page_components/404";
-import Profile from "page_components/u";
+import Profile, { UpdateProfileForm } from "page_components/u";
 import { getFetcher } from "utils/fetchers";
 
 const ProfilePage: NextPageWithLayout = ({ user: _user }: any) => {
@@ -51,6 +51,7 @@ const ProfilePage: NextPageWithLayout = ({ user: _user }: any) => {
   return (
     <main className="content-width pad-one">
       <Profile width={width} user={user} page="settings" />
+      <UpdateProfileForm user={user} />
     </main>
   );
 };
