@@ -35,9 +35,10 @@ const ProfilePage: NextPageWithLayout = ({ user }: any) => {
   );
 };
 
-const ProfileContainer: React.FC<any> = ({ user, width }) => {
+const ProfileContainer: React.FC<any> = ({ user: _user, width }) => {
   const [currentUser] = useContext(UserContext);
   const [rank, setRank] = useState<number>(0);
+  const [user, setUser] = useState(_user);
 
   async function getRank() {
     const res = await getFetcher(`/api/user/rank?id=${user._id}`);
@@ -47,9 +48,17 @@ const ProfileContainer: React.FC<any> = ({ user, width }) => {
     setRank(data);
   }
 
+  async function refreshUser() {
+    const res = await getFetcher(`/api/user`);
+    if (!res) return;
+    if (!res.success) return;
+    setUser(res.data);
+  }
+
   /*eslint-disable*/
   useEffect(() => {
     getRank();
+    refreshUser();
   }, [user]);
   /*eslint-enable*/
 

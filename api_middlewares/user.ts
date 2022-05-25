@@ -8,14 +8,12 @@ export async function attachUser(req: NextApiRequestX) {
   if (!ssId) return (req.user = null);
 
   const _user = await Session.findById(ssId)
-    .populate("uId")
+    .populate("uId", "-createdAt -password")
     .select("uId -_id")
     .lean();
   if (!_user || !_user.uId) return (req.user = null);
 
-  const { username, _id, email, profilePicture } = _user.uId;
-  const user: any = { username, _id, email, profilePicture };
-  if (_user.uId.isAdmin) user.isAdmin = true;
+  const user = _user.uId;
   req.user = user;
 }
 
