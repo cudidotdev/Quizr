@@ -1,22 +1,45 @@
 import { NextPageWithLayout } from "types/next";
 import Layout from "components/layouts";
-import styles from "styles/pages/U.module.css";
 import { GetStaticPaths, GetStaticProps } from "next";
 import connectDB from "database/connect";
 import { User } from "database/models";
-import Image from "next/image";
 import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { UserContext } from "components/app";
 import NotFoundComponent from "page_components/404";
-import { LogoutComponent, ProfileContainer, ProfileNav } from ".";
+import Profile from "page_components/u";
+import { getFetcher } from "utils/fetchers";
 
-const ProfilePage: NextPageWithLayout = ({ user }: any) => {
+const ProfilePage: NextPageWithLayout = ({ user: _user }: any) => {
   const [width, setWidth] = useState(0);
   const [currentUser] = useContext(UserContext);
+
+  const [user, setUser] = useState(_user);
 
   function resizeWidth() {
     setWidth(window.innerWidth);
   }
+
+  async function getRank() {
+    const res = await getFetcher(`/api/user/rank?id=${_user._id}`);
+    if (!res) return;
+    const { success, data, error } = res;
+    if (!success) return;
+    return data;
+  }
+
+  async function refreshUser() {
+    const rank = await getRank();
+    const res = await getFetcher(`/api/user?id=${_user._id}`);
+    if (!res) return;
+    if (!res.success) return;
+    setUser({ ...res.data, rank });
+  }
+
+  /*eslint-disable*/
+  useEffect(() => {
+    refreshUser();
+  }, [_user]);
+  /*eslint-enable*/
 
   useLayoutEffect(() => {
     resizeWidth();
@@ -27,11 +50,7 @@ const ProfilePage: NextPageWithLayout = ({ user }: any) => {
 
   return (
     <main className="content-width pad-one">
-      <ProfileContainer user={user} width={width} />
-      <div className={styles.LogoutBox}>
-        {width < 520 && currentUser?._id == user?._id && <LogoutComponent />}
-      </div>
-      <ProfileNav user={user} page="settings" />
+      <Profile width={width} user={user} page="settings" />
     </main>
   );
 };
@@ -62,6 +81,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (!user) return { notFound: true };
 
   user._id = user._id.toString();
+  const rank =
+    (await User.find({ EXP: { $gt: user.EXP } }).select("EXP")).length + 1;
+  user.rank = rank;
 
   return {
     props: { user },
