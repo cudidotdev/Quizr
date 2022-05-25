@@ -28,7 +28,7 @@ const ProfilePage: NextPageWithLayout = ({ user }: any) => {
     <main className="content-width pad-one">
       <ProfileContainer user={user} width={width} />
       <div className={styles.LogoutBox}>
-        {width < 520 && currentUser._id == user._id && <LogoutComponent />}
+        {width < 520 && currentUser?._id == user?._id && <LogoutComponent />}
       </div>
     </main>
   );
