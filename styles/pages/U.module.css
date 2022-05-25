@@ -1,0 +1,54 @@
+.ProfileContainer {
+  display: flex;
+}
+.DPBox {
+  width: 3rem;
+  margin-right: 0.75rem;
+}
+.DPBox .DP {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--color-primary-one);
+  padding: 0.125rem;
+  border-radius: 50%;
+  background-color: var(--color-primary-transparent-one);
+  border: 1px solid var(--color-primary-transparent-two);
+}
+
+.ProfileInfoBox {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.ProfileInfoBox .UsernameBox,
+.ProfileInfoBox .EXPBox {
+  margin-bottom: 0.5rem;
+}
+.ProfileInfoBox .Username,
+.ProfileInfoBox .EXP {
+  display: inline-flex;
+  line-height: 1rem;
+  padding: 0.25rem 1rem;
+  border-radius: 0.25rem;
+  color: var(--color-primary-two);
+  background-color: var(--color-primary-transparent-one);
+  border: 1px solid var(--color-primary-transparent-two);
+}
+
+.LogoutBox {
+  display: inline-flex;
+}
+
+@media screen and (min-width: 600px) {
+  .DPBox {
+    width: 7rem;
+  }
+  .DPBox .DP {
+    display: flex;
+    width: 7rem;
+    height: 7rem;
+  }
+}

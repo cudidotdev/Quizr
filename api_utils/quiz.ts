@@ -213,11 +213,16 @@ export async function submitQuiz(sheet: any, timeSubmited: number) {
     await quiz.save();
 
     const user = await User.findById(sheet.userId);
+
     if (!user.quizzesTaken)
       user.quizzesTaken = user.averageScore = user.EXP = 0;
+
     user.averageScore =
       (user.averageScore * user.quizzesTaken + score) / ++user.quizzesTaken;
+    user.averageScore = Number(user.averageScore.toFixed(2));
+
     user.EXP = user.EXP + calculateEXP(score, quizTime);
+
     await user.save();
   } catch (error) {}
 

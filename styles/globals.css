@@ -144,8 +144,12 @@ textarea:hover {
   --color-primary-three: rgb(116, 180, 255);
   --color-primary-four: rgb(241, 247, 255);
   --color-primary-transparent: rgb(132, 186, 255, 0.07);
+  --color-primary-transparent-one: rgb(132, 186, 255, 0.03);
+  --color-primary-transparent-two: rgb(132, 186, 255, 0.25);
   --color-secondary-one: rgb(0, 194, 97);
   --color-secondary-two: rgb(16, 212, 114);
+  --color-secondary-transparent-one: rgba(0, 194, 97, 0.02);
+  --color-secondary-transparent-two: rgba(0, 194, 97, 0.25);
   --color-tertiary-one: rgb(255, 120, 0);
   --color-tertiary-two: rgb(255, 150, 50);
   --color-tertiary-three: rgb(255, 180, 110);

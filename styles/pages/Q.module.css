@@ -315,7 +315,7 @@
 
 .LeaderBoard .FallBack .Blink {
   display: flex;
-  height: 1.5rem;
+  min-height: 1.5rem;
   width: 100%;
   animation-name: fallback_blink_grey;
   animation-iteration-count: infinite;
@@ -326,7 +326,9 @@
 .LeaderBoard .FallBack .Container {
   display: flex;
   font-size: 0.9rem;
-  line-height: 1.5rem;
+}
+.LeaderBoard .FallBack .Container * {
+  line-height: 1rem;
 }
 .LeaderBoard .FallBack .Container > div {
   width: 100%;
@@ -353,21 +355,17 @@
   color: rgb(160, 160, 160);
   padding: 0 1rem;
 }
-.LeaderBoard .FallBack .ST span {
-  max-width: 5rem;
-  margin-left: 0.5rem;
-}
 .LeaderBoard .FallBack .EXPBox {
   max-width: 3rem;
-}
-.LeaderBoard .FallBack .EXPBox span {
   animation-name: fallback_blink_green;
 }
 
 .LeaderBoard .ScoreBox {
   display: flex;
-  line-height: 1.5rem;
   font-size: 0.9rem;
+}
+.LeaderBoard .ScoreBox * {
+  line-height: 1rem;
 }
 .LeaderBoard .ScoreBox > div {
   width: 100%;
@@ -378,23 +376,23 @@
 }
 
 .LeaderBoard .ScoreBox .DP {
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
   flex-grow: 0;
   flex-shrink: 0;
-  background-color: rgba(81, 149, 251, 0.01);
-  border: 1px solid rgba(81, 149, 251, 0.1);
+  background-color: var(--color-primary-transparent-one);
+  border: 1px solid var(--color-primary-transparent-two);
   padding: 0.125rem;
   margin-right: 0.5rem;
 }
 .LeaderBoard .ScoreBox .Username {
   display: inline-flex;
   margin-bottom: 0.25rem;
-  background-color: rgba(81, 149, 251, 0.01);
-  border: 1px solid rgba(81, 149, 251, 0.1);
+  background-color: var(--color-primary-transparent-one);
+  border: 1px solid var(--color-primary-transparent-two);
   border-radius: 0.25rem;
-  padding: 0 1rem;
+  padding: 0.25rem 1rem;
   color: var(--color-primary-two);
 }
 .LeaderBoard .ScoreBox .ST {
@@ -405,16 +403,13 @@
   background-color: rgb(253, 253, 253);
   color: rgb(160, 160, 160);
   border-radius: 0.25rem;
-  padding: 0 1rem;
-}
-.LeaderBoard .ScoreBox .ST span {
-  margin-left: 0.5rem;
+  padding: 0.25rem 1rem;
 }
 .LeaderBoard .ScoreBox .EXPBox {
-  background-color: rgba(0, 194, 97, 0.01);
-  border: 1px solid rgba(0, 194, 97, 0.1);
+  background-color: var(--color-secondary-transparent-one);
+  border: 1px solid var(--color-secondary-transparent-two);
   border-radius: 0.25rem;
-  padding: 0 1rem;
+  padding: 0.25rem 1rem;
   color: var(--color-secondary-one);
 }
 
@@ -471,6 +466,12 @@
   50% {
     background-color: rgba(81, 149, 251, 0.05);
     border: 1px solid rgba(81, 149, 251, 0.2);
+  }
+}
+@media screen and (min-width: 350px) {
+  .LeaderBoard .ScoreBox .DP {
+    width: 3rem;
+    height: 3rem;
   }
 }
 @media screen and (min-width: 768px) {

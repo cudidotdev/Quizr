@@ -160,9 +160,9 @@ const LeaderBoards: React.FC = () => {
     if (!res) return setError("It seems there is no internet connection");
 
     const { success, data, error } = res;
-    if (error) return setError(error.message);
+    if (!success) return setError(error.message);
 
-    setQuizId(data._id);
+    setQuizId(data?._id);
   }
 
   async function getScores(quizId: string) {
@@ -224,12 +224,10 @@ const ScoreContainer: React.FC<any> = ({ scores, start }) => {
             </div>
             <div>
               <div className={styles.Username}>{score.user.username}</div>
+              <div className={`${styles.ST} `}>Score:&ensp;{score.score}</div>
               <div className={`${styles.ST} `}>
-                Score:<span>{score.score}</span>
-              </div>
-              <div className={`${styles.ST} `}>
-                Time:
-                <span>{modifyTimeForDisplay(score.quizTime)}</span>
+                Time:&ensp;
+                {modifyTimeForDisplay(score.quizTime)}
               </div>
               <div className={`${styles.EXPBox}`}>
                 +{calculateEXP(score.score, score.quizTime)} EXP
@@ -246,19 +244,13 @@ const LeaderBoardsFallBack: React.FC = () => (
   <ListContainer className={styles.FallBack}>
     {new Array(10).fill(0).map((e, idx) => (
       <List key={idx}>
-        <div className={styles.Container}>
+        <div className={`${styles.Container} t-mono`}>
           <div className={`${styles.DP} ${styles.Blink}`}></div>
           <div>
             <div className={`${styles.Username} ${styles.Blink}`}></div>
-            <div className={`${styles.ST} ${styles.Blink}`}>
-              Score: <span></span>
-            </div>
-            <div className={`${styles.ST} ${styles.Blink}`}>
-              Time: <span></span>
-            </div>
-            <div className={styles.EXPBox}>
-              <span className={styles.Blink}></span>
-            </div>
+            <div className={`${styles.ST} ${styles.Blink}`}>Score</div>
+            <div className={`${styles.ST} ${styles.Blink}`}>Time</div>
+            <div className={`${styles.EXPBox} ${styles.Blink}`}></div>
           </div>
         </div>
       </List>
