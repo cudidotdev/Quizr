@@ -10,9 +10,9 @@ const UserSchema = new mongoose.Schema({
       `https://avatars.dicebear.com/api/bottts/${Math.random()}.svg`,
   },
   isAdmin: Boolean,
-  quizzesTaken: Number,
-  averageScore: Number,
-  EXP: Number,
+  quizzesTaken: { type: Number, default: 0 },
+  averageScore: { type: Number, default: 0 },
+  EXP: { type: Number, default: 0 },
   createdAt: { type: Date, default: () => Date.now() },
   quizStarted: String,
 });

@@ -29,7 +29,7 @@ export const getStaticProps: GetStaticProps = async () => {
     q.questions.forEach((ques: any) => delete ques.answer);
   });
 
-  return { props: { quizzes }, revalidate: 5 };
+  return { props: { quizzes }, revalidate: 1 };
 };
 
 export default Home;

@@ -23,14 +23,12 @@
   display: flex;
   flex-direction: column;
 }
-.ProfileInfoBox .UsernameBox,
-.ProfileInfoBox .EXPBox {
+.ProfileInfoBox .DataBox {
   margin-bottom: 0.5rem;
 }
-.ProfileInfoBox .Username,
-.ProfileInfoBox .EXP {
+.ProfileInfoBox .Data {
   display: inline-flex;
-  line-height: 1rem;
+  line-height: 1.2rem;
   padding: 0.25rem 1rem;
   border-radius: 0.25rem;
   color: var(--color-primary-two);
@@ -39,10 +37,22 @@
 }
 
 .LogoutBox {
-  display: inline-flex;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 320px) {
+  .DPBox {
+    width: 5rem;
+  }
+  .DPBox .DP {
+    display: flex;
+    width: 5rem;
+    height: 5rem;
+  }
+}
+@media screen and (min-width: 520px) {
   .DPBox {
     width: 7rem;
   }
