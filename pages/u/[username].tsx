@@ -59,7 +59,7 @@ const ProfileContainer: React.FC<any> = ({ user: _user, width }) => {
   useEffect(() => {
     getRank();
     refreshUser();
-  }, [user]);
+  }, [_user]);
   /*eslint-enable*/
 
   return (
