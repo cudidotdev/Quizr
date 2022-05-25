@@ -13,6 +13,7 @@ import { UserContext } from "components/app";
 
 const ProfilePage: NextPageWithLayout = ({ user }: any) => {
   const [width, setWidth] = useState(0);
+  const [currentUser] = useContext(UserContext);
 
   function resizeWidth() {
     setWidth(window.innerWidth);
@@ -27,7 +28,7 @@ const ProfilePage: NextPageWithLayout = ({ user }: any) => {
     <main className="content-width pad-one">
       <ProfileContainer user={user} width={width} />
       <div className={styles.LogoutBox}>
-        {width < 520 && <LogoutComponent />}
+        {width < 520 && currentUser._id == user._id && <LogoutComponent />}
       </div>
     </main>
   );
