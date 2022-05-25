@@ -8,8 +8,9 @@ import Image from "next/image";
 import BtnStyles from "styles/components/buttons.module.css";
 import { ExitIcon } from "components/icons";
 import { Linkr } from "components/links";
-import { useContext, useLayoutEffect, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { UserContext } from "components/app";
+import { getFetcher } from "utils/fetchers";
 
 const ProfilePage: NextPageWithLayout = ({ user }: any) => {
   const [width, setWidth] = useState(0);
@@ -36,6 +37,21 @@ const ProfilePage: NextPageWithLayout = ({ user }: any) => {
 
 const ProfileContainer: React.FC<any> = ({ user, width }) => {
   const [currentUser] = useContext(UserContext);
+  const [rank, setRank] = useState<number>(0);
+
+  async function getRank() {
+    const res = await getFetcher(`/api/user/rank?id=${user._id}`);
+    if (!res) return;
+    const { success, data, error } = res;
+    if (!success) return;
+    setRank(data);
+  }
+
+  /*eslint-disable*/
+  useEffect(() => {
+    getRank();
+  }, [user]);
+  /*eslint-enable*/
 
   return (
     <div className={styles.ProfileContainer}>
@@ -56,7 +72,7 @@ const ProfileContainer: React.FC<any> = ({ user, width }) => {
           <div className={styles.Data}>{!!user && user.username}</div>
         </div>
         <div className={styles.DataBox}>
-          <div className={styles.Data}>Rank:&ensp;#1</div>
+          <div className={styles.Data}>Rank:&ensp;#{rank ? rank : "-"}</div>
         </div>
         <div className={styles.DataBox}>
           <div className={styles.Data}>EXP:&ensp;{!!user && user.EXP}</div>

@@ -232,6 +232,16 @@
   color: var(--color-tertiary-one);
 }
 
+.ResultContainer .ErrorBox {
+  border-top: 1px solid var(--color-grey-three);
+  border-bottom: 1px solid var(--color-grey-three);
+  padding: 0.5rem 0;
+  color: var(--color-tertiary-one);
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
 .ResultBox.A {
   color: var(--color-secondary-two);
 }

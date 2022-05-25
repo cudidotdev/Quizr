@@ -67,7 +67,7 @@ const QuizEndPage: NextPageWithLayout = () => {
             ) : result ? (
               <Result result={result} />
             ) : (
-              <></>
+              <NoResult error={resultError} />
             )}
           </div>
           <div>
@@ -108,6 +108,15 @@ const Result: React.FC<{ result: any }> = ({ result }) => {
           </div>
         </div>
       ))}
+    </div>
+  );
+};
+
+const NoResult: React.FC<any> = ({ error }) => {
+  return (
+    <div className={`${styles.ResultContainer}`}>
+      <div className={styles.ScoreBox}>Score: -/10</div>
+      <div className={styles.ErrorBox}>{error}</div>
     </div>
   );
 };
