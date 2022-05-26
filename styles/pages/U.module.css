@@ -109,8 +109,6 @@
 }
 
 .ProfilePictureChanger > div {
-  padding: 0.5rem;
-
   border-radius: 0.5rem;
   border: 1px solid var(--color-grey-two);
 }
@@ -123,6 +121,7 @@
 .ProfileFormContainer .PictureContainer {
   display: grid;
   gap: 0.5rem;
+  padding: 0.5rem;
   grid-template-columns: auto auto auto;
 }
 .PictureContainer > div {
@@ -154,9 +153,43 @@
 .NextBtnBox {
   width: 100%;
   border-top: 1px solid var(--color-grey-two);
-  padding-top: 0.5rem;
+  padding: 0.5rem;
   display: flex;
   justify-content: center;
+}
+
+.UpdateUserErrorBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: var(--color-tertiary-one);
+  padding-bottom: 0.5rem;
+}
+.UpdateUserErrorBox .Icon {
+  display: flex;
+  width: 1.75rem;
+  height: 1.75rem;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-right: 0.5rem;
+}
+.UpdateUserErrorBox .Msg {
+  line-height: 1rem;
+  font-size: 0.9rem;
+}
+.UpdateUserErrorBox .Link {
+  color: var(--color-primary-two);
+  border-bottom: 1px dashed transparent;
+}
+.UpdateUserErrorBox .Link:hover,
+.UpdateUserErrorBox .Link:focus {
+  outline: none;
+  border-color: currentColor;
+  transition: all 200ms linear;
 }
 
 @media screen and (min-width: 320px) {

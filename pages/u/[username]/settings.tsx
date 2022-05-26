@@ -51,7 +51,7 @@ const ProfilePage: NextPageWithLayout = ({ user: _user }: any) => {
   return (
     <main className="content-width pad-one">
       <Profile width={width} user={user} page="settings" />
-      <UpdateProfileForm user={user} />
+      <UpdateProfileForm user={user} refreshUser={refreshUser} />
     </main>
   );
 };

@@ -1,5 +1,5 @@
 .NotePad {
-  position: absolute;
+  position: fixed;
   width: 100%;
   max-width: 420px;
   top: 0;

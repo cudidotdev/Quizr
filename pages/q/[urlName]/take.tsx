@@ -197,11 +197,6 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
             </div>
           </section>
           <section className={styles.NavigationBox}>
-            <div className={styles.NextBtnBox}>
-              <NextButton
-                onClick={() => setIdx((prev) => (prev < 10 ? prev + 1 : 1))}
-              />
-            </div>
             <div>
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
                 <Nav
@@ -212,6 +207,11 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
                   pending={pending.includes(i)}
                 />
               ))}
+            </div>
+            <div className={styles.NextBtnBox}>
+              <NextButton
+                onClick={() => setIdx((prev) => (prev < 10 ? prev + 1 : 1))}
+              />
             </div>
             <div
               className={styles.SubmitBtnBox}

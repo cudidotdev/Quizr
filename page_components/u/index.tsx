@@ -6,7 +6,7 @@ import React, {
   useMemo,
   useRef,
 } from "react";
-import { UserContext } from "components/app";
+import { NotePadContext, UserContext } from "components/app";
 import { getFetcher, patchFetcher } from "utils/fetchers";
 import styles from "styles/pages/U.module.css";
 import Image from "next/image";
@@ -214,20 +214,25 @@ export const QuizzesTakenComponent: React.FC<any> = ({ user }) => {
   );
 };
 
-export const UpdateProfileForm: React.FC<{ user: any }> = ({ user }) => {
-  const [data, setData] = useState<any>({
-    username: "",
-    email: "",
+export const UpdateProfileForm: React.FC<{
+  user: any;
+  refreshUser: () => any;
+}> = ({ user, refreshUser }) => {
+  const [userData, setData] = useState<any>({
+    username: user?.username,
+    email: user?.email,
     password: "",
-    currentPassword: "",
     profilePicture: "",
   });
   const [pictures, setPictures] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<React.ReactElement | null>(null);
+  const [, setUser] = useContext(UserContext);
+  const addNote = useContext(NotePadContext);
 
   function refreshPictures() {
     setPictures(
-      new Array(12)
+      new Array(3)
         .fill(0)
         .map(
           (e) => `https://avatars.dicebear.com/api/bottts/${Math.random()}.svg`
@@ -235,10 +240,53 @@ export const UpdateProfileForm: React.FC<{ user: any }> = ({ user }) => {
     );
   }
 
-  async function updateUser() {
+  function processError(error: any) {
+    const { name, message } = error;
+
+    if (name === "not resolved")
+      return setError(<>It seems there is a connection error.</>);
+
+    if (["username", "email", "password"].includes(name)) {
+      //@ts-ignore
+      document.updateUserForm[name].focus();
+      return setError(<>{message}</>);
+    }
+
+    if (name === "login")
+      return setError(
+        <>
+          {message},{" "}
+          <Linkr
+            className={styles.Link}
+            href={`/in?next=/u/${user.username}/settings`}
+          >
+            click to login.
+          </Linkr>
+        </>
+      );
+
+    setError(<>Unknown server error, please try again</>);
+  }
+
+  async function updateUser(ev: any) {
+    ev.preventDefault();
+
+    setError(null);
     setLoading(true);
-    const res = await patchFetcher(`/api/user/update`, data);
+    const res = await patchFetcher(`/api/user/update`, userData);
     setLoading(false);
+
+    if (!res) return processError({ name: "not resolved" });
+    const { success, data, error } = res;
+    if (!success) return processError(error);
+
+    refreshUser();
+    setUser(data);
+    addNote({
+      type: "success",
+      id: "updateuser",
+      msg: "User updated successfully",
+    });
   }
 
   useEffect(() => {
@@ -247,12 +295,14 @@ export const UpdateProfileForm: React.FC<{ user: any }> = ({ user }) => {
 
   return (
     <div className={styles.ProfileFormContainer}>
-      <h2 className="t-regular">UPDATE PROFILE</h2>
-      <form>
+      <h2 className="t-medium">UPDATE PROFILE</h2>
+      <form id="updateUserForm" name="updateUserForm">
         <Inputr
           name="username"
-          label={`Change Username ${data.username ? "(modified)" : ""}`}
-          value={data.username}
+          label={`Change Username ${
+            userData.username != user?.username ? "(modified)" : ""
+          }`}
+          value={userData.username}
           onChange={(value) =>
             setData((prev: any) => {
               return { ...prev, username: value };
@@ -261,28 +311,20 @@ export const UpdateProfileForm: React.FC<{ user: any }> = ({ user }) => {
         />
         <Inputr
           type="email"
-          label={`Change Email ${data.email ? "(modified)" : ""}`}
+          label={`Change Email ${
+            userData.email != user?.email ? "(modified)" : ""
+          }`}
           name="email"
-          value={data.email}
+          value={userData.email}
           onChange={(value) =>
             setData((prev: any) => {
               return { ...prev, email: value };
             })
           }
         />
-        <Passwordr
-          name="password"
-          label={`Change Password ${data.password ? "(modified)" : ""}`}
-          value={data.password}
-          onChange={(value) =>
-            setData((prev: any) => {
-              return { ...prev, password: value };
-            })
-          }
-        />
         <ProfilePictureChanger
           pictures={pictures}
-          $picture={data.profilePicture}
+          $picture={userData.profilePicture}
           set$picture={(value) =>
             setData((prev: any) => {
               return { ...prev, profilePicture: value };
@@ -297,17 +339,31 @@ export const UpdateProfileForm: React.FC<{ user: any }> = ({ user }) => {
           }}
         >
           <Passwordr
-            label="Enable Update By Entering Current Password"
-            name="currentPassword"
-            value={data.currentPassword}
+            label="Enable Update By Entering Password"
+            name="password"
+            value={userData.passwerd}
             onChange={(value) =>
               setData((prev: any) => {
-                return { ...prev, currentPassword: value };
+                return { ...prev, password: value };
               })
             }
             required
           />
-          <Submitr onClick={updateUser}>Update</Submitr>
+          {!!error && (
+            <div className={`${styles.UpdateUserErrorBox}`}>
+              <span className={`${styles.Icon} t-medium`}>!</span>
+              <p className={styles.Msg}>{error}</p>
+            </div>
+          )}
+          <Submitr onClick={updateUser}>
+            {!loading ? (
+              <>Update</>
+            ) : (
+              <>
+                Updating <TripleSquareLoader />
+              </>
+            )}
+          </Submitr>
         </div>
       </form>
     </div>

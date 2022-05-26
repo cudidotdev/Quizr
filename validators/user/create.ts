@@ -12,7 +12,7 @@ async function validate(body: any) {
   return final;
 }
 
-function validateUsername(username: string, final: any) {
+export function validateUsername(username: string, final: any) {
   username = username.trim();
 
   if (!username || !username.length)
@@ -27,7 +27,7 @@ function validateUsername(username: string, final: any) {
   final.username = username;
 }
 
-function validateEmail(email: string, final: any) {
+export function validateEmail(email: string, final: any) {
   email = email.trim();
 
   if (!email || !email.length)

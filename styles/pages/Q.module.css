@@ -171,7 +171,8 @@
 }
 
 .NextBtnBox {
-  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: center;
 }
 
 .SubmitBtnBox {
