@@ -47,6 +47,13 @@ const QuizListApp: React.FC<{ quizzes: quiz[] }> = ({ quizzes }) => {
         return a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1;
       if (query.sort === "Z-A")
         return a.title.toLowerCase() < b.title.toLowerCase() ? 1 : -1;
+      if (query.sort === "Hardest")
+        return (a.averageScore || -Infinity) - (b.averageScore || -Infinity);
+      if (query.sort === "Easiest")
+        return (b.averageScore || -Infinity) - (a.averageScore || -Infinity);
+      if (query.sort === "Most Relevant" && !query.search) {
+        return (b.timesTaken || -Infinity) - (a.timesTaken || -Infinity);
+      }
       return 0;
     });
 

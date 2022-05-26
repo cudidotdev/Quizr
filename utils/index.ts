@@ -161,7 +161,5 @@ export function searchQuizzes({
   const newQuizzes: quizType2[] = [];
   filterQuiz.forEach((quiz) => (newQuizzes[IdRankMap[quiz._id]] = quiz));
 
-  console.log(IdScoreMap);
-
   return newQuizzes;
 }
