@@ -16,6 +16,10 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <meta name="description" content="A portfolio project by CudiLala" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
+          property="og:title"
+          content="Quizr: A portfolio project by Cudilala"
+        />
+        <meta
           property="og:description"
           content="A portfolio project by CudiLala"
         />
@@ -23,16 +27,10 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           property="og:image"
           content={`${process.env.NEXT_PUBLIC_URL}/og-image.png`}
         />
-        <meta property="og:image:height" content="661" />
-        <meta property="og:image:width" content="1353" />
         <meta property="og:site_name" content="Quizr" />
-        <meta
-          property="og:title"
-          content="Quizr: A portfolio project by Cudilala"
-        />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`${process.env.NEXT_PUBLIC_URL}`} />
-        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="A portfolio project by CudiLala" />
         <meta
           name="twitter:description"
           content="A portfolio project by CudiLala."
@@ -42,7 +40,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           content={`${process.env.NEXT_PUBLIC_URL}/og-image.png`}
         />
         <meta name="twitter:site" content="@CudiLala_" />
-        <meta name="twitter:title" content="A portfolio project by CudiLala" />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <App>
         <Layout {...Component.LayoutProps}>
