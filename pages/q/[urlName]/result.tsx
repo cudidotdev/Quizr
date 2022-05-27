@@ -76,7 +76,7 @@ const QuizEndPage: NextPageWithLayout = () => {
         </div>
       </main>
       <Head>
-        <title>Quizr: Result page</title>
+        <title>Result page: Quizr</title>
       </Head>
     </>
   );

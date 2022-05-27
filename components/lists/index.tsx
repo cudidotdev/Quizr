@@ -55,15 +55,13 @@ const ListContainer: React.FC<list> = (props) => {
   );
 };
 
-export const List: React.FC<
-  React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
-> = (props) => {
+export const List: React.FC<list> = (props) => {
   //@ts-ignore
-  const { children, index } = props;
+  const { children, index, noIndex = false } = props;
 
   return (
     <div {...props} className={`${styles.List} ${props.className || ""}`}>
-      <div className={styles.Index}>{index + 1}</div>
+      {!noIndex && <div className={styles.Index}>{index + 1}</div>}
       <div className={styles.Child}>{children}</div>
     </div>
   );
@@ -71,7 +69,7 @@ export const List: React.FC<
 
 export const LinkList: React.FC<linkr> = (props) => {
   //@ts-ignore
-  const { children, index, href = "#" } = props;
+  const { children, index, href = "#", noIndex = false } = props;
 
   return (
     <Linkr
@@ -79,7 +77,7 @@ export const LinkList: React.FC<linkr> = (props) => {
       className={`${styles.List} ${props.className || ""} disable-focus-color`}
       href={href}
     >
-      <div className={styles.Index}>{index + 1}</div>
+      {!noIndex && <div className={styles.Index}>{index + 1}</div>}
       <div className={styles.Child}>{children}</div>
     </Linkr>
   );

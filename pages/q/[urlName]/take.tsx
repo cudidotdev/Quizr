@@ -246,7 +246,7 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
         </div>
       </main>
       <Head>
-        <title>Quiz: {title}</title>
+        <title>{title}: Quizr</title>
       </Head>
     </>
   );

@@ -8,6 +8,7 @@ import { UserContext } from "components/app";
 import NotFoundComponent from "page_components/404";
 import Profile, { UpdateProfileForm } from "page_components/u";
 import { getFetcher } from "utils/fetchers";
+import Head from "next/head";
 
 const ProfilePage: NextPageWithLayout = ({ user: _user }: any) => {
   const [width, setWidth] = useState(0);
@@ -52,6 +53,9 @@ const ProfilePage: NextPageWithLayout = ({ user: _user }: any) => {
     <main className="content-width pad-one">
       <Profile width={width} user={user} page="settings" />
       <UpdateProfileForm user={user} refreshUser={refreshUser} />
+      <Head>
+        <title>{user?.username}: Quizr</title>
+      </Head>
     </main>
   );
 };

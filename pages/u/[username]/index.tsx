@@ -7,6 +7,7 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { getFetcher } from "utils/fetchers";
 import Profile from "page_components/u";
 import { QuizzesTakenComponent } from "page_components/u";
+import Head from "next/head";
 
 const ProfilePage: NextPageWithLayout = ({ user: _user }: any) => {
   const [width, setWidth] = useState(0);
@@ -47,6 +48,9 @@ const ProfilePage: NextPageWithLayout = ({ user: _user }: any) => {
     <main className="content-width pad-one">
       <Profile user={user} width={width} page="home" />
       <QuizzesTakenComponent user={user} />
+      <Head>
+        <title>{user?.username}: Quizr</title>
+      </Head>
     </main>
   );
 };

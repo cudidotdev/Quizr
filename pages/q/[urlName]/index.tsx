@@ -65,7 +65,7 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: { quiz: quiz }) => {
         <StartButton loading={startLoading} onClick={startQuiz} />
       </div>
       <Head>
-        <title>Quiz: {title}</title>
+        <title>{title}: Quizr</title>
       </Head>
     </main>
   );

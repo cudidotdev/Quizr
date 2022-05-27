@@ -13,6 +13,36 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       <Head>
         <title>Quizr: A quiz portfoilo project by CudiLala</title>
         <link rel="icon" href="/logo.png" />
+        <meta name="description" content="A portfolio project by CudiLala" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          property="og:description"
+          content="A portfolio project by CudiLala"
+        />
+        <meta
+          property="og:image"
+          content={`${process.env.NEXT_PUBLIC_URL}/og-image.png`}
+        />
+        <meta property="og:image:height" content="661" />
+        <meta property="og:image:width" content="1353" />
+        <meta property="og:site_name" content="Quizr" />
+        <meta
+          property="og:title"
+          content="Quizr: A portfolio project by Cudilala"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${process.env.NEXT_PUBLIC_URL}`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:description"
+          content="A portfolio project by CudiLala."
+        />
+        <meta
+          name="twitter:image"
+          content={`${process.env.NEXT_PUBLIC_URL}/og-image.png`}
+        />
+        <meta name="twitter:site" content="@CudiLala_" />
+        <meta name="twitter:title" content="A portfolio project by CudiLala" />
       </Head>
       <App>
         <Layout {...Component.LayoutProps}>

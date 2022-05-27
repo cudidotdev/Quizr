@@ -55,7 +55,7 @@ const LogoutPage: NextPageWithLayout = () => {
         <p className={`${styles.Msg} ${styles.Error} t-light`}>{msg.value}</p>
       )}
       <Head>
-        <title>Quiz: User Logout</title>
+        <title>User Logout: Quizr</title>
       </Head>
     </main>
   );

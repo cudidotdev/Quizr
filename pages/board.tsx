@@ -4,14 +4,17 @@ import ListContainer, { LinkList, List } from "components/lists";
 import Pagination from "components/pagination";
 import { useState, useMemo, useEffect } from "react";
 import { getFetcher } from "utils/fetchers";
-import Qstyles from "styles/pages/Q.module.css";
-import Ustyles from "styles/pages/U.module.css";
+import styles from "styles/pages/Board.module.css";
 import Image from "next/image";
+import Head from "next/head";
 
 const LeaderBoardsPage: NextPageWithLayout = () => {
   return (
     <main className="content-width pad-one">
       <LeaderBoards />
+      <Head>
+        <title>LeaderBoards: Quizr</title>
+      </Head>
     </main>
   );
 };
@@ -56,8 +59,8 @@ const LeaderBoards: React.FC = () => {
   }, []);
 
   return (
-    <div className={Qstyles.LeaderBoard}>
-      <h2 className={`${Qstyles.Title} t-regular`}>LEADERBOARD</h2>
+    <div className={styles.LeaderBoard}>
+      <h1 className={`${styles.Title} t-regular`}>LEADERBOARDS</h1>
       <Pagination from={1} to={pages} idx={idx} setIdx={setIdx} />
       {loading ? (
         <LeaderBoardsFallBack />
@@ -79,11 +82,11 @@ const ScoreContainer: React.FC<{ leaderboards: any; start: number }> = ({
   start,
 }) => {
   return (
-    <ListContainer start={start}>
+    <ListContainer>
       {leaderboards.map((user: any, idx: any) => (
-        <LinkList href={`/u/${user.username}`} key={idx}>
-          <div className={`${Qstyles.ScoreBox} t-mono`}>
-            <div className={Qstyles.DP}>
+        <LinkList href={`/u/${user.username}`} key={idx} noIndex>
+          <div className={`${styles.ProfileBox} t-mono`}>
+            <div className={styles.DP}>
               <Image
                 src={user.profilePicture}
                 alt={`${user.username} profilePicture`}
@@ -91,27 +94,27 @@ const ScoreContainer: React.FC<{ leaderboards: any; start: number }> = ({
                 height="100%"
               />
             </div>
-            <div className={`${Ustyles.ProfileInfoBox} t-mono`}>
-              <div className={Ustyles.DataBox}>
-                <div className={Ustyles.Data}>{!!user && user.username}</div>
+            <div className={`${styles.ProfileInfoBox} t-mono`}>
+              <div className={styles.DataBox}>
+                <div className={styles.Data}>{!!user && user.username}</div>
               </div>
-              <div className={Ustyles.DataBox}>
-                <div className={Ustyles.Data}>
+              <div className={styles.DataBox}>
+                <div className={`${styles.Data} ${styles.Green}`}>
                   Rank:&ensp;#{!!user && user.rank}
                 </div>
               </div>
-              <div className={Ustyles.DataBox}>
-                <div className={Ustyles.Data}>
+              <div className={styles.DataBox}>
+                <div className={styles.Data}>
                   EXP:&ensp;{!!user && user.EXP}
                 </div>
               </div>
-              <div className={Ustyles.DataBox}>
-                <div className={Ustyles.Data}>
+              <div className={styles.DataBox}>
+                <div className={styles.Data}>
                   Quizzes Taken:&ensp;{!!user && user.quizzesTaken}
                 </div>
               </div>
-              <div className={Ustyles.DataBox}>
-                <div className={Ustyles.Data}>
+              <div className={styles.DataBox}>
+                <div className={styles.Data}>
                   Average Score:&ensp;
                   {!!user && user.averageScore}
                 </div>
@@ -125,16 +128,18 @@ const ScoreContainer: React.FC<{ leaderboards: any; start: number }> = ({
 };
 
 const LeaderBoardsFallBack: React.FC = () => (
-  <ListContainer className={Qstyles.FallBack}>
+  <ListContainer className={styles.FallBack}>
     {new Array(10).fill(0).map((e, idx) => (
-      <List key={idx}>
-        <div className={`${Qstyles.Container} t-mono`}>
-          <div className={`${Qstyles.DP} ${Qstyles.Blink}`}></div>
+      //@ts-ignore
+      <List key={idx} noIndex>
+        <div className={`${styles.Container} t-mono`}>
+          <div className={`${styles.DP} ${styles.Blink}`}></div>
           <div>
-            <div className={`${Qstyles.Username} ${Qstyles.Blink}`}></div>
-            <div className={`${Qstyles.ST} ${Qstyles.Blink}`}>Score</div>
-            <div className={`${Qstyles.ST} ${Qstyles.Blink}`}>Time</div>
-            <div className={`${Qstyles.EXPBox} ${Qstyles.Blink}`}></div>
+            <div className={`${styles.Blink}`}></div>
+            <div className={`${styles.Green} ${styles.Blink}`}></div>
+            <div className={`${styles.Blink}`}></div>
+            <div className={`${styles.Blink}`}></div>
+            <div className={`${styles.Blink}`}></div>
           </div>
         </div>
       </List>

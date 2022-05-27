@@ -8,7 +8,7 @@ const LoginPage: NextPageWithLayout = () => {
     <main className="site-width pad-one">
       <RegisterForm />
       <Head>
-        <title>Quiz: User Create Account/User Register</title>
+        <title>Create Account: Quizr</title>
       </Head>
     </main>
   );
