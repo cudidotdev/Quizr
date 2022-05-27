@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           content={`${process.env.NEXT_PUBLIC_URL}/og-image.png`}
         />
         <meta name="twitter:site" content="@CudiLala_" />
-        <meta name="twitter:card" content="summary_large_image" />
+        {/* <meta name="twitter:card" content="summary_large_image" /> */}
       </Head>
       <App>
         <Layout {...Component.LayoutProps}>
