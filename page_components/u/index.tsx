@@ -19,6 +19,7 @@ import Pagination from "components/pagination";
 import { modifyTimeForDisplay } from "utils";
 import { calculateEXP } from "utils/quiz";
 import { Inputr, Passwordr, Submitr } from "components/forms";
+import { useRouter } from "next/router";
 
 export const ProfileContainer: React.FC<any> = ({ user, width }) => {
   const [currentUser] = useContext(UserContext);
@@ -229,6 +230,7 @@ export const UpdateProfileForm: React.FC<{
   const [error, setError] = useState<React.ReactElement | null>(null);
   const [, setUser] = useContext(UserContext);
   const addNote = useContext(NotePadContext);
+  const router = useRouter();
 
   function refreshPictures() {
     setPictures(
@@ -280,13 +282,13 @@ export const UpdateProfileForm: React.FC<{
     const { success, data, error } = res;
     if (!success) return processError(error);
 
-    refreshUser();
     setUser(data);
     addNote({
       type: "success",
       id: "updateuser",
       msg: "User updated successfully",
     });
+    router.reload();
   }
 
   useEffect(() => {

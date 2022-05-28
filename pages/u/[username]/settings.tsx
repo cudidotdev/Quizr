@@ -21,7 +21,7 @@ const ProfilePage: NextPageWithLayout = ({ user: _user }: any) => {
   }
 
   async function getRank() {
-    const res = await getFetcher(`/api/user/rank?id=${_user._id}`);
+    const res = await getFetcher(`/api/user/rank?id=${_user?._id}`);
     if (!res) return;
     const { success, data, error } = res;
     if (!success) return;
@@ -30,7 +30,7 @@ const ProfilePage: NextPageWithLayout = ({ user: _user }: any) => {
 
   async function refreshUser() {
     const rank = await getRank();
-    const res = await getFetcher(`/api/user?id=${_user._id}`);
+    const res = await getFetcher(`/api/user?id=${_user?._id}`);
     if (!res) return;
     if (!res.success) return;
     setUser({ ...res.data, rank });

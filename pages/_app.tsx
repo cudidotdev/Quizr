@@ -41,6 +41,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         />
         <meta name="twitter:site" content="@CudiLala_" />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta httpEquiv="refresh" content="300" />
       </Head>
       <App>
         <Layout {...Component.LayoutProps}>
