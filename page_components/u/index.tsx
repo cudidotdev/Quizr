@@ -282,13 +282,13 @@ export const UpdateProfileForm: React.FC<{
     const { success, data, error } = res;
     if (!success) return processError(error);
 
+    refreshUser();
     setUser(data);
     addNote({
       type: "success",
       id: "updateuser",
       msg: "User updated successfully",
     });
-    router.reload();
   }
 
   useEffect(() => {
