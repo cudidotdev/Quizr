@@ -1,6 +1,14 @@
 import React from "react";
 import styles from "styles/components/loaders.module.css";
 
+export const Loader: React.FC = () => {
+  return (
+    <div className={styles.Loader}>
+      <span></span>
+    </div>
+  );
+};
+
 export const TripleSquareLoader: React.FC<{
   colored?: boolean;
   t_colored?: boolean;

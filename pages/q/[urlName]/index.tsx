@@ -1,8 +1,8 @@
 import Layout from "components/layouts";
-import { TextBlock, Text, TextS } from "components/texts";
+import { TextBlock, TextS } from "components/texts";
 import connectDB from "database/connect";
 import { Quiz } from "database/models";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import type { quiz } from "types/app";
 import { NextPageWithLayout } from "types/next";
 import styles from "styles/pages/Q.module.css";
@@ -44,22 +44,21 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: { quiz: quiz }) => {
     router.push(`/q/${urlName}/take`);
   }
 
-  /* eslint-disable */
   useEffect(() => {
-    router.prefetch(`/q/${urlName}/take`);
     router.prefetch(`/q/${urlName}/result`);
-  }, []);
-  /* eslint-enable */
+  }, [router, urlName]);
 
   return (
     <main className="content-width" style={{ padding: "1rem" }}>
       <h1 className={`${styles.QuizTitle} t-regular`}>
         <TextS>{title}</TextS>
       </h1>
-      <TextBlock className={styles.QuizIntroText}>
+      <div className={styles.QuizIntroText}>
         {modify(introText)}
-        <p className={styles.TimeBox}>Time: 10 minutes</p>
-      </TextBlock>
+        <p className={styles.TimeBox}>
+          <TextS>Time: 10 minutes</TextS>
+        </p>
+      </div>
       {startError.value && <ErrorMsg msg={startError.msg} />}
       <div style={{ textAlign: "center" }}>
         <StartButton loading={startLoading} onClick={startQuiz} />
@@ -80,25 +79,15 @@ function modify(string: string) {
   return arr;
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   await connectDB();
 
-  const paths = (await Quiz.find({}).select("urlName -_id")).map((quiz) => {
-    return { params: quiz };
-  });
-
-  return { paths, fallback: "blocking" };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  await connectDB();
-
-  const quiz: quiz = await Quiz.findOne({ urlName: params!.urlName })
+  const quiz: quiz = await Quiz.findOne({ urlName: params!?.urlName })
     .select("title introText urlName")
     .lean();
   if (!quiz) return { notFound: true };
 
   quiz._id = quiz._id.toString();
 
-  return { props: { quiz }, revalidate: 30 * 60 };
+  return { props: { quiz } };
 };

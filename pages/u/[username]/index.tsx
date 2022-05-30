@@ -1,43 +1,20 @@
 import { NextPageWithLayout } from "types/next";
 import Layout from "components/layouts";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 import connectDB from "database/connect";
-import { User } from "database/models";
+import { ScoreBoard, User } from "database/models";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { getFetcher } from "utils/fetchers";
 import Profile from "page_components/u";
 import { QuizzesTakenComponent } from "page_components/u";
 import Head from "next/head";
 
-const ProfilePage: NextPageWithLayout = ({ user: _user }: any) => {
+const ProfilePage: NextPageWithLayout = ({ user, scores }: any) => {
   const [width, setWidth] = useState(0);
-  const [user, setUser] = useState(_user);
 
   function resizeWidth() {
     setWidth(window.innerWidth);
   }
-
-  async function getRank() {
-    const res = await getFetcher(`/api/user/rank?id=${_user._id}`);
-    if (!res) return;
-    const { success, data, error } = res;
-    if (!success) return;
-    return data;
-  }
-
-  async function refreshUser() {
-    const rank = await getRank();
-    const res = await getFetcher(`/api/user?id=${_user._id}`);
-    if (!res) return;
-    if (!res.success) return;
-    setUser({ ...res.data, rank });
-  }
-
-  /*eslint-disable*/
-  useEffect(() => {
-    refreshUser();
-  }, [_user]);
-  /*eslint-enable*/
 
   useLayoutEffect(() => {
     resizeWidth();
@@ -47,7 +24,7 @@ const ProfilePage: NextPageWithLayout = ({ user: _user }: any) => {
   return (
     <main className="content-width pad-one">
       <Profile user={user} width={width} page="home" />
-      <QuizzesTakenComponent user={user} />
+      <QuizzesTakenComponent scores={scores} />
       <Head>
         <title>{user?.username}: Quizr</title>
       </Head>
@@ -55,21 +32,7 @@ const ProfilePage: NextPageWithLayout = ({ user: _user }: any) => {
   );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  await connectDB();
-
-  const users = await User.find({}).lean();
-  const paths = users.map((user) => {
-    return { params: { username: user.username } };
-  });
-
-  return {
-    paths,
-    fallback: true,
-  };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   await connectDB();
   let user;
 
@@ -85,10 +48,15 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     (await User.find({ EXP: { $gt: user.EXP } }).select("EXP")).length + 1;
   user.rank = rank;
 
-  return {
-    props: { user },
-    revalidate: 1,
-  };
+  const scores = await ScoreBoard.find({ user: user._id })
+    .populate("quiz", "title timesTaken averageScore urlName -_id")
+    .select("-correction -dateSubmitted -user -_id")
+    .lean();
+  scores.sort((a: any, b: any) =>
+    a.quiz.title.toLowerCase() < b.quiz.title.toLowerCase() ? -1 : 1
+  );
+
+  return { props: { user, scores } };
 };
 
 ProfilePage.Layout = Layout;

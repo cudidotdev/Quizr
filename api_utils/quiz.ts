@@ -222,7 +222,7 @@ export async function submitQuiz(sheet: any, timeSubmited: number) {
       (user.averageScore * user.quizzesTaken + score) / ++user.quizzesTaken;
     user.averageScore = Number(user.averageScore.toFixed(2));
 
-    user.EXP = Number(user.EXP + calculateEXP(score, quizTime).toFixed(2));
+    user.EXP = Number((user.EXP + calculateEXP(score, quizTime)).toFixed(2));
 
     await user.save();
   } catch (error) {}

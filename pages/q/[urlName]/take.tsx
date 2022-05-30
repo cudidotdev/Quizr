@@ -7,12 +7,12 @@ import {
   SubmitButton,
 } from "page_components/q";
 import styles from "styles/pages/Q.module.css";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 import connectDB from "database/connect";
 import { Quiz } from "database/models";
 import type { ans, quiz } from "types/app";
 import { useState, useEffect, useContext } from "react";
-import { getFetcher, patchFetcher, postFetcher } from "utils/fetchers";
+import { patchFetcher, postFetcher } from "utils/fetchers";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { serializeAnswers, storeInSession } from "utils/quiz";
@@ -153,7 +153,6 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
         return { ...serializeAnswers(sheet.answers), ...prev };
       });
     })();
-    router.prefetch(`/q/${urlName}`);
     router.prefetch(`/q/${urlName}/result`);
   }, []);
   /* eslint-enable */
@@ -252,20 +251,12 @@ const QuizTakePage: NextPageWithLayout = ({ quiz }: any) => {
   );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export default QuizTakePage;
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   await connectDB();
 
-  const paths = (await Quiz.find({}).select("urlName -_id")).map((quiz) => {
-    return { params: quiz };
-  });
-
-  return { paths, fallback: "blocking" };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  await connectDB();
-
-  const quiz: quiz = await Quiz.findOne({ urlName: params!.urlName })
+  const quiz: quiz = await Quiz.findOne({ urlName: params!?.urlName })
     .select("title questions urlName")
     .lean();
   if (!quiz) return { notFound: true };
@@ -273,7 +264,5 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   quiz._id = quiz._id.toString();
   quiz.questions.forEach((question) => delete question.answer);
 
-  return { props: { quiz }, revalidate: 30 * 60 };
+  return { props: { quiz } };
 };
-
-export default QuizTakePage;

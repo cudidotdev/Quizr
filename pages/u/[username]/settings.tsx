@@ -1,6 +1,6 @@
 import { NextPageWithLayout } from "types/next";
 import Layout from "components/layouts";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 import connectDB from "database/connect";
 import { User } from "database/models";
 import { useContext, useEffect, useLayoutEffect, useState } from "react";
@@ -10,37 +10,13 @@ import Profile, { UpdateProfileForm } from "page_components/u";
 import { getFetcher } from "utils/fetchers";
 import Head from "next/head";
 
-const ProfilePage: NextPageWithLayout = ({ user: _user }: any) => {
+const ProfilePage: NextPageWithLayout = ({ user }: any) => {
   const [width, setWidth] = useState(0);
   const [currentUser] = useContext(UserContext);
-
-  const [user, setUser] = useState(_user);
 
   function resizeWidth() {
     setWidth(window.innerWidth);
   }
-
-  async function getRank() {
-    const res = await getFetcher(`/api/user/rank?id=${_user?._id}`);
-    if (!res) return;
-    const { success, data, error } = res;
-    if (!success) return;
-    return data;
-  }
-
-  async function refreshUser() {
-    const rank = await getRank();
-    const res = await getFetcher(`/api/user?id=${_user?._id}`);
-    if (!res) return;
-    if (!res.success) return;
-    setUser({ ...res.data, rank });
-  }
-
-  /*eslint-disable*/
-  useEffect(() => {
-    refreshUser();
-  }, [_user]);
-  /*eslint-enable*/
 
   useLayoutEffect(() => {
     resizeWidth();
@@ -52,7 +28,7 @@ const ProfilePage: NextPageWithLayout = ({ user: _user }: any) => {
   return (
     <main className="content-width pad-one">
       <Profile width={width} user={user} page="settings" />
-      <UpdateProfileForm user={user} refreshUser={refreshUser} />
+      <UpdateProfileForm user={user} />
       <Head>
         <title>{user?.username}: Quizr</title>
       </Head>
@@ -60,21 +36,10 @@ const ProfilePage: NextPageWithLayout = ({ user: _user }: any) => {
   );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  await connectDB();
+ProfilePage.Layout = Layout;
+export default ProfilePage;
 
-  const users = await User.find({}).lean();
-  const paths = users.map((user) => {
-    return { params: { username: user.username } };
-  });
-
-  return {
-    paths,
-    fallback: true,
-  };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   await connectDB();
   let user;
 
@@ -90,11 +55,5 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     (await User.find({ EXP: { $gt: user.EXP } }).select("EXP")).length + 1;
   user.rank = rank;
 
-  return {
-    props: { user },
-    revalidate: 1,
-  };
+  return { props: { user } };
 };
-
-ProfilePage.Layout = Layout;
-export default ProfilePage;

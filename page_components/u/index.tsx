@@ -7,7 +7,7 @@ import React, {
   useRef,
 } from "react";
 import { NotePadContext, UserContext } from "components/app";
-import { getFetcher, patchFetcher } from "utils/fetchers";
+import { patchFetcher } from "utils/fetchers";
 import styles from "styles/pages/U.module.css";
 import Image from "next/image";
 import { Linkr } from "components/links";
@@ -134,11 +134,10 @@ const Profile: React.FC<{ user: any; width: number; page: string }> = ({
   );
 };
 
-export const QuizzesTakenComponent: React.FC<any> = ({ user }) => {
+export const QuizzesTakenComponent: React.FC<{ scores: any[] }> = ({
+  scores,
+}) => {
   const [idx, setIdx] = useState(1);
-  const [error, setError] = useState<string>();
-  const [scores, setScores] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
 
   const maxPerPage = 4;
   const pages = Math.ceil(scores.length / maxPerPage);
@@ -154,35 +153,10 @@ export const QuizzesTakenComponent: React.FC<any> = ({ user }) => {
     return $;
   }, [scores, pages]);
 
-  async function getScores() {
-    const res = await getFetcher(`/api/quiz/scores?uId=${user._id}`);
-    if (!res) return setError("It seems there is no internet connection");
-
-    const { success, data, error } = res;
-    if (!success) return setError(error.message);
-
-    setLoading(false);
-    setScores(
-      data.sort((a: any, b: any) =>
-        a.quiz.title.toLowerCase() < b.quiz.title.toLowerCase() ? -1 : 1
-      )
-    );
-  }
-
-  /*eslint-disable */
-  useEffect(() => {
-    getScores();
-  }, [user]);
-  /*eslint-enable */
-
   return (
     <div className={styles.QuizTakenContainer}>
       <Pagination from={1} to={pages} idx={idx} setIdx={setIdx} />
-      {loading ? (
-        <p className={styles.LoaderBox}>
-          Fetching quizzes <TripleSquareLoader colored />
-        </p>
-      ) : $scores.length ? (
+      {$scores.length ? (
         <ListContainer start={(idx - 1) * maxPerPage + 1}>
           {$scores[idx - 1].map((score: any, idx: any) => (
             <LinkList href={`/q/${score.quiz.urlName}`} key={idx}>
@@ -215,10 +189,7 @@ export const QuizzesTakenComponent: React.FC<any> = ({ user }) => {
   );
 };
 
-export const UpdateProfileForm: React.FC<{
-  user: any;
-  refreshUser: () => any;
-}> = ({ user, refreshUser }) => {
+export const UpdateProfileForm: React.FC<{ user: any }> = ({ user }) => {
   const [userData, setData] = useState<any>({
     username: user?.username,
     email: user?.email,
@@ -282,13 +253,8 @@ export const UpdateProfileForm: React.FC<{
     const { success, data, error } = res;
     if (!success) return processError(error);
 
-    refreshUser();
     setUser(data);
-    addNote({
-      type: "success",
-      id: "updateuser",
-      msg: "User updated successfully",
-    });
+    router.push(`/u/${userData.username}/settings`);
   }
 
   useEffect(() => {

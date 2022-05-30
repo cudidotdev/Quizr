@@ -7,11 +7,14 @@ import { getFetcher } from "utils/fetchers";
 import styles from "styles/pages/Board.module.css";
 import Image from "next/image";
 import Head from "next/head";
+import { GetServerSideProps } from "next";
+import connectDB from "database/connect";
+import { User } from "database/models";
 
-const LeaderBoardsPage: NextPageWithLayout = () => {
+const LeaderBoardsPage: NextPageWithLayout = ({ leaderboards }: any) => {
   return (
     <main className="content-width pad-one">
-      <LeaderBoards />
+      <LeaderBoards leaderboards={leaderboards} />
       <Head>
         <title>LeaderBoards: Quizr</title>
       </Head>
@@ -23,11 +26,8 @@ LeaderBoardsPage.Layout = Layout;
 
 export default LeaderBoardsPage;
 
-const LeaderBoards: React.FC = () => {
+const LeaderBoards: React.FC<{ leaderboards: any[] }> = ({ leaderboards }) => {
   const [idx, setIdx] = useState(1);
-  const [error, setError] = useState<string>();
-  const [leaderboards, setLeaderBoards] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
 
   const maxPerPage = 10;
   const pages = Math.ceil(leaderboards.length / maxPerPage);
@@ -43,28 +43,11 @@ const LeaderBoards: React.FC = () => {
     return $;
   }, [leaderboards, pages]);
 
-  async function getScores() {
-    const res = await getFetcher(`/api/quiz/leaderboards`);
-    if (!res) return setError("It seems there is no internet connection");
-
-    const { success, data, error } = res;
-    if (!success) return setError(error.message);
-
-    setLoading(false);
-    setLeaderBoards(data);
-  }
-
-  useEffect(() => {
-    getScores();
-  }, []);
-
   return (
     <div className={styles.LeaderBoard}>
       <h1 className={`${styles.Title} t-regular`}>LEADERBOARDS</h1>
       <Pagination from={1} to={pages} idx={idx} setIdx={setIdx} />
-      {loading ? (
-        <LeaderBoardsFallBack />
-      ) : $leaderboards.length ? (
+      {$leaderboards.length ? (
         <ScoreContainer
           leaderboards={$leaderboards[idx - 1]}
           start={(idx - 1) * maxPerPage + 1}
@@ -127,22 +110,18 @@ const ScoreContainer: React.FC<{ leaderboards: any; start: number }> = ({
   );
 };
 
-const LeaderBoardsFallBack: React.FC = () => (
-  <ListContainer className={styles.FallBack}>
-    {new Array(10).fill(0).map((e, idx) => (
-      //@ts-ignore
-      <List key={idx} noIndex>
-        <div className={`${styles.Container} t-mono`}>
-          <div className={`${styles.DP} ${styles.Blink}`}></div>
-          <div>
-            <div className={`${styles.Blink}`}></div>
-            <div className={`${styles.Green} ${styles.Blink}`}></div>
-            <div className={`${styles.Blink}`}></div>
-            <div className={`${styles.Blink}`}></div>
-            <div className={`${styles.Blink}`}></div>
-          </div>
-        </div>
-      </List>
-    ))}
-  </ListContainer>
-);
+export const getServerSideProps: GetServerSideProps = async () => {
+  await connectDB();
+
+  const leaderboards = await User.find()
+    .select("username profilePicture quizzesTaken averageScore EXP")
+    .sort("-EXP")
+    .lean();
+
+  leaderboards.forEach((e, idx) => {
+    e.rank = idx + 1;
+    e._id = e._id.toString();
+  });
+
+  return { props: { leaderboards } };
+};

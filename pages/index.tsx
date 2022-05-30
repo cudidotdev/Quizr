@@ -1,7 +1,7 @@
 import type { NextPageWithLayout } from "types/next";
 import Layout from "components/layouts";
 import { Intro, QuizListApp } from "page_components/index";
-import { GetStaticProps } from "next";
+import { GetServerSideProps, GetStaticProps } from "next";
 import { Quiz } from "database/models";
 import connectDB from "database/connect";
 import type { quizType2 as quiz } from "types/app";
@@ -19,8 +19,9 @@ const Home: NextPageWithLayout = (props: any) => {
 
 Home.Layout = Layout;
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   await connectDB();
+
   const quizzes = await Quiz.find()
     .select("title categories questions urlName averageScore timesTaken")
     .lean();
@@ -29,7 +30,7 @@ export const getStaticProps: GetStaticProps = async () => {
     q.questions.forEach((ques: any) => delete ques.answer);
   });
 
-  return { props: { quizzes }, revalidate: 1 };
+  return { props: { quizzes } };
 };
 
 export default Home;
