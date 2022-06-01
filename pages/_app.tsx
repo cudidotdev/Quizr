@@ -11,17 +11,20 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <>
       <Head>
-        <title>Quizr: A quiz portfoilo project by CudiLala</title>
+        <title>Quizr: A quiz portfoilo project by Augustine Madu</title>
         <link rel="icon" href="/logo.png" />
-        <meta name="description" content="A portfolio project by CudiLala" />
+        <meta
+          name="description"
+          content="A portfolio project by Augustine Madu"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
           property="og:title"
-          content="Quizr: A portfolio project by Cudilala"
+          content="Quizr: A portfolio project by Augustine Madu"
         />
         <meta
           property="og:description"
-          content="A portfolio project by CudiLala"
+          content="A portfolio project by Augustine Madu"
         />
         <meta
           property="og:image"
@@ -30,10 +33,13 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <meta property="og:site_name" content="Quizr" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`${process.env.NEXT_PUBLIC_URL}`} />
-        <meta name="twitter:title" content="A portfolio project by CudiLala" />
+        <meta
+          name="twitter:title"
+          content="A portfolio project by Augustine Madu"
+        />
         <meta
           name="twitter:description"
-          content="A portfolio project by CudiLala."
+          content="A portfolio project by Augustine Madu."
         />
         <meta
           name="twitter:image"
