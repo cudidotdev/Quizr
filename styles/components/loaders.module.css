@@ -2,12 +2,12 @@
   position: fixed;
   top: 0;
   width: 100vw;
-  height: 0.15rem;
+  height: 0.2rem;
   z-index: 15;
 }
 .Loader span {
   display: flex;
-  height: 0.15rem;
+  height: 0.2rem;
   width: 90%;
 
   position: fixed;
