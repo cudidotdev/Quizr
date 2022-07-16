@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse, NextPage } from "next";
-import { AppProps } from "next/dist/shared/lib/router/router";
+import { AppProps } from "next/app";
 import React from "react";
 
 export type NextPageWithLayout = NextPage & {
